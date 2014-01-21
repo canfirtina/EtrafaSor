@@ -13,15 +13,17 @@
 		9FDD89AF188E818500DC7BB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9FDD89AD188E818500DC7BB9 /* InfoPlist.strings */; };
 		9FDD89B1188E818500DC7BB9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDD89B0188E818500DC7BB9 /* main.m */; };
 		9FDD89B5188E818500DC7BB9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDD89B4188E818500DC7BB9 /* AppDelegate.m */; };
-		9FDD89B8188E818500DC7BB9 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FDD89B6188E818500DC7BB9 /* Main_iPhone.storyboard */; };
-		9FDD89BB188E818500DC7BB9 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FDD89B9188E818500DC7BB9 /* Main_iPad.storyboard */; };
-		9FDD89BE188E818500DC7BB9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDD89BD188E818500DC7BB9 /* ViewController.m */; };
+		9FDD89B8188E818500DC7BB9 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FDD89B6188E818500DC7BB9 /* iPhone.storyboard */; };
+		9FDD89BB188E818500DC7BB9 /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FDD89B9188E818500DC7BB9 /* iPad.storyboard */; };
+		9FDD89BE188E818500DC7BB9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDD89BD188E818500DC7BB9 /* LoginViewController.m */; };
 		9FDD89C0188E818500DC7BB9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FDD89BF188E818500DC7BB9 /* Images.xcassets */; };
 		9FDD89C7188E818500DC7BB9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89C6188E818500DC7BB9 /* XCTest.framework */; };
 		9FDD89C8188E818500DC7BB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A4188E818500DC7BB9 /* Foundation.framework */; };
 		9FDD89C9188E818500DC7BB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A8188E818500DC7BB9 /* UIKit.framework */; };
 		9FDD89D1188E818500DC7BB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9FDD89CF188E818500DC7BB9 /* InfoPlist.strings */; };
 		9FDD89D3188E818500DC7BB9 /* EtrafaSorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDD89D2188E818500DC7BB9 /* EtrafaSorTests.m */; };
+		9FDD89DE188E919C00DC7BB9 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDD89DD188E919C00DC7BB9 /* MapViewController.m */; };
+		9FDD89E0188E96F200DC7BB9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89DF188E96F200DC7BB9 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,16 +47,19 @@
 		9FDD89B2188E818500DC7BB9 /* EtrafaSor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EtrafaSor-Prefix.pch"; sourceTree = "<group>"; };
 		9FDD89B3188E818500DC7BB9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9FDD89B4188E818500DC7BB9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9FDD89B7188E818500DC7BB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		9FDD89BA188E818500DC7BB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		9FDD89BC188E818500DC7BB9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9FDD89BD188E818500DC7BB9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		9FDD89B7188E818500DC7BB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/iPhone.storyboard; sourceTree = "<group>"; };
+		9FDD89BA188E818500DC7BB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/iPad.storyboard; sourceTree = "<group>"; };
+		9FDD89BC188E818500DC7BB9 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		9FDD89BD188E818500DC7BB9 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		9FDD89BF188E818500DC7BB9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9FDD89C5188E818500DC7BB9 /* EtrafaSorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EtrafaSorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FDD89C6188E818500DC7BB9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		9FDD89CE188E818500DC7BB9 /* EtrafaSorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "EtrafaSorTests-Info.plist"; sourceTree = "<group>"; };
 		9FDD89D0188E818500DC7BB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9FDD89D2188E818500DC7BB9 /* EtrafaSorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EtrafaSorTests.m; sourceTree = "<group>"; };
+		9FDD89DC188E919C00DC7BB9 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		9FDD89DD188E919C00DC7BB9 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		9FDD89DF188E96F200DC7BB9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FDD89E0188E96F200DC7BB9 /* Security.framework in Frameworks */,
 				9FDD89A7188E818500DC7BB9 /* CoreGraphics.framework in Frameworks */,
 				9FDD89A9188E818500DC7BB9 /* UIKit.framework in Frameworks */,
 				9FDD89A5188E818500DC7BB9 /* Foundation.framework in Frameworks */,
@@ -103,6 +109,7 @@
 		9FDD89A3188E818500DC7BB9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9FDD89DF188E96F200DC7BB9 /* Security.framework */,
 				9FDD89A4188E818500DC7BB9 /* Foundation.framework */,
 				9FDD89A6188E818500DC7BB9 /* CoreGraphics.framework */,
 				9FDD89A8188E818500DC7BB9 /* UIKit.framework */,
@@ -114,12 +121,14 @@
 		9FDD89AA188E818500DC7BB9 /* EtrafaSor */ = {
 			isa = PBXGroup;
 			children = (
+				9FDD89B6188E818500DC7BB9 /* iPhone.storyboard */,
+				9FDD89B9188E818500DC7BB9 /* iPad.storyboard */,
 				9FDD89B3188E818500DC7BB9 /* AppDelegate.h */,
 				9FDD89B4188E818500DC7BB9 /* AppDelegate.m */,
-				9FDD89B6188E818500DC7BB9 /* Main_iPhone.storyboard */,
-				9FDD89B9188E818500DC7BB9 /* Main_iPad.storyboard */,
-				9FDD89BC188E818500DC7BB9 /* ViewController.h */,
-				9FDD89BD188E818500DC7BB9 /* ViewController.m */,
+				9FDD89BC188E818500DC7BB9 /* LoginViewController.h */,
+				9FDD89BD188E818500DC7BB9 /* LoginViewController.m */,
+				9FDD89DC188E919C00DC7BB9 /* MapViewController.h */,
+				9FDD89DD188E919C00DC7BB9 /* MapViewController.m */,
 				9FDD89BF188E818500DC7BB9 /* Images.xcassets */,
 				9FDD89AB188E818500DC7BB9 /* Supporting Files */,
 			);
@@ -202,6 +211,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Can Firtina";
 				TargetAttributes = {
+					9FDD89A0188E818500DC7BB9 = {
+						DevelopmentTeam = QSQCHD8PL2;
+					};
 					9FDD89C4188E818500DC7BB9 = {
 						TestTargetID = 9FDD89A0188E818500DC7BB9;
 					};
@@ -231,9 +243,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FDD89BB188E818500DC7BB9 /* Main_iPad.storyboard in Resources */,
+				9FDD89BB188E818500DC7BB9 /* iPad.storyboard in Resources */,
 				9FDD89C0188E818500DC7BB9 /* Images.xcassets in Resources */,
-				9FDD89B8188E818500DC7BB9 /* Main_iPhone.storyboard in Resources */,
+				9FDD89B8188E818500DC7BB9 /* iPhone.storyboard in Resources */,
 				9FDD89AF188E818500DC7BB9 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,9 +265,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FDD89BE188E818500DC7BB9 /* ViewController.m in Sources */,
+				9FDD89BE188E818500DC7BB9 /* LoginViewController.m in Sources */,
 				9FDD89B5188E818500DC7BB9 /* AppDelegate.m in Sources */,
 				9FDD89B1188E818500DC7BB9 /* main.m in Sources */,
+				9FDD89DE188E919C00DC7BB9 /* MapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,20 +299,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		9FDD89B6188E818500DC7BB9 /* Main_iPhone.storyboard */ = {
+		9FDD89B6188E818500DC7BB9 /* iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				9FDD89B7188E818500DC7BB9 /* Base */,
 			);
-			name = Main_iPhone.storyboard;
+			name = iPhone.storyboard;
 			sourceTree = "<group>";
 		};
-		9FDD89B9188E818500DC7BB9 /* Main_iPad.storyboard */ = {
+		9FDD89B9188E818500DC7BB9 /* iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				9FDD89BA188E818500DC7BB9 /* Base */,
 			);
-			name = Main_iPad.storyboard;
+			name = iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		9FDD89CF188E818500DC7BB9 /* InfoPlist.strings */ = {
@@ -392,10 +405,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EtrafaSor/EtrafaSor-Prefix.pch";
 				INFOPLIST_FILE = "EtrafaSor/EtrafaSor-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -405,10 +422,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EtrafaSor/EtrafaSor-Prefix.pch";
 				INFOPLIST_FILE = "EtrafaSor/EtrafaSor-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -474,6 +495,7 @@
 				9FDD89D8188E818500DC7BB9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9FDD89D9188E818500DC7BB9 /* Build configuration list for PBXNativeTarget "EtrafaSorTests" */ = {
 			isa = XCConfigurationList;
@@ -482,6 +504,7 @@
 				9FDD89DB188E818500DC7BB9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

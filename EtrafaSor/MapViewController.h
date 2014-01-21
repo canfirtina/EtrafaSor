@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  MapViewController.h
 //  EtrafaSor
 //
 //  Created by Can Firtina on 21/01/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface MapViewController : UIViewController
 
 @end

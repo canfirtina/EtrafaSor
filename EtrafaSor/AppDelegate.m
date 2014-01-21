@@ -7,12 +7,27 @@
 //
 
 #import "AppDelegate.h"
+#import <Security/Security.h>
 
+#define PASSWORD_KEY @"password"
+#define USERNAME_KEY @"username"
+
+@interface AppDelegate ()
+@property (nonatomic, strong) UIViewController *rootViewController;
+@end
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    if( ![[NSUserDefaults standardUserDefaults] valueForKey:PASSWORD_KEY]){
+        self.rootViewController = self.window.rootViewController;
+        
+        UIStoryboard* storyboard = self.window.rootViewController.storyboard;
+        UIViewController *loginScreenViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginScreen"];
+        
+        self.window.rootViewController = loginScreenViewController;
+    }
+    
     return YES;
 }
 							
@@ -41,6 +56,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)loginSucceeded
+{
+    self.window.rootViewController = self.rootViewController;
 }
 
 @end
