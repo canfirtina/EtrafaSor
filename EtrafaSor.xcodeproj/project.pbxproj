@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F5F87E91890145600428918 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87E81890145600428918 /* Profile.m */; };
+		9F5F87EC189015C300428918 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87EB189015C300428918 /* Message.m */; };
+		9F5F87EF189015DE00428918 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87EE189015DE00428918 /* Question.m */; };
 		9FDD89A5188E818500DC7BB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A4188E818500DC7BB9 /* Foundation.framework */; };
 		9FDD89A7188E818500DC7BB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A6188E818500DC7BB9 /* CoreGraphics.framework */; };
 		9FDD89A9188E818500DC7BB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A8188E818500DC7BB9 /* UIKit.framework */; };
@@ -38,6 +41,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9F5F87E71890145600428918 /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
+		9F5F87E81890145600428918 /* Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Profile.m; sourceTree = "<group>"; };
+		9F5F87EA189015C300428918 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		9F5F87EB189015C300428918 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		9F5F87ED189015DE00428918 /* Question.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Question.h; sourceTree = "<group>"; };
+		9F5F87EE189015DE00428918 /* Question.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Question.m; sourceTree = "<group>"; };
 		9FDD89A1188E818500DC7BB9 /* EtrafaSor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EtrafaSor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FDD89A4188E818500DC7BB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9FDD89A6188E818500DC7BB9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -133,6 +142,12 @@
 				9FDD89BD188E818500DC7BB9 /* LoginViewController.m */,
 				9FDD89DC188E919C00DC7BB9 /* MapViewController.h */,
 				9FDD89DD188E919C00DC7BB9 /* MapViewController.m */,
+				9F5F87E71890145600428918 /* Profile.h */,
+				9F5F87E81890145600428918 /* Profile.m */,
+				9F5F87ED189015DE00428918 /* Question.h */,
+				9F5F87EE189015DE00428918 /* Question.m */,
+				9F5F87EA189015C300428918 /* Message.h */,
+				9F5F87EB189015C300428918 /* Message.m */,
 				9FDD89BF188E818500DC7BB9 /* Images.xcassets */,
 				9FDD89AB188E818500DC7BB9 /* Supporting Files */,
 			);
@@ -270,7 +285,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FDD89BE188E818500DC7BB9 /* LoginViewController.m in Sources */,
+				9F5F87EC189015C300428918 /* Message.m in Sources */,
+				9F5F87E91890145600428918 /* Profile.m in Sources */,
 				9FDD89B5188E818500DC7BB9 /* AppDelegate.m in Sources */,
+				9F5F87EF189015DE00428918 /* Question.m in Sources */,
 				9FDD89B1188E818500DC7BB9 /* main.m in Sources */,
 				9FDD89DE188E919C00DC7BB9 /* MapViewController.m in Sources */,
 			);
