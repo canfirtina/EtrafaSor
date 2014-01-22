@@ -69,7 +69,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
             pinAnnotationView.pinColor = MKPinAnnotationColorRed;
             pinAnnotationView.animatesDrop = YES;
             pinAnnotationView.canShowCallout = YES;
-            
+            pinAnnotationView.leftCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
             //pinAnnotationView.leftCalloutAccessoryView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:profile.userImageURL]]];
         }
         
