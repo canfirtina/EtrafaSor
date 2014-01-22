@@ -18,6 +18,10 @@
 
 @implementation LoginViewController
 
+@synthesize usernameField = _usernameField;
+@synthesize passwordField = _passwordField;
+@synthesize loginButton = _loginButton;
+
 #pragma mark - System
 - (void)viewDidLoad
 {

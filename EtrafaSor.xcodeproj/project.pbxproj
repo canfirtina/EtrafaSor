@@ -24,6 +24,7 @@
 		9FDD89D3188E818500DC7BB9 /* EtrafaSorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDD89D2188E818500DC7BB9 /* EtrafaSorTests.m */; };
 		9FDD89DE188E919C00DC7BB9 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDD89DD188E919C00DC7BB9 /* MapViewController.m */; };
 		9FDD89E0188E96F200DC7BB9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89DF188E96F200DC7BB9 /* Security.framework */; };
+		9FE50D91188F13B800F5C370 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FE50D90188F13B800F5C370 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		9FDD89DC188E919C00DC7BB9 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		9FDD89DD188E919C00DC7BB9 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		9FDD89DF188E96F200DC7BB9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		9FE50D90188F13B800F5C370 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FE50D91188F13B800F5C370 /* MapKit.framework in Frameworks */,
 				9FDD89E0188E96F200DC7BB9 /* Security.framework in Frameworks */,
 				9FDD89A7188E818500DC7BB9 /* CoreGraphics.framework in Frameworks */,
 				9FDD89A9188E818500DC7BB9 /* UIKit.framework in Frameworks */,
@@ -109,6 +112,7 @@
 		9FDD89A3188E818500DC7BB9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9FE50D90188F13B800F5C370 /* MapKit.framework */,
 				9FDD89DF188E96F200DC7BB9 /* Security.framework */,
 				9FDD89A4188E818500DC7BB9 /* Foundation.framework */,
 				9FDD89A6188E818500DC7BB9 /* CoreGraphics.framework */,
