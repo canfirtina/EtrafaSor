@@ -14,5 +14,5 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) Profile *profile;
 
-- (void)loginSucceededWithUserProfile:(Profile *)userProfile;
+- (void)loginSucceededWithUserProfile:(Profile *)userProfile forUserEMail:(NSString *)userEMail andPassword:(NSString *)password;
 @end

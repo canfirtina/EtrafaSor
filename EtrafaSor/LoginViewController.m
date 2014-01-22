@@ -46,7 +46,9 @@
                                                                   andPassword:self.passwordField.text];
     
     if( profile)
-        [(AppDelegate *)[[UIApplication sharedApplication] delegate] loginSucceededWithUserProfile:profile];
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] loginSucceededWithUserProfile:profile
+                                                                                      forUserEMail:self.usernameField.text
+                                                                                       andPassword:self.passwordField.text];
     else NSLog(@"Login unsuccessful");
 }
 

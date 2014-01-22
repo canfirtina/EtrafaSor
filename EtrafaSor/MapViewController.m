@@ -70,7 +70,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
             pinAnnotationView.animatesDrop = YES;
             pinAnnotationView.canShowCallout = YES;
             
-            pinAnnotationView.leftCalloutAccessoryView = [[UIImageView alloc] initWithImage:[[UIImage imageWithData:[NSData dataWithContentsOfURL:profile.userImageURL]] stretchableImageWithLeftCapWidth:0.0 topCapHeight:5.0]];
+            //pinAnnotationView.leftCalloutAccessoryView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:profile.userImageURL]]];
         }
         
         return pinAnnotationView;
@@ -134,7 +134,11 @@ calloutAccessoryControlTapped:(UIControl *)control {
 
 - (void)loadQuestionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
 {
-    [self.mapView removeAnnotations:self.mapView.annotations];
+    NSMutableArray *questionAnnotations = [self.mapView.annotations mutableCopy];
+    if( [questionAnnotations containsObject:self.userProfile])
+        [questionAnnotations removeObject:self.userProfile];
+    
+    [self.mapView removeAnnotations:[questionAnnotations copy]];
     [self.mapView addAnnotations:[EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:coordinate withRadius:RADIUS]];
 }
 
