@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Profile.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) Profile *profile;
 
-- (void)loginSucceeded;
+- (void)loginSucceededWithUserProfile:(Profile *)userProfile;
 @end

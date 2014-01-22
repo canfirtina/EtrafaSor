@@ -10,10 +10,12 @@
 #import <MapKit/MapKit.h>
 
 #import "Profile.h"
+#import "Question.h"
 
 #define RADIUS 375
 
-@interface MapViewController : UIViewController <MKMapViewDelegate>
+@interface MapViewController : UIViewController <MKMapViewDelegate, ProfileCoordinateObserver>
+
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *peopleAroundLabel;
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;

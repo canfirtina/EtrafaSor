@@ -8,6 +8,10 @@
 
 #import "Profile.h"
 
+@interface Profile ()
+@property (strong, nonatomic) NSMutableArray *coordinateObservers;
+@end
+
 @implementation Profile
 
 @synthesize coordinate = _coordinate;
@@ -18,11 +22,26 @@
 @synthesize userImageURL = _userImageURL;
 @synthesize questions = _questions;
 @synthesize answers = _answers;
+@synthesize coordinateObservers = _coordinateObservers;
 
+#pragma mark - Custom Allocations
+
++ (Profile *)profileWithUserEMail:(NSString *)userEMail
+                         userName:(NSString *)userName {
+    
+    Profile *newProfile = [[Profile alloc] init];
+    newProfile.userEMail = userEMail;
+    newProfile.userName = userName;
+    
+    return newProfile;
+}
 
 #pragma mark - Setters & Getters
 
-- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate { _coordinate = newCoordinate; }
+- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate {
+    _coordinate = newCoordinate;
+    [self notifyCoordinateObservers];
+}
 
 - (NSString *)title { return self.userName; }
 
@@ -42,6 +61,27 @@
     }
     
     return _answers;
+}
+
+- (NSMutableArray *)coordinateObservers{
+    
+    if( !_coordinateObservers) _coordinateObservers = [NSMutableArray array];
+    
+    return _coordinateObservers;
+}
+
+#pragma mark - Custom Notification for Profile
+
+- (void)attachObserverForCoordinateChange:(id<ProfileCoordinateObserver>)observer{
+    
+    [self.coordinateObservers addObject:observer];
+}
+
+- (void)notifyCoordinateObservers{
+    
+    for (id<ProfileCoordinateObserver> observer in self.coordinateObservers) {
+        [observer updateProfileCoordinate];
+    }
 }
 
 @end

@@ -12,6 +12,7 @@
 @interface Question : NSObject <MKAnnotation>
 
 @property (strong, nonatomic) NSString *topic;
-@property (strong, nonatomic) NSArray *messages;
+@property (strong, nonatomic) NSArray *messages; //array of messages
 @property (nonatomic) BOOL isSolved;
+
 @end

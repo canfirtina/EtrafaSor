@@ -8,9 +8,8 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
-
-#define PASSWORD_KEY @"password"
-#define USERNAME_KEY @"username"
+#import "Profile.h"
+#import "EtrafaSorHTTPRequestHandler.h"
 
 @interface LoginViewController ()
 
@@ -23,8 +22,7 @@
 @synthesize loginButton = _loginButton;
 
 #pragma mark - System
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	
     self.usernameField.delegate = self;
@@ -37,13 +35,6 @@
     [self.view addGestureRecognizer:tap];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Actions
 - (IBAction)loginPressed:(UIButton *)sender
 {
@@ -51,10 +42,12 @@
     [self.usernameField resignFirstResponder];
     [self.passwordField resignFirstResponder];
     
-    [[NSUserDefaults standardUserDefaults] setValue:self.usernameField.text forKey:USERNAME_KEY];
-    [[NSUserDefaults standardUserDefaults] setValue:self.usernameField.text forKey:PASSWORD_KEY];
+    Profile *profile = [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:self.usernameField.text
+                                                                  andPassword:self.passwordField.text];
     
-    [(AppDelegate *)[[UIApplication sharedApplication] delegate] loginSucceeded];
+    if( profile)
+        [(AppDelegate *)[[UIApplication sharedApplication] delegate] loginSucceededWithUserProfile:profile];
+    else NSLog(@"Login unsuccessful");
 }
 
 -(void)dismissKeyboard {
@@ -64,11 +57,13 @@
 }
 
 #pragma mark - Delegations
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     [textField resignFirstResponder];
     return YES;
 }
 
+#pragma mark - Segue Actions
+
+- (IBAction)dismissViewController:(UIStoryboardSegue *)segue{}
 @end

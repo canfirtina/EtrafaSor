@@ -8,24 +8,28 @@
 
 #import "AppDelegate.h"
 #import <Security/Security.h>
+#import "MapViewController.h"
 
-#define PASSWORD_KEY @"password"
-#define USERNAME_KEY @"username"
+#define PROFILE_KEY @"profileKey"
 
 @interface AppDelegate ()
 @property (nonatomic, strong) UIViewController *rootViewController;
 @end
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    if( ![[NSUserDefaults standardUserDefaults] valueForKey:PASSWORD_KEY]){
+    if( ![[NSUserDefaults standardUserDefaults] valueForKey:PROFILE_KEY]){
         self.rootViewController = self.window.rootViewController;
         
         UIStoryboard* storyboard = self.window.rootViewController.storyboard;
         UIViewController *loginScreenViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginScreen"];
         
         self.window.rootViewController = loginScreenViewController;
+    } else if ([self.window.rootViewController isKindOfClass:[MapViewController class]]){
+        
+        self.profile = [[NSUserDefaults standardUserDefaults] valueForKey:PROFILE_KEY];
     }
     
     return YES;
@@ -58,8 +62,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)loginSucceeded
+- (void)loginSucceededWithUserProfile:(Profile *)userProfile
 {
+    self.profile = userProfile;
     self.window.rootViewController = self.rootViewController;
 }
 
