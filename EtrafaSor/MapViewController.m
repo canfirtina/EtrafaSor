@@ -14,7 +14,6 @@ const float lonDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 = 0.0135 (111000 meters is an approximate distance between two latitudes)
 
 @interface MapViewController ()
-@property (nonatomic, strong) MKAnnotationView *customUserLocation;
 @end
 
 @implementation MapViewController
@@ -22,7 +21,6 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 @synthesize mapView = _mapView;
 @synthesize peopleAroundLabel = _peopleAroundLabel;
 @synthesize goBackButton = _goBackButton;
-@synthesize customUserLocation = _customUserLocation;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,44 +48,74 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
         
         [self setRegionForCoordinate:userLocation.coordinate];
     }
+    
+    [EtrafaSorHTTPRequestHandler updateUserCheckIn:self.userProfile.userEMail inCoordinate:userLocation.coordinate];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView
             viewForAnnotation:(id<MKAnnotation>)annotation{
     
-    MKAnnotationView *annotationView = nil;
+    MKPinAnnotationView *pinAnnotationView = nil;
     
     if( [annotation isKindOfClass:[Profile class]]){
         
         Profile *profile = (Profile *)annotation;
+        pinAnnotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:profile.userEMail];
         
-        MKPinAnnotationView *pinAnnotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:profile.userEMail];
-        
-        if( !annotationView){
+        if( !pinAnnotationView){
             
             pinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:profile.userEMail];
             pinAnnotationView.pinColor = MKPinAnnotationColorRed;
             pinAnnotationView.animatesDrop = YES;
             pinAnnotationView.canShowCallout = YES;
-            pinAnnotationView.leftCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-            //pinAnnotationView.leftCalloutAccessoryView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:profile.userImageURL]]];
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:profile.userImageURL]]];
+            imageView.frame = CGRectMake(0,0,32,32);
+            pinAnnotationView.leftCalloutAccessoryView = imageView;
+            
+            pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];;
         }
         
         return pinAnnotationView;
         
     } else if( [annotation isKindOfClass:[Question class]]){
         
+        Question *question = (Question *)annotation;
+        Profile *owner = ((Message *)[question.messages objectAtIndex:0]).owner;
         
+        pinAnnotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:[NSString stringWithFormat:@"%f%f %@", question.coordinate.latitude, question.coordinate.longitude, question.title]];
+        
+        if( !pinAnnotationView){
+            
+            pinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[NSString stringWithFormat:@"%f%f %@", question.coordinate.latitude, question.coordinate.longitude, question.title]];
+            pinAnnotationView.pinColor = MKPinAnnotationColorGreen;
+            pinAnnotationView.animatesDrop = YES;
+            pinAnnotationView.canShowCallout = YES;
+            
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:owner.userImageURL]]];
+            imageView.frame = CGRectMake(0,0,32,32);
+            pinAnnotationView.leftCalloutAccessoryView = imageView;
+            
+            pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];;
+        }
+        
+        return pinAnnotationView;
     }
     
-    return annotationView;
+    return pinAnnotationView;
 }
 
 - (void)mapView:(MKMapView *)mapView
  annotationView:(MKAnnotationView *)view
 calloutAccessoryControlTapped:(UIControl *)control {
     
-    NSLog(@"tapped");
+    if( [view.annotation isKindOfClass:[Profile class]]){
+        
+        NSLog(@"profile callout tapped");
+    } else if( [view.annotation isKindOfClass:[Question class]]){
+        
+        NSLog(@"question callout tapped");
+    }
 }
 
 #pragma mark - Gesture Recognizers
@@ -101,6 +129,12 @@ calloutAccessoryControlTapped:(UIControl *)control {
         
         [self setRegionForCoordinate:coordinate];
     }
+}
+
+- (void)pinButtonTapped:(UITapGestureRecognizer *)gesture {
+    
+    UIButton *tappedButton = (UIButton *)gesture.view;
+    NSLog(@"%@", tappedButton.superview);
 }
 
 #pragma mark - Actions

@@ -17,6 +17,8 @@
     NSMutableArray *questions = [NSMutableArray array];
     
     //fetch questions
+    MKCircle *circle = [MKCircle circleWithCenterCoordinate:coordinate radius:375];
+    NSLog(@"%f %f", circle.boundingMapRect.size.height, circle.boundingMapRect.size.width);
     
     return [questions copy];
 }
@@ -52,6 +54,11 @@
 }
 
 + (BOOL)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress{
+    
+    return NO;
+}
+
++ (BOOL)updateUserCheckIn:(NSString *)userEMail inCoordinate:(CLLocationCoordinate2D)coordinate{
     
     return NO;
 }

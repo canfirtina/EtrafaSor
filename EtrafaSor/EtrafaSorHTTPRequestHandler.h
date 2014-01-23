@@ -24,4 +24,6 @@
 + (BOOL)signUpUserProfile:(Profile *)profile;
 
 + (BOOL)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress;
+
++ (BOOL)updateUserCheckIn:(NSString *)userEMail inCoordinate:(CLLocationCoordinate2D)coordinate;
 @end

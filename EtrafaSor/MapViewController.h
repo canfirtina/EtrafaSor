@@ -11,6 +11,7 @@
 
 #import "Profile.h"
 #import "Question.h"
+#import "Message.h"
 
 #define RADIUS 375
 
