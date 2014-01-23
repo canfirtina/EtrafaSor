@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F5E64E118913121002067F6 /* MessageBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E64E018913121002067F6 /* MessageBoardViewController.m */; };
 		9F5F87E91890145600428918 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87E81890145600428918 /* Profile.m */; };
 		9F5F87EC189015C300428918 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87EB189015C300428918 /* Message.m */; };
 		9F5F87EF189015DE00428918 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87EE189015DE00428918 /* Question.m */; };
@@ -71,6 +72,9 @@
 		9FB6C880189129F400CD5427 /* input-bar-flat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FB6C845189129F400CD5427 /* input-bar-flat@2x.png */; };
 		9FB6C881189129F400CD5427 /* message-received.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 9FB6C847189129F400CD5427 /* message-received.aiff */; };
 		9FB6C882189129F400CD5427 /* message-sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 9FB6C848189129F400CD5427 /* message-sent.aiff */; };
+		9FB6C88718912AC100CD5427 /* JSQSystemSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB6C88618912AC100CD5427 /* JSQSystemSoundPlayer.m */; };
+		9FB6C88918912ADD00CD5427 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB6C88818912ADD00CD5427 /* AudioToolbox.framework */; };
+		9FB6C88B18912B0700CD5427 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB6C88A18912B0700CD5427 /* QuartzCore.framework */; };
 		9FDD89A5188E818500DC7BB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A4188E818500DC7BB9 /* Foundation.framework */; };
 		9FDD89A7188E818500DC7BB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A6188E818500DC7BB9 /* CoreGraphics.framework */; };
 		9FDD89A9188E818500DC7BB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A8188E818500DC7BB9 /* UIKit.framework */; };
@@ -102,6 +106,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9F5E64DF18913121002067F6 /* MessageBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBoardViewController.h; sourceTree = "<group>"; };
+		9F5E64E018913121002067F6 /* MessageBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBoardViewController.m; sourceTree = "<group>"; };
 		9F5F87E71890145600428918 /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
 		9F5F87E81890145600428918 /* Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Profile.m; sourceTree = "<group>"; };
 		9F5F87EA189015C300428918 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -186,6 +192,10 @@
 		9FB6C845189129F400CD5427 /* input-bar-flat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "input-bar-flat@2x.png"; sourceTree = "<group>"; };
 		9FB6C847189129F400CD5427 /* message-received.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "message-received.aiff"; sourceTree = "<group>"; };
 		9FB6C848189129F400CD5427 /* message-sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "message-sent.aiff"; sourceTree = "<group>"; };
+		9FB6C88518912AC100CD5427 /* JSQSystemSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQSystemSoundPlayer.h; sourceTree = "<group>"; };
+		9FB6C88618912AC100CD5427 /* JSQSystemSoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQSystemSoundPlayer.m; sourceTree = "<group>"; };
+		9FB6C88818912ADD00CD5427 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		9FB6C88A18912B0700CD5427 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9FDD89A1188E818500DC7BB9 /* EtrafaSor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EtrafaSor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FDD89A4188E818500DC7BB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9FDD89A6188E818500DC7BB9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -217,6 +227,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FB6C88B18912B0700CD5427 /* QuartzCore.framework in Frameworks */,
+				9FB6C88918912ADD00CD5427 /* AudioToolbox.framework in Frameworks */,
 				9FE50D91188F13B800F5C370 /* MapKit.framework in Frameworks */,
 				9FDD89E0188E96F200DC7BB9 /* Security.framework in Frameworks */,
 				9FDD89A7188E818500DC7BB9 /* CoreGraphics.framework in Frameworks */,
@@ -413,6 +425,23 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		9FB6C88318912AC100CD5427 /* JSQSystemSoundPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				9FB6C88418912AC100CD5427 /* Classes */,
+			);
+			path = JSQSystemSoundPlayer;
+			sourceTree = "<group>";
+		};
+		9FB6C88418912AC100CD5427 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				9FB6C88518912AC100CD5427 /* JSQSystemSoundPlayer.h */,
+				9FB6C88618912AC100CD5427 /* JSQSystemSoundPlayer.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		9FDD8998188E818500DC7BB9 = {
 			isa = PBXGroup;
 			children = (
@@ -435,6 +464,8 @@
 		9FDD89A3188E818500DC7BB9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9FB6C88A18912B0700CD5427 /* QuartzCore.framework */,
+				9FB6C88818912ADD00CD5427 /* AudioToolbox.framework */,
 				9FE50D90188F13B800F5C370 /* MapKit.framework */,
 				9FDD89DF188E96F200DC7BB9 /* Security.framework */,
 				9FDD89A4188E818500DC7BB9 /* Foundation.framework */,
@@ -460,6 +491,8 @@
 				9F5F87F418905CEF00428918 /* ProfileViewController.m */,
 				9F5F87F618905D2300428918 /* QuestionsTableViewController.h */,
 				9F5F87F718905D2300428918 /* QuestionsTableViewController.m */,
+				9F5E64DF18913121002067F6 /* MessageBoardViewController.h */,
+				9F5E64E018913121002067F6 /* MessageBoardViewController.m */,
 				9F5F87E71890145600428918 /* Profile.h */,
 				9F5F87E81890145600428918 /* Profile.m */,
 				9F5F87ED189015DE00428918 /* Question.h */,
@@ -468,6 +501,7 @@
 				9F5F87EB189015C300428918 /* Message.m */,
 				9F5F87F01890437000428918 /* EtrafaSorHTTPRequestHandler.h */,
 				9F5F87F11890437000428918 /* EtrafaSorHTTPRequestHandler.m */,
+				9FB6C88318912AC100CD5427 /* JSQSystemSoundPlayer */,
 				9FB6C7F4189129F400CD5427 /* JSMessagesViewController */,
 				9FDD89BF188E818500DC7BB9 /* Images.xcassets */,
 				9FDD89AB188E818500DC7BB9 /* Supporting Files */,
@@ -650,6 +684,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FDD89BE188E818500DC7BB9 /* LoginViewController.m in Sources */,
+				9F5E64E118913121002067F6 /* MessageBoardViewController.m in Sources */,
 				9F5F87F518905CEF00428918 /* ProfileViewController.m in Sources */,
 				9F5F87EC189015C300428918 /* Message.m in Sources */,
 				9FB6C849189129F400CD5427 /* NSString+JSMessagesView.m in Sources */,
@@ -659,6 +694,7 @@
 				9FB6C84B189129F400CD5427 /* UIImage+JSMessagesView.m in Sources */,
 				9FB6C852189129F400CD5427 /* JSMessageInputView.m in Sources */,
 				9F5F87F818905D2300428918 /* QuestionsTableViewController.m in Sources */,
+				9FB6C88718912AC100CD5427 /* JSQSystemSoundPlayer.m in Sources */,
 				9FB6C855189129F400CD5427 /* JSMessageTableView.m in Sources */,
 				9FB6C84A189129F400CD5427 /* UIColor+JSMessagesView.m in Sources */,
 				9FB6C853189129F400CD5427 /* JSMessageSoundEffect.m in Sources */,
