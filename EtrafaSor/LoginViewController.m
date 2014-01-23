@@ -67,5 +67,5 @@
 
 #pragma mark - Segue Actions
 
-- (IBAction)dismissViewController:(UIStoryboardSegue *)segue{}
+- (IBAction)dismissByCancelToLoginViewController:(UIStoryboardSegue *)segue{}
 @end

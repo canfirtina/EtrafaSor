@@ -73,7 +73,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
             imageView.frame = CGRectMake(0,0,32,32);
             pinAnnotationView.leftCalloutAccessoryView = imageView;
             
-            pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];;
+            pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeContactAdd];
         }
         
         return pinAnnotationView;
@@ -87,7 +87,8 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
         
         if( !pinAnnotationView){
             
-            pinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[NSString stringWithFormat:@"%f%f %@", question.coordinate.latitude, question.coordinate.longitude, question.title]];
+            pinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
+                                                                reuseIdentifier:[NSString stringWithFormat:@"%f%f %@", question.coordinate.latitude, question.coordinate.longitude, question.title]];
             pinAnnotationView.pinColor = MKPinAnnotationColorGreen;
             pinAnnotationView.animatesDrop = YES;
             pinAnnotationView.canShowCallout = YES;
@@ -96,7 +97,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
             imageView.frame = CGRectMake(0,0,32,32);
             pinAnnotationView.leftCalloutAccessoryView = imageView;
             
-            pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];;
+            pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         }
         
         return pinAnnotationView;
@@ -111,7 +112,7 @@ calloutAccessoryControlTapped:(UIControl *)control {
     
     if( [view.annotation isKindOfClass:[Profile class]]){
         
-        NSLog(@"profile callout tapped");
+        [self performSegueWithIdentifier:@"CreateQuestionModal" sender:self];
     } else if( [view.annotation isKindOfClass:[Question class]]){
         
         NSLog(@"question callout tapped");
@@ -129,12 +130,6 @@ calloutAccessoryControlTapped:(UIControl *)control {
         
         [self setRegionForCoordinate:coordinate];
     }
-}
-
-- (void)pinButtonTapped:(UITapGestureRecognizer *)gesture {
-    
-    UIButton *tappedButton = (UIButton *)gesture.view;
-    NSLog(@"%@", tappedButton.superview);
 }
 
 #pragma mark - Actions
@@ -182,4 +177,7 @@ calloutAccessoryControlTapped:(UIControl *)control {
     
     self.peopleAroundLabel.text = [NSString stringWithFormat:@"%d people around you", (int)peopleAround.count];
 }
+
+#pragma mark - Segue
+- (IBAction)dismissByCancelToMapViewController:(UIStoryboardSegue *)segue{}
 @end

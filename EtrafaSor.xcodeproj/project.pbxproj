@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9F5E64E118913121002067F6 /* MessageBoardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E64E018913121002067F6 /* MessageBoardViewController.m */; };
+		9F5E64E418913B7F002067F6 /* CreateQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5E64E318913B7F002067F6 /* CreateQuestionViewController.m */; };
 		9F5F87E91890145600428918 /* Profile.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87E81890145600428918 /* Profile.m */; };
 		9F5F87EC189015C300428918 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87EB189015C300428918 /* Message.m */; };
 		9F5F87EF189015DE00428918 /* Question.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87EE189015DE00428918 /* Question.m */; };
@@ -108,6 +109,8 @@
 /* Begin PBXFileReference section */
 		9F5E64DF18913121002067F6 /* MessageBoardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBoardViewController.h; sourceTree = "<group>"; };
 		9F5E64E018913121002067F6 /* MessageBoardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBoardViewController.m; sourceTree = "<group>"; };
+		9F5E64E218913B7F002067F6 /* CreateQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateQuestionViewController.h; sourceTree = "<group>"; };
+		9F5E64E318913B7F002067F6 /* CreateQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateQuestionViewController.m; sourceTree = "<group>"; };
 		9F5F87E71890145600428918 /* Profile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Profile.h; sourceTree = "<group>"; };
 		9F5F87E81890145600428918 /* Profile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Profile.m; sourceTree = "<group>"; };
 		9F5F87EA189015C300428918 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
@@ -430,8 +433,9 @@
 			children = (
 				9FB6C88418912AC100CD5427 /* Classes */,
 			);
-			path = JSQSystemSoundPlayer;
-			sourceTree = "<group>";
+			name = JSQSystemSoundPlayer;
+			path = EtrafaSor/JSQSystemSoundPlayer;
+			sourceTree = SOURCE_ROOT;
 		};
 		9FB6C88418912AC100CD5427 /* Classes */ = {
 			isa = PBXGroup;
@@ -493,6 +497,8 @@
 				9F5F87F718905D2300428918 /* QuestionsTableViewController.m */,
 				9F5E64DF18913121002067F6 /* MessageBoardViewController.h */,
 				9F5E64E018913121002067F6 /* MessageBoardViewController.m */,
+				9F5E64E218913B7F002067F6 /* CreateQuestionViewController.h */,
+				9F5E64E318913B7F002067F6 /* CreateQuestionViewController.m */,
 				9F5F87E71890145600428918 /* Profile.h */,
 				9F5F87E81890145600428918 /* Profile.m */,
 				9F5F87ED189015DE00428918 /* Question.h */,
@@ -699,6 +705,7 @@
 				9FB6C84A189129F400CD5427 /* UIColor+JSMessagesView.m in Sources */,
 				9FB6C853189129F400CD5427 /* JSMessageSoundEffect.m in Sources */,
 				9F5F87EF189015DE00428918 /* Question.m in Sources */,
+				9F5E64E418913B7F002067F6 /* CreateQuestionViewController.m in Sources */,
 				9FB6C84C189129F400CD5427 /* JSAvatarImageFactory.m in Sources */,
 				9FDD89B1188E818500DC7BB9 /* main.m in Sources */,
 				9FB6C856189129F400CD5427 /* JSMessageTextView.m in Sources */,

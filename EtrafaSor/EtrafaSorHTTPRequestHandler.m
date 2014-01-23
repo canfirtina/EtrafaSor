@@ -17,8 +17,7 @@
     NSMutableArray *questions = [NSMutableArray array];
     
     //fetch questions
-    MKCircle *circle = [MKCircle circleWithCenterCoordinate:coordinate radius:375];
-    NSLog(@"%f %f", circle.boundingMapRect.size.height, circle.boundingMapRect.size.width);
+    //MKCircle *circle = [MKCircle circleWithCenterCoordinate:coordinate radius:375];
     
     return [questions copy];
 }
@@ -59,6 +58,16 @@
 }
 
 + (BOOL)updateUserCheckIn:(NSString *)userEMail inCoordinate:(CLLocationCoordinate2D)coordinate{
+    
+    return NO;
+}
+
++ (BOOL)postQuestion:(id)question OfUser:(NSString *)userEMail inCoordinate:(CLLocationCoordinate2D)coordinate{
+    
+    return NO;
+}
+
++ (BOOL)postMessage:(id)message forQuestion:(id)question{
     
     return NO;
 }

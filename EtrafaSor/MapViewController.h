@@ -22,4 +22,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;
 @property (strong, nonatomic) Profile *userProfile;
 
+
+- (IBAction)dismissByCancelToMapViewController:(UIStoryboardSegue *)segue;
 @end

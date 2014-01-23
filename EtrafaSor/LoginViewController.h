@@ -16,5 +16,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 
-- (IBAction)dismissViewController:(UIStoryboardSegue *)segue;
+- (IBAction)dismissByCancelToLoginViewController:(UIStoryboardSegue *)segue;
 @end
