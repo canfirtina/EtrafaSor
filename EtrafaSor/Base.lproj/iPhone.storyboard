@@ -268,11 +268,12 @@
                                 <segue destination="vqw-pH-ubq" kind="unwind" unwindAction="dismissByCancelToMapViewController:" id="c78-9u-LQ2"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Send" id="s30-Tc-0OC"/>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Send" id="s30-Tc-0OC"/>
                     </navigationItem>
                     <connections>
                         <outlet property="questionDetailed" destination="sHE-WS-h6K" id="6n8-Nb-Jxu"/>
                         <outlet property="questionTopicField" destination="PrW-dc-tpW" id="3J4-Mt-XEd"/>
+                        <outlet property="sendMessageButton" destination="s30-Tc-0OC" id="Sfz-DW-hak"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F0q-cD-9fh" userLabel="First Responder" sceneMemberID="firstResponder"/>

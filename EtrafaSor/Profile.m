@@ -7,6 +7,8 @@
 //
 
 #import "Profile.h"
+#import "Message.h"
+#import "Question.h"
 
 @interface Profile ()
 @property (strong, nonatomic) NSMutableArray *coordinateObservers;
@@ -68,6 +70,10 @@
     if( !_coordinateObservers) _coordinateObservers = [NSMutableArray array];
     
     return _coordinateObservers;
+}
+
+- (void)addMessage:(Message *)message {
+
 }
 
 #pragma mark - Custom Notification for Profile

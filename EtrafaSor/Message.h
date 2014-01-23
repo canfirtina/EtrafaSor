@@ -17,4 +17,5 @@
 @property (strong, nonatomic) Profile *owner;
 @property (strong, nonatomic) Question *question;
 
++ (Message *)messageWithText:(NSString *)text owner:(Profile *)owner inQuestion:(Question *)question;
 @end

@@ -21,4 +21,5 @@
 @property (nonatomic, strong) CreateQuestionViewController *dataSource;
 @property (weak, nonatomic) IBOutlet UITextField *questionTopicField;
 @property (weak, nonatomic) IBOutlet UITextView *questionDetailed;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sendMessageButton;
 @end

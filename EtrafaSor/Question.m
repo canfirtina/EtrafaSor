@@ -7,6 +7,7 @@
 //
 
 #import "Question.h"
+#import "Message.h"
 
 @implementation Question
 
@@ -32,5 +33,24 @@
     }
     
     return _messages;
+}
+
+#pragma mark - Property Change
+
+- (void)addMessage:(Message *)message {
+    
+    NSMutableArray *mutableCopy = [self.messages mutableCopy];
+    [mutableCopy addObject:message];
+    _messages = [mutableCopy copy];
+}
+#pragma mark - Allocations
+
++ (Question *)questionWithTopic:(NSString *)topic questionMessage:(NSString *)question owner:(Profile *)owner {
+    
+    Question *newQuestion = [[Question alloc] init];
+    newQuestion.topic = topic;
+    [newQuestion addMessage:[Message messageWithText:question owner:owner inQuestion:newQuestion]];
+    
+    return newQuestion;
 }
 @end

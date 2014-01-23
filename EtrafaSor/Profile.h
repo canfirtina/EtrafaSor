@@ -26,4 +26,5 @@
                          userName:(NSString *)userName;
 
 - (void)attachObserverForCoordinateChange:(id<ProfileCoordinateObserver>)observer;
+
 @end
