@@ -28,7 +28,8 @@
 
 - (NSString *)title { return self.topic; }
 
-- (NSString *)subtitle { return [self.messages objectAtIndex:0]; }
+- (NSString *)subtitle { //return [self.messages objectAtIndex:0];
+return @"asd";}
 
 - (NSArray *)messages {
     

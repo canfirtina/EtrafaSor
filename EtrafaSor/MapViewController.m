@@ -82,7 +82,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     } else if( [annotation isKindOfClass:[Question class]]){
         
         Question *question = (Question *)annotation;
-        Profile *owner = ((Message *)[question.messages objectAtIndex:0]).owner;
+        //Profile *owner = ((Message *)[question.messages objectAtIndex:0]).owner;
         
         pinAnnotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:[NSString stringWithFormat:@"%f%f %@", question.coordinate.latitude, question.coordinate.longitude, question.title]];
         
@@ -94,9 +94,9 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
             pinAnnotationView.animatesDrop = YES;
             pinAnnotationView.canShowCallout = YES;
             
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:owner.userImageURL]]];
-            imageView.frame = CGRectMake(0,0,32,32);
-            pinAnnotationView.leftCalloutAccessoryView = imageView;
+            //UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:owner.userImageURL]]];
+            //imageView.frame = CGRectMake(0,0,32,32);
+            //pinAnnotationView.leftCalloutAccessoryView = imageView;
             
             pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         }
@@ -147,7 +147,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     
     if( [self.mapView.annotations containsObject:self.userProfile])
         [self.mapView removeAnnotation:self.userProfile];
-    
+
     [self.mapView addAnnotation:self.userProfile];
 }
 
