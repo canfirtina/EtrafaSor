@@ -22,6 +22,8 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 @synthesize peopleAroundLabel = _peopleAroundLabel;
 @synthesize goBackButton = _goBackButton;
 
+#pragma mark - System
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -42,8 +44,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 
 #pragma mark - MKMapViewDelegate
 
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-{
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     if( self.goBackButton.hidden){
         
         [self setRegionForCoordinate:userLocation.coordinate];
@@ -53,7 +54,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView
-            viewForAnnotation:(id<MKAnnotation>)annotation{
+            viewForAnnotation:(id<MKAnnotation>)annotation {
     
     MKPinAnnotationView *pinAnnotationView = nil;
     
@@ -107,8 +108,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 }
 
 - (void)mapView:(MKMapView *)mapView
- annotationView:(MKAnnotationView *)view
-calloutAccessoryControlTapped:(UIControl *)control {
+ annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     
     if( [view.annotation isKindOfClass:[Profile class]]){
         
@@ -120,6 +120,7 @@ calloutAccessoryControlTapped:(UIControl *)control {
 }
 
 #pragma mark - Gesture Recognizers
+
 - (void)mapViewLongPressed:(UILongPressGestureRecognizer *)gesture {
     if( gesture.state == UIGestureRecognizerStateBegan){
         
@@ -134,8 +135,8 @@ calloutAccessoryControlTapped:(UIControl *)control {
 
 #pragma mark - Actions
 
-- (IBAction)goBackPressed:(UIButton *)sender
-{
+- (IBAction)goBackPressed:(UIButton *)sender {
+    
     [self setRegionForCoordinate:self.mapView.userLocation.coordinate];
     [self.goBackButton setHidden:YES];
 }
@@ -149,10 +150,11 @@ calloutAccessoryControlTapped:(UIControl *)control {
     
     [self.mapView addAnnotation:self.userProfile];
 }
+
 #pragma mark - MapView Controls
 
-- (void)setRegionForCoordinate:(CLLocationCoordinate2D)coordinate
-{
+- (void)setRegionForCoordinate:(CLLocationCoordinate2D)coordinate {
+    
     [self.mapView setRegion:MKCoordinateRegionMake(coordinate, MKCoordinateSpanMake(letDegree, lonDegree))
                    animated:YES];
     
@@ -161,8 +163,8 @@ calloutAccessoryControlTapped:(UIControl *)control {
     [self loadPeopleAroundCenterCoordinate:coordinate];
 }
 
-- (void)loadQuestionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-{
+- (void)loadQuestionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate {
+    
     NSMutableArray *questionAnnotations = [self.mapView.annotations mutableCopy];
     if( [questionAnnotations containsObject:self.userProfile])
         [questionAnnotations removeObject:self.userProfile];
@@ -171,13 +173,14 @@ calloutAccessoryControlTapped:(UIControl *)control {
     [self.mapView addAnnotations:[EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:coordinate withRadius:RADIUS]];
 }
 
-- (void)loadPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-{
+- (void)loadPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate{
     NSArray *peopleAround = [EtrafaSorHTTPRequestHandler fetchPeopleAroundCenterCoordinate:coordinate withRadius:RADIUS];
     
     self.peopleAroundLabel.text = [NSString stringWithFormat:@"%d people around you", (int)peopleAround.count];
 }
 
 #pragma mark - Segue
+
 - (IBAction)dismissByCancelToMapViewController:(UIStoryboardSegue *)segue{}
+
 @end

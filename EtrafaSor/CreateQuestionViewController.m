@@ -15,13 +15,13 @@
 
 @implementation CreateQuestionViewController
 
-@synthesize dataSource = _dataSource;
 @synthesize questionDetailed = _questionDetailed;
 @synthesize questionTopicField = _questionTopicField;
 @synthesize sendMessageButton = _sendMessageButton;
+
 #pragma mark - System
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
+    
     [super viewDidLoad];
 	
     self.questionTopicField.delegate = self;
@@ -43,12 +43,15 @@
 
 #pragma mark - Actions
 
-- (IBAction)sendMessagePressed:(UIButton *)sender {
+- (IBAction)sendMessagePressed:(UIBarButtonItem *)sender {
     
     Profile *questionOwner = [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
     Question *question = [Question questionWithTopic:self.questionTopicField.text questionMessage:self.questionDetailed.text owner:questionOwner];
     
-    [EtrafaSorHTTPRequestHandler postQuestion:question OfUser:questionOwner.userEMail inCoordinate:questionOwner.coordinate];
+    if ( ![EtrafaSorHTTPRequestHandler postQuestion:question OfUser:questionOwner.userEMail inCoordinate:questionOwner.coordinate]){
+        
+        //show unsuccessful posting question message
+    }
 }
 
 #pragma mark - Delegate
@@ -60,8 +63,12 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    
+
     NSUInteger newLength = [textField.text length] + [string length] - range.length;
+    
+    if( self.sendMessageButton.isEnabled && newLength == 0) self.sendMessageButton.enabled = NO;
+    else if( !self.sendMessageButton.isEnabled && newLength > 0 && self.questionDetailed.text.length > 0) self.sendMessageButton.enabled = YES;
+    
     return (newLength > 25) ? NO : YES;
 }
 
@@ -79,13 +86,8 @@
 
 - (void)textViewDidChange:(UITextView *)textView {
     
-    if(self.sendMessageButton.isEnabled && textView.text.length == 0) self.sendMessageButton.enabled = NO;
+    if( self.sendMessageButton.isEnabled && textView.text.length == 0) self.sendMessageButton.enabled = NO;
     else if( !self.sendMessageButton.isEnabled && textView.text.length > 0 && self.questionTopicField.text.length > 0) self.sendMessageButton.enabled = YES;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    
-    if(self.sendMessageButton.isEnabled && textField.text.length == 0) self.sendMessageButton.enabled = NO;
-    else if( !self.sendMessageButton.isEnabled && textField.text.length > 0 && self.questionDetailed.text.length > 0) self.sendMessageButton.enabled = YES;
-}
 @end

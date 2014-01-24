@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
+#import "Profile.h"
 
 @interface Question : NSObject <MKAnnotation>
 

@@ -7,7 +7,11 @@
 //
 
 #import "JSMessagesViewController.h"
+#import "Question.h"
+#import "Profile.h"
 
 @interface MessageBoardViewController : JSMessagesViewController
+
+@property (nonatomic, strong) Question *question;
 
 @end

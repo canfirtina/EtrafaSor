@@ -20,7 +20,11 @@
 
 #pragma mark - Setters & Getters
 
-- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate { _coordinate = newCoordinate; }
+- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate {
+    
+    _coordinate.latitude = newCoordinate.latitude;
+    _coordinate.longitude = newCoordinate.longitude;
+}
 
 - (NSString *)title { return self.topic; }
 
@@ -43,6 +47,7 @@
     [mutableCopy addObject:message];
     _messages = [mutableCopy copy];
 }
+
 #pragma mark - Allocations
 
 + (Question *)questionWithTopic:(NSString *)topic questionMessage:(NSString *)question owner:(Profile *)owner {
@@ -50,7 +55,10 @@
     Question *newQuestion = [[Question alloc] init];
     newQuestion.topic = topic;
     [newQuestion addMessage:[Message messageWithText:question owner:owner inQuestion:newQuestion]];
+    [newQuestion setCoordinate:owner.coordinate];
+    newQuestion.isSolved = NO;
     
     return newQuestion;
 }
+
 @end

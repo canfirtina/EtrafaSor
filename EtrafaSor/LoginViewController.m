@@ -36,8 +36,7 @@
 }
 
 #pragma mark - Actions
-- (IBAction)loginPressed:(UIButton *)sender
-{
+- (IBAction)loginPressed:(UIButton *)sender {
     
     [self.usernameField resignFirstResponder];
     [self.passwordField resignFirstResponder];
