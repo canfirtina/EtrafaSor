@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 #import "Profile.h"
-#import "Question.h"
 #import "Message.h"
 
 @interface EtrafaSorHTTPRequestHandler : NSObject
@@ -27,9 +26,9 @@
 
 + (BOOL)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress;
 
-+ (BOOL)updateUserCheckIn:(NSString *)userEMail inCoordinate:(CLLocationCoordinate2D)coordinate;
++ (BOOL)updateUserCheckIn:(Profile *)profile inCoordinate:(CLLocationCoordinate2D)coordinate;
 
-+ (BOOL)postQuestion:(Question *)question OfUser:(NSString *)userEMail inCoordinate:(CLLocationCoordinate2D)coordinate;
++ (BOOL)postQuestion:(Question *)question OfUser:(Profile *)user;
 
-+ (BOOL)postMessage:(Message *)message forQuestion:(Question *)question;
++ (BOOL)postMessage:(Message *)message;
 @end

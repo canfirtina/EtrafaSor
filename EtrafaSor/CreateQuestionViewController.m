@@ -48,7 +48,8 @@
     Profile *questionOwner = [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
     Question *question = [Question questionWithTopic:self.questionTopicField.text questionMessage:self.questionDetailed.text owner:questionOwner];
     
-    if ( ![EtrafaSorHTTPRequestHandler postQuestion:question OfUser:questionOwner.userEMail inCoordinate:questionOwner.coordinate]){
+    //do it in another thread
+    if ( ![EtrafaSorHTTPRequestHandler postQuestion:question OfUser:questionOwner]){
         
         //show unsuccessful posting question message
     }

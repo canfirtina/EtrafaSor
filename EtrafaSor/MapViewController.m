@@ -45,12 +45,13 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 #pragma mark - MKMapViewDelegate
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+    
     if( self.goBackButton.hidden){
         
         [self setRegionForCoordinate:userLocation.coordinate];
     }
     
-    [EtrafaSorHTTPRequestHandler updateUserCheckIn:self.userProfile.userEMail inCoordinate:userLocation.coordinate];
+    [EtrafaSorHTTPRequestHandler updateUserCheckIn:self.userProfile inCoordinate:userLocation.coordinate];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView

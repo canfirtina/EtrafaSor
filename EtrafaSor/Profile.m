@@ -29,23 +29,29 @@
 #pragma mark - Custom Allocations
 
 + (Profile *)profileWithUserEMail:(NSString *)userEMail
-                         userName:(NSString *)userName {
+                         userName:(NSString *)userName
+                         imageURL:(NSURL *)imageURL{
     
     Profile *newProfile = [[Profile alloc] init];
     newProfile.userEMail = userEMail;
     newProfile.userName = userName;
+    newProfile.userImageURL = imageURL;
     
     return newProfile;
 }
 
 #pragma mark - Setters & Getters
 
+//notification sent there
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate {
+    
     _coordinate = newCoordinate;
     [self notifyCoordinateObservers];
 }
 
-- (NSString *)title { return self.userName; }
+- (NSString *)title {
+    return self.userName;
+}
 
 - (NSArray *)questions {
     
@@ -82,7 +88,11 @@
     
     [self.coordinateObservers addObject:observer];
 }
-
+- (void)dettachObserverForCoordinateChange:(id<ProfileCoordinateObserver>)observer{
+    
+    if( [self.coordinateObservers containsObject:observer])
+        [self.coordinateObservers removeObject:observer];
+}
 - (void)notifyCoordinateObservers{
     
     for (id<ProfileCoordinateObserver> observer in self.coordinateObservers) {

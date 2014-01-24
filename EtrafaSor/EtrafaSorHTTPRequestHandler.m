@@ -16,7 +16,7 @@
     
     static int i = 0;
         
-    Question *question = [Question questionWithTopic:[NSString stringWithFormat:@"%d %@", i++, profile.userName] questionMessage:@"message" owner:profile];
+    Question *question = [Question questionWithTopic:[NSString stringWithFormat:@"%d %@", i++, profile.userName] questionMessage:@"messageasdnaskjdahsdhkasdh" owner:profile];
     
     return question;
 }
@@ -25,10 +25,12 @@
     
     NSMutableArray *profiles = [NSMutableArray array];
     int lenght = arc4random_uniform(40);
+    
     for( int i = 1; i < lenght; i++) {
         
-        Profile *profile = [Profile profileWithUserEMail:[NSString stringWithFormat:@"%d@gmail.com", i] userName:[NSString stringWithFormat:@"%dCan", i]];
-        profile.userImageURL = [NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"];
+        Profile *profile = [Profile profileWithUserEMail:[NSString stringWithFormat:@"%d@gmail.com", i]
+                                                userName:[NSString stringWithFormat:@"%dCan", i]
+                                                imageURL:[NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"]];
         
         int latInt = arc4random_uniform(4284);
         CGFloat lat = (float)latInt / 1000000;
@@ -59,7 +61,6 @@
     for (Profile *profile in profiles) {
         for (Question *question in profile.questions) {
             if( [[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] distanceFromLocation:[[CLLocation alloc] initWithLatitude:question.coordinate.latitude longitude:question.coordinate.longitude]] < radius){
-                NSLog(@"yes");
                 [questionsToSend addObject:question];
             }
         }
@@ -84,9 +85,9 @@
     //trial
     if( [userEMail isEqualToString:@"root"] && [password isEqualToString:@"abc"]){
         
-        Profile *userProfile = [Profile profileWithUserEMail:userEMail userName:@"Can"];
-        userProfile.userImageURL = [NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"];
-        
+        Profile *userProfile = [Profile profileWithUserEMail:userEMail
+                                                    userName:@"Can"
+                                                    imageURL:[NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"]];
         return userProfile;
     }
     
@@ -103,17 +104,17 @@
     return NO;
 }
 
-+ (BOOL)updateUserCheckIn:(NSString *)userEMail inCoordinate:(CLLocationCoordinate2D)coordinate{
++ (BOOL)updateUserCheckIn:(Profile *)profile inCoordinate:(CLLocationCoordinate2D)coordinate{
     
     return NO;
 }
 
-+ (BOOL)postQuestion:(id)question OfUser:(NSString *)userEMail inCoordinate:(CLLocationCoordinate2D)coordinate{
++ (BOOL)postQuestion:(id)question OfUser:(Profile *)user {
     
     return NO;
 }
 
-+ (BOOL)postMessage:(id)message forQuestion:(id)question{
++ (BOOL)postMessage:(id)message {
     
     return NO;
 }

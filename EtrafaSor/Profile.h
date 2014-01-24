@@ -23,8 +23,10 @@
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
 + (Profile *)profileWithUserEMail:(NSString *)userEMail
-                         userName:(NSString *)userName;
+                         userName:(NSString *)userName
+                         imageURL:(NSURL *)imageURL;
 
+//Observer Pattern
 - (void)attachObserverForCoordinateChange:(id<ProfileCoordinateObserver>)observer;
-
+- (void)dettachObserverForCoordinateChange:(id<ProfileCoordinateObserver>)observer;
 @end

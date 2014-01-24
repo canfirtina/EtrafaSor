@@ -8,6 +8,7 @@
 
 #import "Question.h"
 #import "Message.h"
+#import "EtrafaSorHTTPRequestHandler.h"
 
 @implementation Question
 
@@ -26,10 +27,27 @@
     _coordinate.longitude = newCoordinate.longitude;
 }
 
-- (NSString *)title { return self.topic; }
+- (NSString *)title {
+    
+    if( self.topic.length > 20){
+        
+        return [NSString stringWithFormat:@"%@...", [self.topic substringToIndex:17]];
+    }
+    
+    return self.topic;
+}
 
-- (NSString *)subtitle { //return [self.messages objectAtIndex:0];
-return @"asd";}
+- (NSString *)subtitle {
+    
+    NSString *firstMessage = ((Message *)[self.messages firstObject]).text;
+    
+    if( firstMessage.length > 25){
+        
+        return [NSString stringWithFormat:@"%@...", [firstMessage substringToIndex:22]];
+    }
+    
+    return firstMessage;
+}
 
 - (NSArray *)messages {
     
@@ -48,6 +66,20 @@ return @"asd";}
     [mutableCopy addObject:message];
     _messages = [mutableCopy copy];
 }
+- (void)postMessage:(NSString *)text forUser:(Profile *)user usingBlock:(postCompletionBlock)completionBlock {
+    
+    Message *message = [Message messageWithText:text owner:user inQuestion:self];
+    [self addMessage:message];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        BOOL success = [EtrafaSorHTTPRequestHandler postMessage:message];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            message.isSent = success;
+            completionBlock(success);
+        });
+    });
+}
 
 #pragma mark - Allocations
 
@@ -61,5 +93,4 @@ return @"asd";}
     
     return newQuestion;
 }
-
 @end
