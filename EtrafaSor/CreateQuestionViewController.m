@@ -45,14 +45,20 @@
 
 - (IBAction)sendMessagePressed:(UIBarButtonItem *)sender {
     
-    Profile *questionOwner = [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
-    Question *question = [Question questionWithTopic:self.questionTopicField.text questionMessage:self.questionDetailed.text owner:questionOwner];
-    
-    //do it in another thread
-    if ( ![EtrafaSorHTTPRequestHandler postQuestion:question OfUser:questionOwner]){
+    [self dismissViewControllerAnimated:YES completion:^{
         
-        //show unsuccessful posting question message
-    }
+        Profile *questionOwner = [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
+        Question *question = [Question questionWithTopic:self.questionTopicField.text questionMessage:self.questionDetailed.text owner:questionOwner];
+        NSMutableArray *mutable = [questionOwner.questions mutableCopy];
+        [mutable addObject:question];
+        questionOwner.questions = [mutable copy];
+                
+        //do it in another thread
+        if ( ![EtrafaSorHTTPRequestHandler postQuestion:question OfUser:questionOwner]){
+            
+            //show unsuccessful posting question message
+        }
+    }];
 }
 
 #pragma mark - Delegate

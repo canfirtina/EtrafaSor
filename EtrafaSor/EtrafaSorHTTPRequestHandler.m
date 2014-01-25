@@ -8,6 +8,7 @@
 
 #import "EtrafaSorHTTPRequestHandler.h"
 #include <stdlib.h>
+#import "AppDelegate.h"
 
 @implementation EtrafaSorHTTPRequestHandler
 
@@ -47,6 +48,8 @@
         
         [profiles addObject:profile];
     }
+    
+    [profiles addObject:[(AppDelegate *)[[UIApplication sharedApplication] delegate] profile]];
     
     return profiles;
 }

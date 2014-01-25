@@ -272,7 +272,6 @@
                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="Send" id="s30-Tc-0OC">
                             <connections>
                                 <action selector="sendMessagePressed:" destination="xh8-A4-DLU" id="Orv-N0-gJg"/>
-                                <segue destination="vqw-pH-ubq" kind="unwind" unwindAction="dismissByCancelToMapViewController:" id="4BR-Yi-bJe"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

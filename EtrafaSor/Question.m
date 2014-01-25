@@ -74,10 +74,8 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         BOOL success = [EtrafaSorHTTPRequestHandler postMessage:message];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            message.isSent = success;
-            completionBlock(success);
-        });
+        message.isSent = success;
+        completionBlock(success);
     });
 }
 
