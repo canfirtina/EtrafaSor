@@ -13,6 +13,7 @@
 
 @interface MessageBoardViewController ()
 @property (nonatomic, strong) Profile *userProfile;
+@property (weak, nonatomic) UIBarButtonItem *cancelButton;
 @end
 
 @implementation MessageBoardViewController

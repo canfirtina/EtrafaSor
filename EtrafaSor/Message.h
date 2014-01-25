@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Profile.h"
 #import "Question.h"
 
 @protocol MessageStatusObserver <NSObject>
+@required
 - (void)updateMessageStatus;
 @end
 

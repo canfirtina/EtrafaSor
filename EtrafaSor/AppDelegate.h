@@ -12,7 +12,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) Profile *profile;
+@property (strong, nonatomic, readonly) Profile *profile;
 
 - (void)loginSucceededWithUserProfile:(Profile *)userProfile forUserEMail:(NSString *)userEMail andPassword:(NSString *)password;
 @end

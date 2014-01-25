@@ -7,8 +7,11 @@
 //
 
 #import "Question.h"
-#import "Message.h"
 #import "EtrafaSorHTTPRequestHandler.h"
+
+@interface Question ()
+@property (strong, nonatomic) NSMutableArray *questionContentObservers;
+@end
 
 @implementation Question
 
@@ -18,6 +21,8 @@
 @synthesize messages = _messages;
 @synthesize topic = _topic;
 @synthesize isSolved = _isSolved;
+@synthesize owner = _owner;
+@synthesize questionContentObservers = _questionContentObservers;
 
 #pragma mark - Setters & Getters
 
@@ -58,13 +63,30 @@
     return _messages;
 }
 
+- (Profile *)owner {
+    
+    Message *firstMessage = ((Message *)[self.messages firstObject]);
+    
+    return firstMessage.owner;
+}
+
+- (NSMutableArray *)questionContentObservers {
+    
+    if( !_questionContentObservers) _questionContentObservers = [NSMutableArray array];
+    
+    return _questionContentObservers;
+}
+
 #pragma mark - Property Change
 
 - (void)addMessage:(Message *)message {
     
-    NSMutableArray *mutableCopy = [self.messages mutableCopy];
-    [mutableCopy addObject:message];
-    _messages = [mutableCopy copy];
+    if( ![self.messages containsObject:message]){
+        NSMutableArray *mutableCopy = [self.messages mutableCopy];
+        [mutableCopy addObject:message];
+        _messages = [mutableCopy copy];
+        [self notifyContentObservers];
+    }
 }
 - (void)postMessage:(NSString *)text forUser:(Profile *)user usingBlock:(postCompletionBlock)completionBlock {
     
@@ -77,6 +99,24 @@
         message.isSent = success;
         completionBlock(success);
     });
+}
+
+#pragma mark - Custom Notification for Profile
+
+- (void)attachObserverForContentChange:(id<QuestionContentObserver>)observer;{
+    
+    [self.questionContentObservers addObject:observer];
+}
+- (void)dettachObserverForContentChange:(id<QuestionContentObserver>)observer;{
+    
+    if( [self.questionContentObservers containsObject:observer])
+        [self.questionContentObservers removeObject:observer];
+}
+- (void)notifyContentObservers{
+    
+    for (id<QuestionContentObserver> observer in self.questionContentObservers) {
+        [observer updateQuestionContent];
+    }
 }
 
 #pragma mark - Allocations

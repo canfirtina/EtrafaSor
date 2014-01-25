@@ -78,8 +78,14 @@
     return _coordinateObservers;
 }
 
-- (void)addMessage:(Message *)message {
+- (void)addAnswer:(Message *)answer {
 
+    
+}
+
+- (void)addQuestion:( Question *)question {
+    
+    
 }
 
 #pragma mark - Custom Notification for Profile

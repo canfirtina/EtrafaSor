@@ -20,8 +20,10 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+@synthesize profile = _profile;
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     if( ![[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]){
         self.rootViewController = self.window.rootViewController;
         
@@ -31,8 +33,8 @@
         self.window.rootViewController = loginScreenViewController;
     } else {
         
-        self.profile = [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:[[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]
-                                                                  andPassword:[[NSUserDefaults standardUserDefaults] valueForKey:PASSWORD_KEY]];
+        _profile = [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:[[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]
+                                                              andPassword:[[NSUserDefaults standardUserDefaults] valueForKey:PASSWORD_KEY]];
     }
     
     return YES;
@@ -40,12 +42,12 @@
 
 - (void)loginSucceededWithUserProfile:(Profile *)userProfile
                          forUserEMail:(NSString *)userEMail
-                          andPassword:(NSString *)password
-{
+                          andPassword:(NSString *)password {
+    
     [[NSUserDefaults standardUserDefaults] setValue:userEMail forKey:USEREMAIL_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:password forKey:PASSWORD_KEY];
     
-    self.profile = userProfile;
+    _profile = userProfile;
     self.window.rootViewController = self.rootViewController;
 }
 

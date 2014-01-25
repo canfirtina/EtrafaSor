@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *peopleAroundLabel;
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;
-@property (strong, nonatomic) Profile *userProfile;
+@property (nonatomic, readonly, copy) Profile *userProfile;
 
 
 - (IBAction)dismissByCancelToMapViewController:(UIStoryboardSegue *)segue;

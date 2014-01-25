@@ -10,6 +10,8 @@
 #import <MapKit/MapKit.h>
 
 @protocol ProfileCoordinateObserver <NSObject>
+
+@required
 - (void)updateProfileCoordinate;
 @end
 

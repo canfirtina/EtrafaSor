@@ -15,6 +15,7 @@ const float lonDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 = 0.0135 (111000 meters is an approximate distance between two latitudes)
 
 @interface MapViewController ()
+@property (strong, nonatomic) NSTimer *questionLoadTimer;
 @end
 
 @implementation MapViewController
@@ -22,13 +23,14 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 @synthesize mapView = _mapView;
 @synthesize peopleAroundLabel = _peopleAroundLabel;
 @synthesize goBackButton = _goBackButton;
+@synthesize userProfile = _userProfile;
+@synthesize questionLoadTimer = _questionLoadTimer;
 
 #pragma mark - System
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.userProfile = [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
     self.mapView.delegate = self;
     
     //Gesture Recognizer Creations
@@ -43,6 +45,11 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 
 #pragma mark - Setters & Getters
 
+- (Profile *)userProfile {
+    
+    return [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];;
+}
+
 #pragma mark - MKMapViewDelegate
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
@@ -52,7 +59,10 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
         [self setRegionForCoordinate:userLocation.coordinate];
     }
     
-    [EtrafaSorHTTPRequestHandler updateUserCheckIn:self.userProfile inCoordinate:userLocation.coordinate];
+    //update server for the user location change
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [EtrafaSorHTTPRequestHandler updateUserCheckIn:self.userProfile inCoordinate:userLocation.coordinate];
+    });
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView
@@ -63,11 +73,13 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     if( [annotation isKindOfClass:[Profile class]]){
         
         Profile *profile = (Profile *)annotation;
-        pinAnnotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:profile.userEMail];
+        pinAnnotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"Profile Annotation"];
         
         if( !pinAnnotationView){
             
-            pinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:profile.userEMail];
+            pinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
+                                                                reuseIdentifier:@"Profile Annotation"];
+            
             pinAnnotationView.pinColor = MKPinAnnotationColorRed;
             pinAnnotationView.animatesDrop = YES;
             pinAnnotationView.canShowCallout = YES;
@@ -83,15 +95,14 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
         
     } else if( [annotation isKindOfClass:[Question class]]){
         
-        Question *question = (Question *)annotation;
-        //Profile *owner = ((Message *)[question.messages objectAtIndex:0]).owner;
+        //Question *question = (Question *)annotation;
         
-        pinAnnotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:[NSString stringWithFormat:@"%f%f %@", question.coordinate.latitude, question.coordinate.longitude, question.title]];
+        pinAnnotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"Question Annotation"];
         
         if( !pinAnnotationView){
             
             pinAnnotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
-                                                                reuseIdentifier:[NSString stringWithFormat:@"%f%f %@", question.coordinate.latitude, question.coordinate.longitude, question.title]];
+                                                                reuseIdentifier:[NSString stringWithFormat:@"Question Annotation"]];
             pinAnnotationView.pinColor = MKPinAnnotationColorGreen;
             pinAnnotationView.animatesDrop = YES;
             pinAnnotationView.canShowCallout = YES;
@@ -115,17 +126,17 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     if( [view.annotation isKindOfClass:[Profile class]]){
         
         [self performSegueWithIdentifier:@"CreateQuestionModal" sender:self];
+        
     } else if( [view.annotation isKindOfClass:[Question class]]){
         
-        Question *question = (Question *)view.annotation;
-        
-        [self performSegueWithIdentifier:@"MessageBoardModal" sender:question];
+        [self performSegueWithIdentifier:@"MessageBoardModal" sender:view.annotation];
     }
 }
 
 #pragma mark - Gesture Recognizers
 
 - (void)mapViewLongPressed:(UILongPressGestureRecognizer *)gesture {
+    
     if( gesture.state == UIGestureRecognizerStateBegan){
         
         self.goBackButton.hidden = NO;
@@ -141,8 +152,8 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 
 - (IBAction)goBackPressed:(UIButton *)sender {
     
-    [self setRegionForCoordinate:self.mapView.userLocation.coordinate];
     [self.goBackButton setHidden:YES];
+    [self setRegionForCoordinate:self.mapView.userLocation.coordinate];
 }
 
 #pragma mark - Notifications
@@ -155,12 +166,28 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     [self.mapView addAnnotation:self.userProfile];
 }
 
+#pragma mark - NSTimer Mesages
+
+- (void)loadQuestions:(NSTimer *)timer {
+    
+    [self loadQuestionsAroundCenterCoordinate:self.userProfile.coordinate];
+}
+
 #pragma mark - MapView Controls
 
 - (void)setRegionForCoordinate:(CLLocationCoordinate2D)coordinate {
     
     [self.mapView setRegion:MKCoordinateRegionMake(coordinate, MKCoordinateSpanMake(letDegree, lonDegree))
                    animated:YES];
+    
+    //Set timer for loading questions
+    [self.questionLoadTimer invalidate];
+    self.questionLoadTimer = nil;
+    self.questionLoadTimer = [NSTimer scheduledTimerWithTimeInterval:45.0
+                                                              target:self
+                                                            selector:@selector(loadQuestions:)
+                                                            userInfo:nil
+                                                             repeats:YES];
     
     [self.userProfile setCoordinate:coordinate];
     [self loadQuestionsAroundCenterCoordinate:coordinate];
@@ -174,10 +201,19 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
         [questionAnnotations removeObject:self.userProfile];
     
     [self.mapView removeAnnotations:[questionAnnotations copy]];
-    [self.mapView addAnnotations:[EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:coordinate withRadius:RADIUS]];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSArray *annotations = [EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:coordinate withRadius:RADIUS];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.mapView addAnnotations:annotations];
+        });
+    });
 }
 
-- (void)loadPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate{
+- (void)loadPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate {
     NSArray *peopleAround = [EtrafaSorHTTPRequestHandler fetchPeopleAroundCenterCoordinate:coordinate withRadius:RADIUS];
     
     self.peopleAroundLabel.text = [NSString stringWithFormat:@"%d people around you", (int)peopleAround.count];
@@ -185,16 +221,22 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 
 #pragma mark - Segue
 
-- (IBAction)dismissByCancelToMapViewController:(UIStoryboardSegue *)segue{}
+- (IBAction)dismissByCancelToMapViewController:(UIStoryboardSegue *)segue {}
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue
+                 sender:(id)sender {
     
     if( [segue.identifier isEqualToString:@"MessageBoardModal"]){
         
-        Question *question = (Question *)sender;
+        Question *question = [sender isKindOfClass:[Question class]]?sender:nil;
+        MessageBoardViewController *mbvc = nil;
         
-        UINavigationController *nvc = segue.destinationViewController;
-        MessageBoardViewController *mbvc = (MessageBoardViewController *)nvc.topViewController;
+        if( [segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *nvc = (UINavigationController *)segue.destinationViewController;
+            mbvc = (MessageBoardViewController *)nvc.topViewController;
+        } else if( [segue.destinationViewController isKindOfClass:[MessageBoardViewController class]])
+            mbvc = (MessageBoardViewController *)segue.destinationViewController;
+        
         mbvc.question = question;
     }
 }

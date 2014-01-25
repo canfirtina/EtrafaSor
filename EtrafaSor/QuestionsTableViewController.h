@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Question.h"
+
+#define RADIUS 375
 
 @interface QuestionsTableViewController : UITableViewController
 
-@property (nonatomic, strong) NSArray *questions;
+@property (nonatomic, strong) NSArray *questions; //array of Questions
 
 @end
