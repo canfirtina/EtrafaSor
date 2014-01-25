@@ -91,10 +91,10 @@
             </objects>
             <point key="canvasLocation" x="-877" y="-1797"/>
         </scene>
-        <!--View Controller-->
+        <!--Sign Up View Controller-->
         <scene sceneID="2ZM-Zp-M3J">
             <objects>
-                <viewController id="EUG-5a-HXW" sceneMemberID="viewController">
+                <viewController id="EUG-5a-HXW" customClass="SignUpViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="T5E-ED-FEG"/>
                         <viewControllerLayoutGuide type="bottom" id="k9w-qR-vhI"/>
@@ -102,7 +102,50 @@
                     <view key="view" contentMode="scaleToFill" id="AJU-S4-R6p">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xKh-1b-kgJ">
+                                <rect key="frame" x="20" y="151" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YBD-H6-aHD">
+                                <rect key="frame" x="20" y="189" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P4r-mk-aCz">
+                                <rect key="frame" x="20" y="227" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfT-93-ZdM">
+                                <rect key="frame" x="137" y="269" width="55" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Sign Up">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signUpPressed:" destination="EUG-5a-HXW" eventType="touchUpInside" id="d88-XO-rbQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="0.32268914599999998" green="0.57725417180000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="YBD-H6-aHD" firstAttribute="leading" secondItem="P4r-mk-aCz" secondAttribute="leading" id="1Xx-ig-FcF"/>
+                            <constraint firstItem="YBD-H6-aHD" firstAttribute="trailing" secondItem="P4r-mk-aCz" secondAttribute="trailing" id="37E-Cr-437"/>
+                            <constraint firstItem="pfT-93-ZdM" firstAttribute="top" secondItem="P4r-mk-aCz" secondAttribute="bottom" constant="12" id="AKe-6r-8Uf"/>
+                            <constraint firstItem="pfT-93-ZdM" firstAttribute="centerY" secondItem="AJU-S4-R6p" secondAttribute="centerY" id="FZf-XY-w67"/>
+                            <constraint firstItem="YBD-H6-aHD" firstAttribute="trailing" secondItem="xKh-1b-kgJ" secondAttribute="trailing" id="JHe-j7-L4S"/>
+                            <constraint firstItem="P4r-mk-aCz" firstAttribute="top" secondItem="YBD-H6-aHD" secondAttribute="bottom" constant="8" symbolic="YES" id="P9P-JM-cqX"/>
+                            <constraint firstItem="xKh-1b-kgJ" firstAttribute="leading" secondItem="YBD-H6-aHD" secondAttribute="leading" id="V8l-Hb-TS8"/>
+                            <constraint firstItem="YBD-H6-aHD" firstAttribute="top" secondItem="xKh-1b-kgJ" secondAttribute="bottom" constant="8" symbolic="YES" id="WdM-pl-opf"/>
+                            <constraint firstItem="pfT-93-ZdM" firstAttribute="leading" secondItem="AJU-S4-R6p" secondAttribute="leading" constant="137" id="eKA-S7-644"/>
+                            <constraint firstAttribute="trailing" secondItem="xKh-1b-kgJ" secondAttribute="trailing" constant="20" symbolic="YES" id="k6H-0l-Fvk"/>
+                            <constraint firstItem="xKh-1b-kgJ" firstAttribute="leading" secondItem="AJU-S4-R6p" secondAttribute="leading" constant="20" symbolic="YES" id="qVt-1F-rzo"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kTY-SA-cqQ">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vmD-ur-VLa">
@@ -111,6 +154,12 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="emailField" destination="xKh-1b-kgJ" id="GLn-Vm-JUt"/>
+                        <outlet property="passwordField" destination="P4r-mk-aCz" id="Ac0-WC-qTS"/>
+                        <outlet property="signUpButton" destination="pfT-93-ZdM" id="auo-8H-FhN"/>
+                        <outlet property="userNameField" destination="YBD-H6-aHD" id="FVV-5P-QZS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rgo-52-nAl" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="FYg-Ne-iFI" userLabel="Exit" sceneMemberID="exit"/>

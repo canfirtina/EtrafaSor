@@ -38,8 +38,7 @@
 #pragma mark - Actions
 - (IBAction)loginPressed:(UIButton *)sender {
     
-    [self.usernameField resignFirstResponder];
-    [self.passwordField resignFirstResponder];
+    [self dismissKeyboard];
     
     Profile *profile = [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:self.usernameField.text
                                                                   andPassword:self.passwordField.text];
@@ -51,7 +50,7 @@
     else NSLog(@"Login unsuccessful");
 }
 
--(void)dismissKeyboard {
+- (void)dismissKeyboard {
     
     [self.usernameField resignFirstResponder];
     [self.passwordField resignFirstResponder];
