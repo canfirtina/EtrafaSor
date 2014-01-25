@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 
 @interface MessageBoardViewController ()
-@property (nonatomic, strong) Profile *userProfile;
+@property (nonatomic, readonly, copy) Profile *userProfile;
 @property (weak, nonatomic) UIBarButtonItem *cancelButton;
 @end
 
@@ -20,18 +20,25 @@
 
 @synthesize userProfile = _userProfile;
 
+#pragma mark - System
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [[JSBubbleView appearance] setFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]];
     
-    self.userProfile = [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
     self.delegate = self;
     self.dataSource = self;
     
     self.title = self.question.title;
     self.messageInputView.textView.placeHolder = @"Write Answer";
     self.sender = self.userProfile.userName;
+}
+
+#pragma mark - Setters & Getters
+
+- (Profile *)userProfile {
+    
+    return [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];;
 }
 
 #pragma mark - UITableViewDataSource Responses
@@ -87,21 +94,12 @@
 
 - (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath { return YES; }
 
-//- (void)configureCell:(JSBubbleMessageCell *)cell atIndexPath:(NSIndexPath *)indexPath {}
-
 - (BOOL)shouldPreventScrollToBottomWhileUserScrolling { return NO; }
 
 - (BOOL)allowsPanToDismissKeyboard { return YES; }
 
 //- (UIButton *)sendButtonForInputView;
 
-/**
- *  Asks the delegate for a custom cell reuse identifier for the row to be displayed at the specified index path.
- *
- *  @param indexPath The index path of the row to be displayed.
- *
- *  @return A string specifying the cell reuse identifier for the row at indexPath.
- */
 - (NSString *)customCellIdentifierForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Message *message = [self.question.messages objectAtIndex:indexPath.row];
@@ -111,13 +109,6 @@
 
 #pragma mark - JSMessageViewDataSource Responses
 
-/**
- *  Asks the data source for the message to display for the row at the specified index path. The message text is displayed in the bubble at index path. The message date is displayed *above* the row at the specified index path. The message sender is displayed *below* the row at the specified index path.
- *
- *  @param indexPath An index path locating a row in the table view.
- *
- *  @return A message object containing the message data. This value must not be `nil`.
- */
 - (JSMessage *)messageForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Message *message = [self.question.messages objectAtIndex:indexPath.row];
@@ -129,14 +120,6 @@
     return jsmessage;
 }
 
-/**
- *  Asks the data source for the imageView to display for the row at the specified index path with the given sender. The imageView must have its `image` property set.
- *
- *  @param indexPath An index path locating a row in the table view.
- *  @param sender    The name of the user who sent the message at indexPath.
- *
- *  @return An image view specifying the avatar for the message at indexPath. This value may be `nil`.
- */
 - (UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath sender:(NSString *)sender {
     
     Message *message = [self.question.messages objectAtIndex:indexPath.row];

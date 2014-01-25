@@ -14,7 +14,7 @@
 #import "MessageBoardViewController.h"
 
 @interface QuestionsTableViewController ()
-@property (nonatomic, strong) Profile *userProfile;
+@property (nonatomic, readonly, copy) Profile *userProfile;
 @end
 
 @implementation QuestionsTableViewController
@@ -30,6 +30,8 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    [NSTimer scheduledTimerWithTimeInterval:45.0 target:self selector:@selector(fetchAndSetQuestionsAsynchronously:) userInfo:nil repeats:YES];
 }
 
 #pragma mark - Setters & Getters
@@ -37,7 +39,7 @@
 - (NSArray *)questions {
     
     if( !_questions)
-        _questions = [EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:self.userProfile.coordinate withRadius:RADIUS];
+        [self fetchAndSetQuestionsAsynchronously:nil];
     
     return _questions;
 }
@@ -72,7 +74,26 @@
 
 - (Profile *)userProfile {
     
-    return [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
+    return [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];;
+}
+
+#pragma mark - Data Fetch
+
+- (void)fetchAndSetQuestionsAsynchronously:(NSTimer *)timer {
+    
+    UIActivityIndicatorView *ai = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:ai];
+    [ai startAnimating];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSArray *questions = [EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:self.userProfile.coordinate withRadius:RADIUS];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setQuestions:questions];
+            [ai stopAnimating];
+            self.navigationItem.rightBarButtonItem = nil;
+        });
+    });
 }
 
 #pragma mark - Table view data source
