@@ -10,4 +10,6 @@
 
 @interface QuestionsTableViewController : UITableViewController
 
+@property (nonatomic, strong) NSArray *questions;
+
 @end

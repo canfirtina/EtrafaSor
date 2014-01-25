@@ -20,9 +20,10 @@
 @property (nonatomic) NSUInteger *totalVoteValue;
 @property (strong, nonatomic) Profile *owner;
 @property (strong, nonatomic) Question *question;
+@property (strong, nonatomic) NSDate *messageSendDate;
 @property (nonatomic) BOOL isSent;
 
-+ (Message *)messageWithText:(NSString *)text owner:(Profile *)owner inQuestion:(Question *)question;
++ (Message *)messageWithText:(NSString *)text owner:(Profile *)owner inQuestion:(Question *)question atDate:(NSDate *)date;
 
 //Observer Pattern
 - (void)attachObserverForMessageStatusChange:(id<MessageStatusObserver>)observer;

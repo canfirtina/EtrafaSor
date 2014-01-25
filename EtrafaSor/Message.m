@@ -20,6 +20,7 @@
 @synthesize question = _question;
 @synthesize isSent = _isSent;
 @synthesize messageStatusObservers = _messageStatusObservers;
+@synthesize messageSendDate = _messageSendDate;
 
 #pragma mark - Setters & Getters
 
@@ -38,13 +39,14 @@
 }
 
 # pragma mark - Allocations
-+ (Message *)messageWithText:(NSString *)text owner:(Profile *)owner inQuestion:(Question *)question {
++ (Message *)messageWithText:(NSString *)text owner:(Profile *)owner inQuestion:(Question *)question atDate:(NSDate *)date{
     
     Message *newMessage = [[Message alloc] init];
     newMessage.text = text;
     newMessage.totalVoteValue = 0;
     newMessage.owner = owner;
     newMessage.question = question;
+    newMessage.messageSendDate = date;
     newMessage.isSent = NO;
     
     return newMessage;

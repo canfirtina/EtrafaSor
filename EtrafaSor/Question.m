@@ -68,7 +68,7 @@
 }
 - (void)postMessage:(NSString *)text forUser:(Profile *)user usingBlock:(postCompletionBlock)completionBlock {
     
-    Message *message = [Message messageWithText:text owner:user inQuestion:self];
+    Message *message = [Message messageWithText:text owner:user inQuestion:self atDate:[NSDate date]];
     [self addMessage:message];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -87,7 +87,7 @@
     
     Question *newQuestion = [[Question alloc] init];
     newQuestion.topic = topic;
-    [newQuestion addMessage:[Message messageWithText:question owner:owner inQuestion:newQuestion]];
+    [newQuestion addMessage:[Message messageWithText:question owner:owner inQuestion:newQuestion atDate:[NSDate date]]];
     [newQuestion setCoordinate:owner.coordinate];
     newQuestion.isSolved = NO;
     

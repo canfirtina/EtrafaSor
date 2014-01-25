@@ -9,6 +9,7 @@
 #import "MapViewController.h"
 #import "EtrafaSorHTTPRequestHandler.h"
 #import "AppDelegate.h"
+#import "MessageBoardViewController.h"
 
 const float lonDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 = 0.0135 (111000 meters is distance between two longtitudes)
 const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 = 0.0135 (111000 meters is an approximate distance between two latitudes)
@@ -116,7 +117,9 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
         [self performSegueWithIdentifier:@"CreateQuestionModal" sender:self];
     } else if( [view.annotation isKindOfClass:[Question class]]){
         
-        NSLog(@"question callout tapped");
+        Question *question = (Question *)view.annotation;
+        
+        [self performSegueWithIdentifier:@"MessageBoardModal" sender:question];
     }
 }
 
@@ -183,5 +186,17 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 #pragma mark - Segue
 
 - (IBAction)dismissByCancelToMapViewController:(UIStoryboardSegue *)segue{}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
+    if( [segue.identifier isEqualToString:@"MessageBoardModal"]){
+        
+        Question *question = (Question *)sender;
+        
+        UINavigationController *nvc = segue.destinationViewController;
+        MessageBoardViewController *mbvc = (MessageBoardViewController *)nvc.topViewController;
+        mbvc.question = question;
+    }
+}
 
 @end

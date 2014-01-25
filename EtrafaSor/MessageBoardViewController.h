@@ -10,7 +10,7 @@
 #import "Question.h"
 #import "Profile.h"
 
-@interface MessageBoardViewController : JSMessagesViewController
+@interface MessageBoardViewController : JSMessagesViewController <JSMessagesViewDelegate, JSMessagesViewDataSource>
 
 @property (nonatomic, strong) Question *question;
 

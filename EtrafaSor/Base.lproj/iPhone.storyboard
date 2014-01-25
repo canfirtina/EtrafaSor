@@ -200,7 +200,7 @@
                         <outlet property="mapView" destination="qlG-z1-zo4" id="DtY-ap-Dkn"/>
                         <outlet property="peopleAroundLabel" destination="KNx-L1-hh8" id="BX4-zM-mGV"/>
                         <segue destination="5Lu-yL-f7q" kind="modal" identifier="CreateQuestionModal" id="9AF-z0-h1k"/>
-                        <segue destination="Dqf-u6-Pll" kind="push" identifier="MessageBoardPush" id="zf3-ks-cZz"/>
+                        <segue destination="6hu-PC-AZq" kind="modal" identifier="MessageBoardModal" id="rAm-5l-pTT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -272,6 +272,7 @@
                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="Send" id="s30-Tc-0OC">
                             <connections>
                                 <action selector="sendMessagePressed:" destination="xh8-A4-DLU" id="Orv-N0-gJg"/>
+                                <segue destination="vqw-pH-ubq" kind="unwind" unwindAction="dismissByCancelToMapViewController:" id="4BR-Yi-bJe"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -295,15 +296,23 @@
                         <viewControllerLayoutGuide type="bottom" id="YAo-tr-PZA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="V0U-Tp-Y2S">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="eWm-Dr-bYM"/>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="eWm-Dr-bYM">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="hJZ-Ka-0US">
+                            <connections>
+                                <segue destination="eJe-ms-uOv" kind="unwind" unwindAction="dismissByCancelToMapViewController:" id="AyE-2Z-GFM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vlU-uR-G3E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="eJe-ms-uOv" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3043" y="-2557"/>
+            <point key="canvasLocation" x="3043" y="-2571"/>
         </scene>
         <!--Questions Table View Controller - Questions-->
         <scene sceneID="ovc-y2-fbN">
@@ -565,6 +574,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S5C-jx-svq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2298" y="-175"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="g47-3r-xSq">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6hu-PC-AZq" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Agm-bi-znU"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aaV-6M-ADn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Dqf-u6-Pll" kind="relationship" relationship="rootViewController" id="9TX-BP-uQl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="juU-9W-bI8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2298" y="-2571"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
