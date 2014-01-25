@@ -11,8 +11,10 @@
 #import "AppDelegate.h"
 
 #define DEFAULT_IMAGE_URL @"http://canfirtina.com/projectTrials/profile.jpg"
+#define KEY_FOR_RESULT @"result"
+#define RESULT_FOR_SUCCESS @"0"
 
-@interface SignUpViewController ()
+@interface SignUpViewController () <EtrafaSorHTTPRequestHandlerDelegate>
 
 @end
 
@@ -47,18 +49,9 @@
                                             userName:self.userNameField.text
                                             imageURL:[NSURL URLWithString:DEFAULT_IMAGE_URL]];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        BOOL success = [EtrafaSorHTTPRequestHandler signUpUserProfile:profile];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if( success) [self dismissViewControllerAnimated:YES completion:^{
-                //do sth with success
-            }];
-            else NSLog(@"not succeeded sign up");
-        });
-    });
+    [EtrafaSorHTTPRequestHandler signUpUserProfile:profile
+                                       andPassword:self.passwordField.text
+                                            sender:self];
 }
 
 - (void)dismissKeyboard {
@@ -83,6 +76,28 @@
     else if( !self.signUpButton.isEnabled && self.emailField.text.length > 0 && self.userNameField.text.length > 0 && self.passwordField.text.length > 0) self.signUpButton.enabled = YES;
     
     return YES;
+}
+
+- (void)connectionHasFinishedWithData:(NSDictionary *)data {
+    
+    if( !data) NSLog(@"failed signup");
+    else {
+        
+        NSLog(@"Sign up");
+        for(id key in data) {
+            
+            id value = [data objectForKey:key];
+            
+            NSString *keyAsString = (NSString *)key;
+            NSString *valueAsString = (NSString *)value;
+            
+            if( [keyAsString isEqualToString:KEY_FOR_RESULT]){
+                
+                if( [[NSString stringWithFormat:@"%@", valueAsString] isEqualToString:RESULT_FOR_SUCCESS]) NSLog(@"sign up succeded");
+                else NSLog(@"sign up not succeded");
+            }
+        }
+    }
 }
 
 @end

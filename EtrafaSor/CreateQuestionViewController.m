@@ -9,7 +9,7 @@
 #import "CreateQuestionViewController.h"
 #import "AppDelegate.h"
 
-@interface CreateQuestionViewController ()
+@interface CreateQuestionViewController () <EtrafaSorHTTPRequestHandlerDelegate>
 
 @end
 
@@ -45,20 +45,14 @@
 
 - (IBAction)sendMessagePressed:(UIBarButtonItem *)sender {
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-        Profile *questionOwner = [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
-        Question *question = [Question questionWithTopic:self.questionTopicField.text questionMessage:self.questionDetailed.text owner:questionOwner];
-        NSMutableArray *mutable = [questionOwner.questions mutableCopy];
-        [mutable addObject:question];
-        questionOwner.questions = [mutable copy];
+    Profile *questionOwner = [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
+    Question *question = [Question questionWithTopic:self.questionTopicField.text questionMessage:self.questionDetailed.text owner:questionOwner];
+    NSMutableArray *mutable = [questionOwner.questions mutableCopy];
+    [mutable addObject:question];
+    questionOwner.questions = [mutable copy];
                 
-        //do it in another thread
-        if ( ![EtrafaSorHTTPRequestHandler postQuestion:question OfUser:questionOwner]){
-            
-            //show unsuccessful posting question message
-        }
-    }];
+    //do it in another thread
+    [EtrafaSorHTTPRequestHandler postQuestion:question OfUser:questionOwner sender:self];
 }
 
 #pragma mark - Delegate
@@ -95,6 +89,26 @@
     
     if( self.sendMessageButton.isEnabled && textView.text.length == 0) self.sendMessageButton.enabled = NO;
     else if( !self.sendMessageButton.isEnabled && textView.text.length > 0 && self.questionTopicField.text.length > 0) self.sendMessageButton.enabled = YES;
+}
+
+- (void)connectionHasFinishedWithData:(NSDictionary *)data {
+    
+    if( !data) NSLog(@"something wrong with creation question");
+    else {
+        
+        NSLog(@"Create Question");
+        for(id key in data) {
+            id value = [data objectForKey:key];
+            
+            NSString *keyAsString = (NSString *)key;
+            NSString *valueAsString = (NSString *)value;
+            
+            NSLog(@"key: %@", keyAsString);
+            NSLog(@"value: %@", valueAsString);
+        }
+        
+        //[self dismissViewControllerAnimated:YES completion:nil]; //if everything is ok then dismiss
+    }
 }
 
 @end

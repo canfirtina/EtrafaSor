@@ -9,7 +9,7 @@
 #import "Question.h"
 #import "EtrafaSorHTTPRequestHandler.h"
 
-@interface Question ()
+@interface Question () <EtrafaSorHTTPRequestHandlerDelegate>
 @property (strong, nonatomic) NSMutableArray *questionContentObservers;
 @end
 
@@ -88,17 +88,14 @@
         [self notifyContentObservers];
     }
 }
-- (void)postMessage:(NSString *)text forUser:(Profile *)user usingBlock:(postCompletionBlock)completionBlock {
+
+- (void)postMessage:(NSString *)text forUser:(Profile *)user {
     
     Message *message = [Message messageWithText:text owner:user inQuestion:self atDate:[NSDate date]];
     [self addMessage:message];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        BOOL success = [EtrafaSorHTTPRequestHandler postMessage:message];
-        message.isSent = success;
-        completionBlock(success);
-    });
+    [EtrafaSorHTTPRequestHandler postMessage:message
+                                      sender:self];
 }
 
 #pragma mark - Custom Notification for Profile
@@ -116,6 +113,26 @@
     
     for (id<QuestionContentObserver> observer in self.questionContentObservers) {
         [observer updateQuestionContent];
+    }
+}
+
+#pragma mark - Delegations
+
+- (void)connectionHasFinishedWithData:(NSDictionary *)data {
+    
+    if( !data) NSLog(@"something wrong with questiin");
+    else {
+        
+        NSLog(@"Question");
+        for(id key in data) {
+            id value = [data objectForKey:key];
+            
+            NSString *keyAsString = (NSString *)key;
+            NSString *valueAsString = (NSString *)value;
+            
+            NSLog(@"key: %@", keyAsString);
+            NSLog(@"value: %@", valueAsString);
+        }
     }
 }
 

@@ -14,7 +14,7 @@
 #define USEREMAIL_KEY @"User EMail"
 #define PASSWORD_KEY @"Password"
 
-@interface AppDelegate ()
+@interface AppDelegate () <EtrafaSorHTTPRequestHandlerDelegate>
 @property (nonatomic, strong) UIViewController *rootViewController;
 @end
 
@@ -33,8 +33,9 @@
         self.window.rootViewController = loginScreenViewController;
     } else {
         
-        _profile = [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:[[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]
-                                                              andPassword:[[NSUserDefaults standardUserDefaults] valueForKey:PASSWORD_KEY]];
+        [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:[[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]
+                                                              andPassword:[[NSUserDefaults standardUserDefaults] valueForKey:PASSWORD_KEY]
+                                                                   sender:self];
     }
     
     return YES;
@@ -49,6 +50,11 @@
     
     _profile = userProfile;
     self.window.rootViewController = self.rootViewController;
+}
+
+- (void)connectionHasFinishedWithData:(NSDictionary *)data {
+    
+    //initialise profile there
 }
 
 @end

@@ -11,13 +11,22 @@
 #import "Profile.h"
 #import "EtrafaSorHTTPRequestHandler.h"
 
-@interface LoginViewController ()
+#define DEFAULT_IMAGE_URL @"http://canfirtina.com/projectTrials/profile.jpg"
+#define KEY_FOR_CONTENT @"content"
+#define KEY_FOR_RESULT @"result"
+#define KEY_FOR_CONTENT_SESSION_ID @"sessionId"
+#define KEY_FOR_CONTENT_USER_CARD @"userCard"
+#define KEY_FOR_CONTENT_USER_CARD_USERNAME @"userName"
+#define RESULT_FOR_SUCCESS @"0"
+#define RESULT_FOR_INVALID_CREDENTIALS @"4"
+
+@interface LoginViewController () <EtrafaSorHTTPRequestHandlerDelegate>
 
 @end
 
 @implementation LoginViewController
 
-@synthesize usernameField = _usernameField;
+@synthesize userEmailField = _userEmailField;
 @synthesize passwordField = _passwordField;
 @synthesize loginButton = _loginButton;
 
@@ -25,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-    self.usernameField.delegate = self;
+    self.userEmailField.delegate = self;
     self.passwordField.delegate = self;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -40,19 +49,15 @@
     
     [self dismissKeyboard];
     
-    Profile *profile = [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:self.usernameField.text
-                                                                  andPassword:self.passwordField.text];
-    
-    if( profile)
-        [(AppDelegate *)[[UIApplication sharedApplication] delegate] loginSucceededWithUserProfile:profile
-                                                                                      forUserEMail:self.usernameField.text
-                                                                                       andPassword:self.passwordField.text];
-    else NSLog(@"Login unsuccessful");
+    [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:self.userEmailField.text
+                                               andPassword:self.passwordField.text
+                                                    sender:self];
+    self.loginButton.enabled = NO;
 }
 
 - (void)dismissKeyboard {
     
-    [self.usernameField resignFirstResponder];
+    [self.userEmailField resignFirstResponder];
     [self.passwordField resignFirstResponder];
 }
 
@@ -61,6 +66,50 @@
     
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)connectionHasFinishedWithData:(NSDictionary *)data {
+    
+    if( !data) NSLog(@"login not succeded");
+    else {
+        
+        NSString *userNameString;
+        BOOL succeded;
+        
+        NSLog(@"Login");
+        for(id key in data) {
+            id value = [data objectForKey:key];
+            
+            NSString *keyAsString = (NSString *)key;
+            NSString *valueAsString = (NSString *)value;
+            
+            if( [keyAsString isEqualToString:KEY_FOR_CONTENT]){
+                
+                id sessionID = [value objectForKey:KEY_FOR_CONTENT_SESSION_ID]; //string
+                id userCard = [value objectForKey:KEY_FOR_CONTENT_USER_CARD]; //dictionary
+                id userName = [userCard objectForKey:KEY_FOR_CONTENT_USER_CARD_USERNAME];
+                userNameString = [NSString stringWithFormat:@"%@", userName];
+                
+            } else if( [keyAsString isEqualToString:KEY_FOR_RESULT]){
+                
+                if( [[NSString stringWithFormat:@"%@", valueAsString] isEqualToString:RESULT_FOR_SUCCESS])
+                    succeded = YES;
+                else if ([[NSString stringWithFormat:@"%@", valueAsString] isEqualToString:RESULT_FOR_INVALID_CREDENTIALS])
+                    succeded = NO;
+            }
+        }
+        
+        if( succeded){
+            
+            Profile *profile = [Profile profileWithUserEMail:self.userEmailField.text
+                                                    userName:[NSString stringWithFormat:@"%@", userNameString]
+                                                    imageURL:[NSURL URLWithString:DEFAULT_IMAGE_URL]];
+            
+            [(AppDelegate *)[[UIApplication sharedApplication] delegate] loginSucceededWithUserProfile:profile
+                                                                                          forUserEMail:self.userEmailField.text
+                                                                                           andPassword:self.passwordField.text];
+        }
+    }
 }
 
 #pragma mark - Segue Actions

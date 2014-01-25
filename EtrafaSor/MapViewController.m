@@ -61,7 +61,9 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     
     //update server for the user location change
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [EtrafaSorHTTPRequestHandler updateUserCheckIn:self.userProfile inCoordinate:userLocation.coordinate];
+        [EtrafaSorHTTPRequestHandler updateUserCheckIn:self.userProfile
+                                          inCoordinate:userLocation.coordinate
+                                                sender:nil];
     });
 }
 
@@ -204,7 +206,9 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        NSArray *annotations = [EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:coordinate withRadius:RADIUS];
+        NSArray *annotations = [EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:coordinate
+                                                                                      withRadius:RADIUS
+                                                                                          sender:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -214,9 +218,11 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 }
 
 - (void)loadPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate {
-    NSArray *peopleAround = [EtrafaSorHTTPRequestHandler fetchPeopleAroundCenterCoordinate:coordinate withRadius:RADIUS];
+    [EtrafaSorHTTPRequestHandler fetchPeopleAroundCenterCoordinate:coordinate
+                                                        withRadius:RADIUS
+                                                            sender:nil];
     
-    self.peopleAroundLabel.text = [NSString stringWithFormat:@"%d people around you", (int)peopleAround.count];
+    self.peopleAroundLabel.text = [NSString stringWithFormat:@"%d people around you", 0];
 }
 
 #pragma mark - Segue

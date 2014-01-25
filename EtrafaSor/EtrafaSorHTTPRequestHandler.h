@@ -8,26 +8,39 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
+#import "EtrafaSorHTTPRequestResponseManager.h"
 #import "Message.h"
 
 @interface EtrafaSorHTTPRequestHandler : NSObject
 
+//if you want to be notified about connection results, set sender
 + (NSArray *)fetchQuestionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-                                       withRadius:(CGFloat)radius;
+                                       withRadius:(CGFloat)radius
+                                           sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (NSArray *)fetchPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-                               withRadius:(CGFloat)radius;
++ (void)fetchPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
+                               withRadius:(CGFloat)radius
+                                        sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (Profile *)fetchProfileWithUserEMail:(NSString *)userEMail
-                           andPassword:(NSString *)password;
++ (void)fetchProfileWithUserEMail:(NSString *)userEMail
+                           andPassword:(NSString *)password
+                                sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (BOOL)signUpUserProfile:(Profile *)profile;
++ (void)signUpUserProfile:(Profile *)profile
+              andPassword:(NSString *)password
+                   sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (BOOL)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress;
++ (void)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress
+                                        sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (BOOL)updateUserCheckIn:(Profile *)profile inCoordinate:(CLLocationCoordinate2D)coordinate;
++ (void)updateUserCheckIn:(Profile *)profile
+             inCoordinate:(CLLocationCoordinate2D)coordinate
+                   sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (BOOL)postQuestion:(Question *)question OfUser:(Profile *)user;
++ (void)postQuestion:(Question *)question
+              OfUser:(Profile *)user
+              sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (BOOL)postMessage:(Message *)message;
++ (void)postMessage:(Message *)message
+             sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 @end

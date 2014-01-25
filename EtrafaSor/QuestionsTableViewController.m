@@ -86,7 +86,9 @@
     [ai startAnimating];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSArray *questions = [EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:self.userProfile.coordinate withRadius:RADIUS];
+        NSArray *questions = [EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:self.userProfile.coordinate
+                                                                                    withRadius:RADIUS
+                                                                                        sender:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self setQuestions:questions];

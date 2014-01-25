@@ -55,7 +55,8 @@
 }
 
 + (NSArray *)fetchQuestionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-                                       withRadius:(CGFloat)radius {
+                                       withRadius:(CGFloat)radius
+                                           sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
     NSMutableArray *questionsToSend = [NSMutableArray array];
     
@@ -72,54 +73,69 @@
     return [questionsToSend copy];
 }
 
-+ (NSArray *)fetchPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-                                    withRadius:(CGFloat)radius {
++ (void)fetchPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
+                                    withRadius:(CGFloat)radius
+                                        sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
-    NSMutableArray *peopleAround = [NSMutableArray array];
+    //NSMutableArray *peopleAround = [NSMutableArray array];
     
     //fetch questions
     
-    return [peopleAround copy];
+    //return [peopleAround copy];
 }
 
-+ (Profile *)fetchProfileWithUserEMail:(NSString *)userEMail
-                           andPassword:(NSString *)password{
++ (void)fetchProfileWithUserEMail:(NSString *)userEMail
+                           andPassword:(NSString *)password
+                                sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
-    //trial
-    if( [userEMail isEqualToString:@"root"] && [password isEqualToString:@"abc"]){
-        
-        Profile *userProfile = [Profile profileWithUserEMail:userEMail
-                                                    userName:@"Can"
-                                                    imageURL:[NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"]];
-        return userProfile;
-    }
+    EtrafaSorHTTPRequestResponseManager *manager = [[EtrafaSorHTTPRequestResponseManager alloc] init];
+    manager.responseData = nil;
+    manager.responseData = [NSMutableData data];
+    manager.delegate = sender;
     
-    return nil;
+    NSString *requestURL = [NSString stringWithFormat:@"http://etrafasor-backend.herokuapp.com/api/signIn?email=%@&password=%@", userEMail, password];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL]];
+    
+    [[NSURLConnection alloc] initWithRequest:request delegate:manager];
 }
 
-+ (BOOL)signUpUserProfile:(Profile *)profile{
++ (void)signUpUserProfile:(Profile *)profile
+              andPassword:(NSString *)password
+                   sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender{
     
-    return NO;
+    EtrafaSorHTTPRequestResponseManager *manager = [[EtrafaSorHTTPRequestResponseManager alloc] init];
+    manager.responseData = nil;
+    manager.responseData = [NSMutableData data];
+    manager.delegate = sender;
+    
+    NSString *requestURL = [NSString stringWithFormat:@"http://etrafasor-backend.herokuapp.com/api/signUp?userName=%@&email=%@&password=%@", profile.userName, profile.userEMail, password];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL]];
+    
+    [[NSURLConnection alloc] initWithRequest:request delegate:manager];
 }
 
-+ (BOOL)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress{
++ (void)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress
+                                        sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
-    return NO;
 }
 
-+ (BOOL)updateUserCheckIn:(Profile *)profile inCoordinate:(CLLocationCoordinate2D)coordinate{
++ (void)updateUserCheckIn:(Profile *)profile
+             inCoordinate:(CLLocationCoordinate2D)coordinate
+                   sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
-    return NO;
 }
 
-+ (BOOL)postQuestion:(id)question OfUser:(Profile *)user {
++ (void)postQuestion:(id)question
+              OfUser:(Profile *)user
+              sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender{
     
-    return NO;
 }
 
-+ (BOOL)postMessage:(id)message {
++ (void)postMessage:(id)message
+             sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender{
     
-    return NO;
 }
 
 @end
