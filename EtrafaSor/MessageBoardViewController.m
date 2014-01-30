@@ -10,8 +10,9 @@
 #import "Message.h"
 #import "Profile.h"
 #import "AppDelegate.h"
+#import "UIImageView+WebCache.h"
 
-@interface MessageBoardViewController ()
+@interface MessageBoardViewController () <QuestionContentObserver>
 @property (nonatomic, readonly, copy) Profile *userProfile;
 @property (weak, nonatomic) UIBarButtonItem *cancelButton;
 @end
@@ -19,6 +20,7 @@
 @implementation MessageBoardViewController
 
 @synthesize userProfile = _userProfile;
+@synthesize question = _question;
 
 #pragma mark - System
 - (void)viewDidLoad {
@@ -28,6 +30,7 @@
     
     self.delegate = self;
     self.dataSource = self;
+    [self.question attachObserverForContentChange:self];
     
     self.title = self.question.title;
     self.messageInputView.textView.placeHolder = @"Write Answer";
@@ -52,11 +55,7 @@
 
 - (void)didSendMessage:(JSMessage *)message {
     
-    [self.question postMessage:message.text forUser:self.userProfile usingBlock:^(BOOL succeeded) {
-        
-        if( !succeeded) NSLog(@"message sent not success");
-        else NSLog(@"message sent success");
-    }];
+    [self.question postMessage:message.text forUser:self.userProfile];
     
     [self finishSend];
     [self scrollToBottomAnimated:YES];
@@ -76,6 +75,7 @@
 
 - (UIImageView *)bubbleImageViewWithType:(JSBubbleMessageType)type
                        forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     Message *message = [self.question.messages objectAtIndex:indexPath.row];
     
     if ( [message.owner.userName isEqualToString:self.userProfile.userName]) {
@@ -104,7 +104,7 @@
     
     Message *message = [self.question.messages objectAtIndex:indexPath.row];
     
-    return [NSString stringWithFormat:@"%@ - %@", message.text, message.owner.userName];
+    return (message.owner == self.userProfile)?@"My Message Cell":@"Message Cell";
 }
 
 #pragma mark - JSMessageViewDataSource Responses
@@ -124,10 +124,17 @@
     
     Message *message = [self.question.messages objectAtIndex:indexPath.row];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:message.owner.userImageURL]]];
-    //imageView.frame = CGRectMake(0,0,32,32);
+    UIImageView *imageView = [[UIImageView alloc] init];
+    [imageView setImageWithURL:message.owner.userImageURL placeholderImage:[UIImage imageNamed:@"defaultProfilePicture"]];
     
     return imageView;
+}
+
+#pragma mark - Custom Notifications
+
+- (void)updateQuestionContent {
+    
+    [self.tableView reloadData];
 }
 
 @end

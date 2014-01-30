@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "Profile.h"
-#import "EtrafaSorHTTPRequestHandler.h"
 
 #define DEFAULT_IMAGE_URL @"http://canfirtina.com/projectTrials/profile.jpg"
 #define KEY_FOR_CONTENT @"content"
@@ -52,13 +51,21 @@
     [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:self.userEmailField.text
                                                andPassword:self.passwordField.text
                                                     sender:self];
-    self.loginButton.enabled = NO;
+    
+    [self enableAllButtons:NO];
 }
 
 - (void)dismissKeyboard {
     
     [self.userEmailField resignFirstResponder];
     [self.passwordField resignFirstResponder];
+}
+
+- (void)enableAllButtons:(BOOL)enabled {
+    
+    self.loginButton.enabled = enabled;
+    self.signUpButton.enabled = enabled;
+    self.forgotPasswordButton.enabled = enabled;
 }
 
 #pragma mark - Delegations
@@ -108,6 +115,12 @@
             [(AppDelegate *)[[UIApplication sharedApplication] delegate] loginSucceededWithUserProfile:profile
                                                                                           forUserEMail:self.userEmailField.text
                                                                                            andPassword:self.passwordField.text];
+            
+            [self enableAllButtons:YES];
+        } else {
+            
+            NSLog(@"not succeded");
+            [self enableAllButtons:YES];
         }
     }
 }

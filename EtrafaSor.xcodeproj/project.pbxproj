@@ -30,6 +30,7 @@
 		9F5F87F21890437000428918 /* EtrafaSorHTTPRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87F11890437000428918 /* EtrafaSorHTTPRequestHandler.m */; };
 		9F5F87F518905CEF00428918 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87F418905CEF00428918 /* ProfileViewController.m */; };
 		9F5F87F818905D2300428918 /* QuestionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5F87F718905D2300428918 /* QuestionsTableViewController.m */; };
+		9F7CEAEE189AD12700B2C81F /* defaultProfilePicture.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F7CEAED189AD12700B2C81F /* defaultProfilePicture.png */; };
 		9FB6C849189129F400CD5427 /* NSString+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB6C7F8189129F400CD5427 /* NSString+JSMessagesView.m */; };
 		9FB6C84A189129F400CD5427 /* UIColor+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB6C7FA189129F400CD5427 /* UIColor+JSMessagesView.m */; };
 		9FB6C84B189129F400CD5427 /* UIImage+JSMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB6C7FC189129F400CD5427 /* UIImage+JSMessagesView.m */; };
@@ -170,6 +171,7 @@
 		9F5F87F418905CEF00428918 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		9F5F87F618905D2300428918 /* QuestionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsTableViewController.h; sourceTree = "<group>"; };
 		9F5F87F718905D2300428918 /* QuestionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsTableViewController.m; sourceTree = "<group>"; };
+		9F7CEAED189AD12700B2C81F /* defaultProfilePicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultProfilePicture.png; sourceTree = "<group>"; };
 		9FB6C7F7189129F400CD5427 /* NSString+JSMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSMessagesView.h"; sourceTree = "<group>"; };
 		9FB6C7F8189129F400CD5427 /* NSString+JSMessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JSMessagesView.m"; sourceTree = "<group>"; };
 		9FB6C7F9189129F400CD5427 /* UIColor+JSMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+JSMessagesView.h"; sourceTree = "<group>"; };
@@ -600,6 +602,7 @@
 				9FB6C88318912AC100CD5427 /* JSQSystemSoundPlayer */,
 				9FB6C7F4189129F400CD5427 /* JSMessagesViewController */,
 				9FDD89BF188E818500DC7BB9 /* Images.xcassets */,
+				9F7CEAED189AD12700B2C81F /* defaultProfilePicture.png */,
 				9FDD89AB188E818500DC7BB9 /* Supporting Files */,
 			);
 			path = EtrafaSor;
@@ -727,6 +730,7 @@
 				9FB6C878189129F400CD5427 /* input-field-cover@2x.png in Resources */,
 				9FB6C87D189129F400CD5427 /* button-photo.png in Resources */,
 				9FB6C86E189129F400CD5427 /* bubble-stroked-tailless@2x.png in Resources */,
+				9F7CEAEE189AD12700B2C81F /* defaultProfilePicture.png in Resources */,
 				9FB6C87F189129F400CD5427 /* input-bar-flat.png in Resources */,
 				9FB6C861189129F400CD5427 /* bubble-classic-typing.png in Resources */,
 				9FB6C867189129F400CD5427 /* bubble-classic-square-selected.png in Resources */,

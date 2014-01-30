@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EtrafaSorHTTPRequestHandler.h"
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate>
+@interface LoginViewController : UIViewController <UITextFieldDelegate, EtrafaSorHTTPRequestHandlerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *userEmailField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordField;

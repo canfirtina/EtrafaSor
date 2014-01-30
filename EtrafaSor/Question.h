@@ -22,11 +22,9 @@
 @property (strong, nonatomic, readonly) NSArray *messages; //array of messages
 @property (nonatomic) BOOL isSolved;
 
-typedef void (^postCompletionBlock)(BOOL succeeded);
-
 + (Question *)questionWithTopic:(NSString *)topic questionMessage:(NSString *)question owner:(Profile *)owner;
 
-- (void)postMessage:(NSString *)text forUser:(Profile *)user usingBlock:(postCompletionBlock)completionBlock;
+- (void)postMessage:(NSString *)text forUser:(Profile *)user;
 
 //Observer Pattern
 - (void)attachObserverForContentChange:(id<QuestionContentObserver>)observer;

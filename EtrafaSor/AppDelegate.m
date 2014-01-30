@@ -10,9 +10,21 @@
 #import <Security/Security.h>
 #import "MapViewController.h"
 #import "EtrafaSorHTTPRequestHandler.h"
+#import "LoginViewController.h"
 
 #define USEREMAIL_KEY @"User EMail"
 #define PASSWORD_KEY @"Password"
+#define USER_NAME_KEY @"User Name"
+#define IMAGEURL_KEY @"Image URL"
+
+#define DEFAULT_IMAGE_URL @"http://canfirtina.com/projectTrials/profile.jpg"
+#define KEY_FOR_CONTENT @"content"
+#define KEY_FOR_RESULT @"result"
+#define KEY_FOR_CONTENT_SESSION_ID @"sessionId"
+#define KEY_FOR_CONTENT_USER_CARD @"userCard"
+#define KEY_FOR_CONTENT_USER_CARD_USERNAME @"userName"
+#define RESULT_FOR_SUCCESS @"0"
+#define RESULT_FOR_INVALID_CREDENTIALS @"4"
 
 @interface AppDelegate () <EtrafaSorHTTPRequestHandlerDelegate>
 @property (nonatomic, strong) UIViewController *rootViewController;
@@ -24,18 +36,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    UIStoryboard* storyboard = self.window.rootViewController.storyboard;
+    LoginViewController *loginScreenViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginScreen"];
+    
     if( ![[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]){
         self.rootViewController = self.window.rootViewController;
-        
-        UIStoryboard* storyboard = self.window.rootViewController.storyboard;
-        UIViewController *loginScreenViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginScreen"];
         
         self.window.rootViewController = loginScreenViewController;
     } else {
         
-        [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:[[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]
-                                                              andPassword:[[NSUserDefaults standardUserDefaults] valueForKey:PASSWORD_KEY]
-                                                                   sender:self];
+        //[EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:[[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]
+          //                                                    andPassword:[[NSUserDefaults standardUserDefaults] valueForKey:PASSWORD_KEY]
+            //                                                       sender:loginScreenViewController];
+        
+        NSString *userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY];
+        NSString *userName = [[NSUserDefaults standardUserDefaults] valueForKey:USER_NAME_KEY];
+        NSString *imageURLString = [[NSUserDefaults standardUserDefaults] valueForKey:IMAGEURL_KEY];
+        NSURL *imageURL = [NSURL URLWithString:imageURLString];
+        
+        _profile = [Profile profileWithUserEMail:userEmail userName:userName imageURL:imageURL];
     }
     
     return YES;
@@ -46,7 +65,8 @@
                           andPassword:(NSString *)password {
     
     [[NSUserDefaults standardUserDefaults] setValue:userEMail forKey:USEREMAIL_KEY];
-    [[NSUserDefaults standardUserDefaults] setValue:password forKey:PASSWORD_KEY];
+    [[NSUserDefaults standardUserDefaults] setValue:userProfile.userName forKey:USER_NAME_KEY];
+    [[NSUserDefaults standardUserDefaults] setValue:userProfile.userImageURL.relativeString forKey:IMAGEURL_KEY];
     
     _profile = userProfile;
     self.window.rootViewController = self.rootViewController;
@@ -54,7 +74,6 @@
 
 - (void)connectionHasFinishedWithData:(NSDictionary *)data {
     
-    //initialise profile there
 }
 
 @end

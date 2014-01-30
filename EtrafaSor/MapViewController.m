@@ -10,11 +10,12 @@
 #import "EtrafaSorHTTPRequestHandler.h"
 #import "AppDelegate.h"
 #import "MessageBoardViewController.h"
+#import "UIImageView+WebCache.h"
 
 const float lonDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 = 0.0135 (111000 meters is distance between two longtitudes)
 const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 = 0.0135 (111000 meters is an approximate distance between two latitudes)
 
-@interface MapViewController ()
+@interface MapViewController () <EtrafaSorHTTPRequestHandlerDelegate>
 @property (strong, nonatomic) NSTimer *questionLoadTimer;
 @end
 
@@ -41,6 +42,15 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     
     //Notification Registrations
     [self.userProfile attachObserverForCoordinateChange:self];
+    
+    //Timers
+    
+    //update location timer
+    [NSTimer scheduledTimerWithTimeInterval:60.0
+                                     target:self
+                                   selector:@selector(updateLocation)
+                                   userInfo:nil
+                                    repeats:YES];
 }
 
 #pragma mark - Setters & Getters
@@ -54,17 +64,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     
-    if( self.goBackButton.hidden){
-        
-        [self setRegionForCoordinate:userLocation.coordinate];
-    }
-    
-    //update server for the user location change
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [EtrafaSorHTTPRequestHandler updateUserCheckIn:self.userProfile
-                                          inCoordinate:userLocation.coordinate
-                                                sender:nil];
-    });
+    if( self.goBackButton.hidden) [self setRegionForCoordinate:userLocation.coordinate];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView
@@ -86,7 +86,8 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
             pinAnnotationView.animatesDrop = YES;
             pinAnnotationView.canShowCallout = YES;
             
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:profile.userImageURL]]];
+            UIImageView *imageView = [[UIImageView alloc] init];
+            [imageView setImageWithURL:profile.userImageURL placeholderImage:[UIImage imageNamed:@"defaultProfilePicture"]];
             imageView.frame = CGRectMake(0,0,32,32);
             pinAnnotationView.leftCalloutAccessoryView = imageView;
             
@@ -97,8 +98,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
         
     } else if( [annotation isKindOfClass:[Question class]]){
         
-        //Question *question = (Question *)annotation;
-        
+        Question *question = (Question *)annotation;
         pinAnnotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"Question Annotation"];
         
         if( !pinAnnotationView){
@@ -109,9 +109,10 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
             pinAnnotationView.animatesDrop = YES;
             pinAnnotationView.canShowCallout = YES;
             
-            //UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:owner.userImageURL]]];
-            //imageView.frame = CGRectMake(0,0,32,32);
-            //pinAnnotationView.leftCalloutAccessoryView = imageView;
+            UIImageView *imageView = [[UIImageView alloc] init];
+            [imageView setImageWithURL:question.owner.userImageURL placeholderImage:[UIImage imageNamed:@"defaultProfilePicture"]];
+            imageView.frame = CGRectMake(0,0,32,32);
+            pinAnnotationView.leftCalloutAccessoryView = imageView;
             
             pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         }
@@ -133,6 +134,13 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
         
         [self performSegueWithIdentifier:@"MessageBoardModal" sender:view.annotation];
     }
+}
+
+#pragma mark - EtrafaSorHTTPRequestManagerDelegate
+
+- (void)connectionHasFinishedWithData:(NSDictionary *)data {
+    
+    NSLog(@"%@", data);
 }
 
 #pragma mark - Gesture Recognizers
@@ -170,9 +178,14 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 
 #pragma mark - NSTimer Mesages
 
-- (void)loadQuestions:(NSTimer *)timer {
+- (void)loadQuestions {
     
     [self loadQuestionsAroundCenterCoordinate:self.userProfile.coordinate];
+}
+
+- (void)updateLocation {
+    
+    [EtrafaSorHTTPRequestHandler updateUserCheckIn:self.userProfile inCoordinate:self.mapView.userLocation.coordinate sender:self];
 }
 
 #pragma mark - MapView Controls
@@ -187,7 +200,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     self.questionLoadTimer = nil;
     self.questionLoadTimer = [NSTimer scheduledTimerWithTimeInterval:45.0
                                                               target:self
-                                                            selector:@selector(loadQuestions:)
+                                                            selector:@selector(loadQuestions)
                                                             userInfo:nil
                                                              repeats:YES];
     
@@ -199,28 +212,22 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 - (void)loadQuestionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate {
     
     NSMutableArray *questionAnnotations = [self.mapView.annotations mutableCopy];
+    
     if( [questionAnnotations containsObject:self.userProfile])
         [questionAnnotations removeObject:self.userProfile];
     
     [self.mapView removeAnnotations:[questionAnnotations copy]];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        NSArray *annotations = [EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:coordinate
-                                                                                      withRadius:RADIUS
-                                                                                          sender:nil];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self.mapView addAnnotations:annotations];
-        });
-    });
+    [self.mapView addAnnotations:[EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:coordinate
+                                                           withRadius:RADIUS
+                                                               sender:self]];
 }
 
 - (void)loadPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate {
+    
     [EtrafaSorHTTPRequestHandler fetchPeopleAroundCenterCoordinate:coordinate
                                                         withRadius:RADIUS
-                                                            sender:nil];
+                                                            sender:self];
     
     self.peopleAroundLabel.text = [NSString stringWithFormat:@"%d people around you", 0];
 }
