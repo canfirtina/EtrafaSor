@@ -16,6 +16,7 @@
 #define KEY_FOR_CONTENT_SESSION_ID @"sessionId"
 #define KEY_FOR_CONTENT_USER_CARD @"userCard"
 #define KEY_FOR_CONTENT_USER_CARD_USERNAME @"userName"
+#define KEY_FOR_CONTENT_USER_CARD_USERID @"userId"
 #define RESULT_FOR_SUCCESS @"0"
 #define RESULT_FOR_INVALID_CREDENTIALS @"4"
 
@@ -81,11 +82,16 @@
     else {
         
         NSString *userNameString;
+        NSString *userIdString;
+        NSString *sessionIdString;
+        
         BOOL succeded;
         
         NSLog(@"Login");
         for(id key in data) {
             id value = [data objectForKey:key];
+            
+            NSLog(@"%@", value);
             
             NSString *keyAsString = (NSString *)key;
             NSString *valueAsString = (NSString *)value;
@@ -95,7 +101,11 @@
                 id sessionID = [value objectForKey:KEY_FOR_CONTENT_SESSION_ID]; //string
                 id userCard = [value objectForKey:KEY_FOR_CONTENT_USER_CARD]; //dictionary
                 id userName = [userCard objectForKey:KEY_FOR_CONTENT_USER_CARD_USERNAME];
+                id userId = [userCard objectForKey:KEY_FOR_CONTENT_USER_CARD_USERID];
                 userNameString = [NSString stringWithFormat:@"%@", userName];
+                userIdString = [NSString stringWithFormat:@"%@", userId];
+                sessionIdString = [NSString stringWithFormat:@"%@", sessionID];
+                
                 
             } else if( [keyAsString isEqualToString:KEY_FOR_RESULT]){
                 
@@ -108,13 +118,15 @@
         
         if( succeded){
             
-            Profile *profile = [Profile profileWithUserEMail:self.userEmailField.text
-                                                    userName:[NSString stringWithFormat:@"%@", userNameString]
+            Profile *profile = [Profile profileWithUserId:userIdString
+                                                userEmail:self.userEmailField.text
+                                                    userName:userNameString
                                                     imageURL:[NSURL URLWithString:DEFAULT_IMAGE_URL]];
             
             [(AppDelegate *)[[UIApplication sharedApplication] delegate] loginSucceededWithUserProfile:profile
                                                                                           forUserEMail:self.userEmailField.text
-                                                                                           andPassword:self.passwordField.text];
+                                                                                              password:self.passwordField.text
+                                                                                             sessionId:sessionIdString];
             
             [self enableAllButtons:YES];
         } else {

@@ -13,6 +13,10 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic, readonly) Profile *profile;
+@property (strong, nonatomic) NSString *sessionId;
 
-- (void)loginSucceededWithUserProfile:(Profile *)userProfile forUserEMail:(NSString *)userEMail andPassword:(NSString *)password;
+- (void)loginSucceededWithUserProfile:(Profile *)userProfile
+                         forUserEMail:(NSString *)userEMail
+                             password:(NSString *)password
+                            sessionId:(NSString *)sessionId;
 @end

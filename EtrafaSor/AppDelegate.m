@@ -15,7 +15,9 @@
 #define USEREMAIL_KEY @"User EMail"
 #define PASSWORD_KEY @"Password"
 #define USER_NAME_KEY @"User Name"
+#define USER_ID_KEY @"User ID"
 #define IMAGEURL_KEY @"Image URL"
+#define SESSION_ID_KEY @"Session Id"
 
 #define DEFAULT_IMAGE_URL @"http://canfirtina.com/projectTrials/profile.jpg"
 #define KEY_FOR_CONTENT @"content"
@@ -51,10 +53,16 @@
         
         NSString *userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY];
         NSString *userName = [[NSUserDefaults standardUserDefaults] valueForKey:USER_NAME_KEY];
+        NSString *userId = [[NSUserDefaults standardUserDefaults] valueForKey:USER_ID_KEY];
         NSString *imageURLString = [[NSUserDefaults standardUserDefaults] valueForKey:IMAGEURL_KEY];
+        self.sessionId = [[NSUserDefaults standardUserDefaults] valueForKey:SESSION_ID_KEY];
+        
         NSURL *imageURL = [NSURL URLWithString:imageURLString];
         
-        _profile = [Profile profileWithUserEMail:userEmail userName:userName imageURL:imageURL];
+        _profile = [Profile profileWithUserId:userId
+                                    userEmail:userEmail
+                                     userName:userName
+                                     imageURL:imageURL];
     }
     
     return YES;
@@ -62,11 +70,16 @@
 
 - (void)loginSucceededWithUserProfile:(Profile *)userProfile
                          forUserEMail:(NSString *)userEMail
-                          andPassword:(NSString *)password {
+                          password:(NSString *)password
+                            sessionId:(NSString *)sessionId{
     
     [[NSUserDefaults standardUserDefaults] setValue:userEMail forKey:USEREMAIL_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:userProfile.userName forKey:USER_NAME_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:userProfile.userImageURL.relativeString forKey:IMAGEURL_KEY];
+    [[NSUserDefaults standardUserDefaults] setValue:userProfile.userId forKey:USER_ID_KEY];
+    [[NSUserDefaults standardUserDefaults] setValue:sessionId forKey:SESSION_ID_KEY];
+    
+    self.sessionId = sessionId;
     
     _profile = userProfile;
     self.window.rootViewController = self.rootViewController;

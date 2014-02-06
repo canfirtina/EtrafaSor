@@ -29,7 +29,8 @@
     
     for( int i = 1; i < lenght; i++) {
         
-        Profile *profile = [Profile profileWithUserEMail:[NSString stringWithFormat:@"%d@gmail.com", i]
+        Profile *profile = [Profile profileWithUserId:nil
+                                            userEmail:[NSString stringWithFormat:@"%d@gmail.com", i]
                                                 userName:[NSString stringWithFormat:@"%dCan", i]
                                                 imageURL:[NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"]];
         
@@ -76,66 +77,76 @@
 + (void)fetchPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
                                     withRadius:(CGFloat)radius
                                         sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
-    
-    //NSMutableArray *peopleAround = [NSMutableArray array];
-    
-    //fetch questions
-    
-    //return [peopleAround copy];
 }
 
 + (void)fetchProfileWithUserEMail:(NSString *)userEMail
                            andPassword:(NSString *)password
                                 sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
-    EtrafaSorHTTPRequestResponseManager *manager = [[EtrafaSorHTTPRequestResponseManager alloc] init];
-    manager.responseData = nil;
-    manager.responseData = [NSMutableData data];
-    manager.delegate = sender;
+    NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:userEMail,@"email",password,@"password", nil];
     
-    NSString *requestURL = [NSString stringWithFormat:@"http://etrafasor-backend.herokuapp.com/api/signIn?email=%@&password=%@", userEMail, password];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL]];
-    
-    [[NSURLConnection alloc] initWithRequest:request delegate:manager];
+    [self requestPostHTTPFromDefaultServer:@"api/signIn" dataInfo:newDatasetInfo userId:@"<null>" sender:sender];
 }
 
 + (void)signUpUserProfile:(Profile *)profile
               andPassword:(NSString *)password
                    sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender{
     
-    EtrafaSorHTTPRequestResponseManager *manager = [[EtrafaSorHTTPRequestResponseManager alloc] init];
-    manager.responseData = nil;
-    manager.responseData = [NSMutableData data];
-    manager.delegate = sender;
+    NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:profile.userName,@"userName",profile.userEMail,@"email",password,@"password",nil];
     
-    NSString *requestURL = [NSString stringWithFormat:@"http://etrafasor-backend.herokuapp.com/api/signUp?userName=%@&email=%@&password=%@", profile.userName, profile.userEMail, password];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:requestURL]];
-    
-    [[NSURLConnection alloc] initWithRequest:request delegate:manager];
+    [self requestPostHTTPFromDefaultServer:@"api/signUp" dataInfo:newDatasetInfo userId:@"<null>" sender:sender];
 }
 
 + (void)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress
                                         sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
-    
 }
 
 + (void)updateUserCheckIn:(Profile *)profile
              inCoordinate:(CLLocationCoordinate2D)coordinate
                    sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
+    NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:coordinate.latitude], @"lat",[NSNumber numberWithFloat:coordinate.longitude],@"lng", nil];
+    
+    [self requestPostHTTPFromDefaultServer:@"api/locations" dataInfo:newDatasetInfo userId:profile.userId sender:sender];
 }
 
-+ (void)postQuestion:(id)question
++ (void)postQuestion:(Question *)question
               OfUser:(Profile *)user
               sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender{
     
+    NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:question.coordinate.latitude], @"lat",[NSNumber numberWithFloat:question.coordinate.longitude],@"lng",question.title,@"title",((Message *)question.messages.firstObject).text,@"question", nil];
+    
+    NSLog(@"%@", newDatasetInfo);
+    
+    [self requestPostHTTPFromDefaultServer:@"api/questions" dataInfo:newDatasetInfo userId:user.userId sender:sender];
 }
 
-+ (void)postMessage:(id)message
++ (void)postMessage:(Message *)message
+        forQuestion:(Question *)question
              sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender{
+}
+
++ (void)requestPostHTTPFromDefaultServer:(NSString *)api dataInfo:(NSDictionary *)dataSetInfo userId:(NSString *)userId sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
+    NSError*error;
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataSetInfo options:kNilOptions error:&error];
+    
+    NSString *sessionId = [(AppDelegate *)[[UIApplication sharedApplication] delegate] sessionId];
+    
+    EtrafaSorHTTPRequestResponseManager *manager = [[EtrafaSorHTTPRequestResponseManager alloc] init];
+    manager.responseData = nil;
+    manager.responseData = [NSMutableData data];
+    manager.delegate = sender;
+    
+    NSString *requestURL = [NSString stringWithFormat:@"http://etrafasor-backend.herokuapp.com/%@",api];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestURL]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:userId forHTTPHeaderField:@"X-UserId"];
+    [request setValue:sessionId forHTTPHeaderField:@"X-SessionId"];
+    [request setHTTPBody:jsonData];
+    
+    [[NSURLConnection alloc] initWithRequest:request delegate:manager];
 }
 
 @end

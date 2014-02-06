@@ -19,6 +19,7 @@
 @synthesize coordinate = _coordinate;
 @synthesize title = _title;
 //@synthesize subtitle = _subtitle;
+@synthesize userId = _userId;
 @synthesize userName = _userName;
 @synthesize userEMail = _userEMail;
 @synthesize userImageURL = _userImageURL;
@@ -28,14 +29,16 @@
 
 #pragma mark - Custom Allocations
 
-+ (Profile *)profileWithUserEMail:(NSString *)userEMail
-                         userName:(NSString *)userName
-                         imageURL:(NSURL *)imageURL{
++ (Profile *)profileWithUserId:(NSString *)userId
+                         userEmail:(NSString *)userEMail
+                      userName:(NSString *)userName
+                      imageURL:(NSURL *)imageURL {
     
     Profile *newProfile = [[Profile alloc] init];
     newProfile.userEMail = userEMail;
     newProfile.userName = userName;
     newProfile.userImageURL = imageURL;
+    newProfile.userId = userId;
     
     return newProfile;
 }

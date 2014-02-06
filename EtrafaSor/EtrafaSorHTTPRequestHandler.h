@@ -42,5 +42,6 @@
               sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
 + (void)postMessage:(Message *)message
+        forQuestion:(Question *)question
              sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 @end

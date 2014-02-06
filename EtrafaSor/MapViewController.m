@@ -64,7 +64,8 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     
-    if( self.goBackButton.hidden) [self setRegionForCoordinate:userLocation.coordinate];
+    if( self.goBackButton.hidden && [userLocation.location distanceFromLocation:[[CLLocation alloc] initWithLatitude:self.userProfile.coordinate.latitude longitude:self.userProfile.coordinate.longitude]] > 30)
+        [self setRegionForCoordinate:userLocation.coordinate];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView

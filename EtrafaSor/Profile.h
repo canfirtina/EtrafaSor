@@ -17,6 +17,7 @@
 
 @interface Profile : NSObject <MKAnnotation>
 
+@property (strong, nonatomic) NSString *userId;
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *userEMail;
 @property (strong, nonatomic) NSURL *userImageURL;
@@ -24,7 +25,8 @@
 @property (strong, nonatomic) NSArray *answers; //array of messages
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
-+ (Profile *)profileWithUserEMail:(NSString *)userEMail
++ (Profile *)profileWithUserId:(NSString *)userId
+                         userEmail:(NSString *)userEMail
                          userName:(NSString *)userName
                          imageURL:(NSURL *)imageURL;
 

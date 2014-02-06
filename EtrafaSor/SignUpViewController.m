@@ -45,7 +45,8 @@
     
     [self dismissKeyboard];
     
-    Profile *profile = [Profile profileWithUserEMail:self.emailField.text
+    Profile *profile = [Profile profileWithUserId:nil
+                                        userEmail:self.emailField.text
                                             userName:self.userNameField.text
                                             imageURL:[NSURL URLWithString:DEFAULT_IMAGE_URL]];
     
