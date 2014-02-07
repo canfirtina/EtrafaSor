@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Can Firtina. All rights reserved.
 //
 
-#import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "Profile.h"
 
@@ -118,10 +117,10 @@
                                                     userName:userNameString
                                                     imageURL:[NSURL URLWithString:DEFAULT_IMAGE_URL]];
             
-            [(AppDelegate *)[[UIApplication sharedApplication] delegate] loginSucceededWithUserProfile:profile
-                                                                                          forUserEMail:self.userEmailField.text
-                                                                                              password:self.passwordField.text
-                                                                                             sessionId:sessionIdString];
+            [self.loginResponseDelegate loginSucceededWithUserProfile:profile
+                                                         forUserEMail:self.userEmailField.text
+                                                             password:self.passwordField.text
+                                                            sessionId:sessionIdString];
         } else NSLog(@"login not succeded");
         
         [self enableAllButtons:YES];
@@ -130,5 +129,5 @@
 
 #pragma mark - Segue Actions
 
-- (IBAction)dismissByCancelToLoginViewController:(UIStoryboardSegue *)segue{}
+- (IBAction)dismissByCancelToLoginViewController:(UIStoryboardSegue *)segue {}
 @end

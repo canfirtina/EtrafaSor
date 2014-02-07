@@ -31,7 +31,7 @@
 #define RESULT_FOR_SUCCESS @"0"
 #define RESULT_FOR_INVALID_CREDENTIALS @"4"
 
-@interface AppDelegate () <EtrafaSorHTTPRequestHandlerDelegate>
+@interface AppDelegate () <EtrafaSorHTTPRequestHandlerDelegate, LoginResultResponser>
 @property (nonatomic, strong) UIViewController *rootViewController;
 @end
 
@@ -47,6 +47,7 @@
     if( ![[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]){
         
         LoginViewController *loginScreenViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginScreen"];
+        loginScreenViewController.loginResponseDelegate = self;
         self.window.rootViewController = loginScreenViewController;
         
     } else {
@@ -64,7 +65,7 @@
 
 - (void)loginSucceededWithUserProfile:(Profile *)userProfile
                          forUserEMail:(NSString *)userEMail
-                          password:(NSString *)password
+                             password:(NSString *)password
                             sessionId:(NSString *)sessionId{
     
     [[NSUserDefaults standardUserDefaults] setValue:userEMail forKey:USEREMAIL_KEY];

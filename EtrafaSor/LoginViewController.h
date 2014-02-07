@@ -9,6 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "EtrafaSorHTTPRequestHandler.h"
 
+@protocol LoginResultResponser <NSObject>
+
+@required
+
+- (void)loginSucceededWithUserProfile:(Profile *)userProfile
+                         forUserEMail:(NSString *)userEMail
+                             password:(NSString *)password
+                            sessionId:(NSString *)sessionId;
+
+@end
+
 @interface LoginViewController : UIViewController <UITextFieldDelegate, EtrafaSorHTTPRequestHandlerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *userEmailField;
@@ -16,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
+@property (nonatomic) id<LoginResultResponser> loginResponseDelegate;
 
 - (IBAction)dismissByCancelToLoginViewController:(UIStoryboardSegue *)segue;
 @end
