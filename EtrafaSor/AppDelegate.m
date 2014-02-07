@@ -47,16 +47,10 @@
         self.window.rootViewController = loginScreenViewController;
     } else {
         
-        //[EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:[[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]
-          //                                                    andPassword:[[NSUserDefaults standardUserDefaults] valueForKey:PASSWORD_KEY]
-            //                                                       sender:loginScreenViewController];
-        
         NSString *userEmail = [[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY];
         NSString *userName = [[NSUserDefaults standardUserDefaults] valueForKey:USER_NAME_KEY];
         NSString *userId = [[NSUserDefaults standardUserDefaults] valueForKey:USER_ID_KEY];
         NSString *imageURLString = [[NSUserDefaults standardUserDefaults] valueForKey:IMAGEURL_KEY];
-        self.sessionId = [[NSUserDefaults standardUserDefaults] valueForKey:SESSION_ID_KEY];
-        
         NSURL *imageURL = [NSURL URLWithString:imageURLString];
         
         _profile = [Profile profileWithUserId:userId
@@ -79,14 +73,17 @@
     [[NSUserDefaults standardUserDefaults] setValue:userProfile.userId forKey:USER_ID_KEY];
     [[NSUserDefaults standardUserDefaults] setValue:sessionId forKey:SESSION_ID_KEY];
     
-    self.sessionId = sessionId;
-    
     _profile = userProfile;
     self.window.rootViewController = self.rootViewController;
 }
 
 - (void)connectionHasFinishedWithData:(NSDictionary *)data {
     
+}
+
+- (NSString *)sessionId {
+    
+    return [[NSUserDefaults standardUserDefaults] valueForKey:SESSION_ID_KEY];
 }
 
 @end

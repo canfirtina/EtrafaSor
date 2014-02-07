@@ -28,9 +28,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
-    // convert to JSON
-    NSError *myError = nil;
-    NSDictionary *result = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&myError];
+    NSDictionary *result = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:nil];
     
     [self.delegate connectionHasFinishedWithData:result];
 }

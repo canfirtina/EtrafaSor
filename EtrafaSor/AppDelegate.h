@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic, readonly) Profile *profile;
-@property (strong, nonatomic) NSString *sessionId;
+@property (nonatomic, readonly, copy) NSString *sessionId;
 
 - (void)loginSucceededWithUserProfile:(Profile *)userProfile
                          forUserEMail:(NSString *)userEMail

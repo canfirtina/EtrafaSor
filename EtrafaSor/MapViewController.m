@@ -226,9 +226,9 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 
 - (void)loadPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate {
     
-    [EtrafaSorHTTPRequestHandler fetchPeopleAroundCenterCoordinate:coordinate
-                                                        withRadius:RADIUS
-                                                            sender:self];
+    [EtrafaSorHTTPRequestHandler peopleAroundCenterCoordinate:coordinate
+                                                   withRadius:RADIUS
+                                                       sender:self];
     
     self.peopleAroundLabel.text = [NSString stringWithFormat:@"%d people around you", 0];
 }

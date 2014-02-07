@@ -18,11 +18,11 @@
                                        withRadius:(CGFloat)radius
                                            sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (void)fetchPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
++ (void)peopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
                                withRadius:(CGFloat)radius
                                         sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (void)fetchProfileWithUserEMail:(NSString *)userEMail
++ (void)loginWithUserEMail:(NSString *)userEMail
                            andPassword:(NSString *)password
                                 sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 

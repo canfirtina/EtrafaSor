@@ -61,31 +61,44 @@
     
     NSMutableArray *questionsToSend = [NSMutableArray array];
     
-    NSArray *profiles = [EtrafaSorHTTPRequestHandler createRandomProfilesAroundCoordinate:coordinate];
+//    NSArray *profiles = [EtrafaSorHTTPRequestHandler createRandomProfilesAroundCoordinate:coordinate];
+//    
+//    for (Profile *profile in profiles) {
+//        for (Question *question in profile.questions) {
+//            if( [[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] distanceFromLocation:[[CLLocation alloc] initWithLatitude:question.coordinate.latitude longitude:question.coordinate.longitude]] < radius){
+//                [questionsToSend addObject:question];
+//            }
+//        }
+//    }
     
-    for (Profile *profile in profiles) {
-        for (Question *question in profile.questions) {
-            if( [[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] distanceFromLocation:[[CLLocation alloc] initWithLatitude:question.coordinate.latitude longitude:question.coordinate.longitude]] < radius){
-                [questionsToSend addObject:question];
-            }
-        }
-    }
+    Profile *profile = [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
+    
+    NSString *api = [NSString stringWithFormat:@"api/questions?lat=%f&lng=%f&distance=%d", coordinate.latitude, coordinate.longitude, radius];
+    [self requestHTTPFromDefaultServerWithMethod:nil
+                                             api:api
+                                        dataInfo:nil
+                                          userId:profile.userId
+                                          sender:sender];
     
     return [questionsToSend copy];
 }
 
-+ (void)fetchPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
++ (void)peopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
                                     withRadius:(CGFloat)radius
                                         sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
 }
 
-+ (void)fetchProfileWithUserEMail:(NSString *)userEMail
++ (void)loginWithUserEMail:(NSString *)userEMail
                            andPassword:(NSString *)password
                                 sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
     NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:userEMail,@"email",password,@"password", nil];
     
-    [self requestPostHTTPFromDefaultServer:@"api/signIn" dataInfo:newDatasetInfo userId:@"<null>" sender:sender];
+    [self requestHTTPFromDefaultServerWithMethod:@"POST"
+                                             api:@"api/signIn"
+                                        dataInfo:newDatasetInfo
+                                          userId:@"<null>"
+                                          sender:sender];
 }
 
 + (void)signUpUserProfile:(Profile *)profile
@@ -94,7 +107,11 @@
     
     NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:profile.userName,@"userName",profile.userEMail,@"email",password,@"password",nil];
     
-    [self requestPostHTTPFromDefaultServer:@"api/signUp" dataInfo:newDatasetInfo userId:@"<null>" sender:sender];
+    [self requestHTTPFromDefaultServerWithMethod:@"POST"
+                                             api:@"api/signUp"
+                                        dataInfo:newDatasetInfo
+                                          userId:@"<null>"
+                                          sender:sender];
 }
 
 + (void)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress
@@ -105,20 +122,28 @@
              inCoordinate:(CLLocationCoordinate2D)coordinate
                    sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
-    NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:coordinate.latitude], @"lat",[NSNumber numberWithFloat:coordinate.longitude],@"lng", nil];
+    NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:coordinate.latitude], @"lat",[NSNumber numberWithDouble:coordinate.longitude],@"lng", nil];
     
-    [self requestPostHTTPFromDefaultServer:@"api/locations" dataInfo:newDatasetInfo userId:profile.userId sender:sender];
+    [self requestHTTPFromDefaultServerWithMethod:@"POST"
+                                             api:@"api/locations"
+                                        dataInfo:newDatasetInfo
+                                          userId:profile.userId
+                                          sender:sender];
 }
 
 + (void)postQuestion:(Question *)question
               OfUser:(Profile *)user
               sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender{
     
-    NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:question.coordinate.latitude], @"lat",[NSNumber numberWithFloat:question.coordinate.longitude],@"lng",question.title,@"title",((Message *)question.messages.firstObject).text,@"question", nil];
+    NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:question.coordinate.latitude], @"lat",[NSNumber numberWithDouble:question.coordinate.longitude],@"lng",question.title,@"title",((Message *)question.messages.firstObject).text,@"question", nil];
     
     NSLog(@"%@", newDatasetInfo);
     
-    [self requestPostHTTPFromDefaultServer:@"api/questions" dataInfo:newDatasetInfo userId:user.userId sender:sender];
+    [self requestHTTPFromDefaultServerWithMethod:@"POST"
+                                             api:@"api/questions"
+                                        dataInfo:newDatasetInfo
+                                          userId:user.userId
+                                          sender:sender];
 }
 
 + (void)postMessage:(Message *)message
@@ -126,11 +151,13 @@
              sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender{
 }
 
-+ (void)requestPostHTTPFromDefaultServer:(NSString *)api dataInfo:(NSDictionary *)dataSetInfo userId:(NSString *)userId sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
-    
-    NSError*error;
-    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataSetInfo options:kNilOptions error:&error];
-    
++ (void)requestHTTPFromDefaultServerWithMethod:(NSString *)method
+                                           api:(NSString *)api
+                                      dataInfo:(NSDictionary *)dataSetInfo
+                                        userId:(NSString *)userId
+                                        sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
+
+        
     NSString *sessionId = [(AppDelegate *)[[UIApplication sharedApplication] delegate] sessionId];
     
     EtrafaSorHTTPRequestResponseManager *manager = [[EtrafaSorHTTPRequestResponseManager alloc] init];
@@ -140,11 +167,11 @@
     
     NSString *requestURL = [NSString stringWithFormat:@"http://etrafasor-backend.herokuapp.com/%@",api];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestURL]];
-    [request setHTTPMethod:@"POST"];
+    if( method) [request setHTTPMethod:method];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:userId forHTTPHeaderField:@"X-UserId"];
     [request setValue:sessionId forHTTPHeaderField:@"X-SessionId"];
-    [request setHTTPBody:jsonData];
+    if( dataSetInfo) [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:dataSetInfo options:kNilOptions error:nil]];
     
     [[NSURLConnection alloc] initWithRequest:request delegate:manager];
 }

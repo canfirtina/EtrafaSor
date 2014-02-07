@@ -11,12 +11,13 @@
 #import "Profile.h"
 
 #define DEFAULT_IMAGE_URL @"http://canfirtina.com/projectTrials/profile.jpg"
-#define KEY_FOR_CONTENT @"content"
-#define KEY_FOR_RESULT @"result"
-#define KEY_FOR_CONTENT_SESSION_ID @"sessionId"
-#define KEY_FOR_CONTENT_USER_CARD @"userCard"
-#define KEY_FOR_CONTENT_USER_CARD_USERNAME @"userName"
-#define KEY_FOR_CONTENT_USER_CARD_USERID @"userId"
+#define KEY_CONTENT @"content"
+#define KEY_RESULT @"result"
+#define KEY_SESSION_ID @"sessionId"
+#define KEY_USER_CARD @"userCard"
+#define KEY_USER_CARD_USERNAME @"userName"
+#define KEY_USER_CARD_USERID @"userId"
+
 #define RESULT_FOR_SUCCESS @"0"
 #define RESULT_FOR_INVALID_CREDENTIALS @"4"
 
@@ -49,9 +50,9 @@
     
     [self dismissKeyboard];
     
-    [EtrafaSorHTTPRequestHandler fetchProfileWithUserEMail:self.userEmailField.text
-                                               andPassword:self.passwordField.text
-                                                    sender:self];
+    [EtrafaSorHTTPRequestHandler loginWithUserEMail:self.userEmailField.text
+                                        andPassword:self.passwordField.text
+                                             sender:self];
     
     [self enableAllButtons:NO];
 }
@@ -81,11 +82,13 @@
     if( !data) NSLog(@"login not succeded");
     else {
         
+        NSLog(@"%@", data);
+        
         NSString *userNameString;
         NSString *userIdString;
         NSString *sessionIdString;
         
-        BOOL succeded;
+        BOOL succeded = NO;
         
         NSLog(@"Login");
         for(id key in data) {
@@ -96,23 +99,21 @@
             NSString *keyAsString = (NSString *)key;
             NSString *valueAsString = (NSString *)value;
             
-            if( [keyAsString isEqualToString:KEY_FOR_CONTENT]){
+            if( [keyAsString isEqualToString:KEY_CONTENT]){
                 
-                id sessionID = [value objectForKey:KEY_FOR_CONTENT_SESSION_ID]; //string
-                id userCard = [value objectForKey:KEY_FOR_CONTENT_USER_CARD]; //dictionary
-                id userName = [userCard objectForKey:KEY_FOR_CONTENT_USER_CARD_USERNAME];
-                id userId = [userCard objectForKey:KEY_FOR_CONTENT_USER_CARD_USERID];
+                id sessionID = [value objectForKey:KEY_SESSION_ID]; //string
+                id userCard = [value objectForKey:KEY_USER_CARD]; //dictionary
+                id userName = [userCard objectForKey:KEY_USER_CARD_USERNAME]; //string
+                id userId = [userCard objectForKey:KEY_USER_CARD_USERID]; //string
                 userNameString = [NSString stringWithFormat:@"%@", userName];
                 userIdString = [NSString stringWithFormat:@"%@", userId];
                 sessionIdString = [NSString stringWithFormat:@"%@", sessionID];
                 
                 
-            } else if( [keyAsString isEqualToString:KEY_FOR_RESULT]){
+            } else if( [keyAsString isEqualToString:KEY_RESULT]){
                 
                 if( [[NSString stringWithFormat:@"%@", valueAsString] isEqualToString:RESULT_FOR_SUCCESS])
                     succeded = YES;
-                else if ([[NSString stringWithFormat:@"%@", valueAsString] isEqualToString:RESULT_FOR_INVALID_CREDENTIALS])
-                    succeded = NO;
             }
         }
         
@@ -127,13 +128,9 @@
                                                                                           forUserEMail:self.userEmailField.text
                                                                                               password:self.passwordField.text
                                                                                              sessionId:sessionIdString];
-            
-            [self enableAllButtons:YES];
-        } else {
-            
-            NSLog(@"not succeded");
-            [self enableAllButtons:YES];
-        }
+        } else NSLog(@"not succeded");
+        
+        [self enableAllButtons:YES];
     }
 }
 
