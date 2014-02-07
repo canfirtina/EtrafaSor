@@ -28,7 +28,7 @@
                                         sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
 + (void)questionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-                             withRadius:(CGFloat)radius
+                             withRadius:(NSInteger)radius
                                    user:(Profile *)user
                                  sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 

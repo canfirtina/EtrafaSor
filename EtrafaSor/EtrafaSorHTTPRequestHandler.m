@@ -47,66 +47,12 @@
                                         sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
 }
 
-//+ (Question *)createRandomQuestionforProfile:(Profile *)profile {
-//    
-//    static int i = 0;
-//        
-//    Question *question = [Question questionWithTopic:[NSString stringWithFormat:@"%d %@", i++, profile.userName] questionMessage:@"messageasdnaskjdahsdhkasdh" owner:profile];
-//    
-//    return question;
-//}
-
-//+ (NSArray *)createRandomProfilesAroundCoordinate:(CLLocationCoordinate2D)coordinate {
-//    
-//    NSMutableArray *profiles = [NSMutableArray array];
-//    int lenght = arc4random_uniform(40);
-//    
-//    for( int i = 1; i < lenght; i++) {
-//        
-//        Profile *profile = [Profile profileWithUserId:nil
-//                                            userEmail:[NSString stringWithFormat:@"%d@gmail.com", i]
-//                                                userName:[NSString stringWithFormat:@"%dCan", i]
-//                                                imageURL:[NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"]];
-//        
-//        int latInt = arc4random_uniform(4284);
-//        CGFloat lat = (float)latInt / 1000000;
-//        lat = (coordinate.latitude - 0.002228) + lat;
-//        
-//        int lonInt = arc4random_uniform(5073);
-//        CGFloat lon = (float)lonInt / 1000000;
-//        lon = (coordinate.longitude - 0.002555) + lon;
-//        
-//        CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(lat, lon);
-//        [profile setCoordinate:coordinate];
-//        
-//        profile.questions = [NSArray arrayWithObject:[EtrafaSorHTTPRequestHandler createRandomQuestionforProfile:profile]];
-//        
-//        [profiles addObject:profile];
-//    }
-//    
-//    [profiles addObject:[(AppDelegate *)[[UIApplication sharedApplication] delegate] profile]];
-//    
-//    return profiles;
-//}
-
 + (void)questionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-                             withRadius:(CGFloat)radius
+                             withRadius:(NSInteger)radius
                                    user:(Profile *)user
                                  sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
     
-//    NSMutableArray *questionsToSend = [NSMutableArray array];
-    
-//    NSArray *profiles = [EtrafaSorHTTPRequestHandler createRandomProfilesAroundCoordinate:coordinate];
-//    
-//    for (Profile *profile in profiles) {
-//        for (Question *question in profile.questions) {
-//            if( [[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] distanceFromLocation:[[CLLocation alloc] initWithLatitude:question.coordinate.latitude longitude:question.coordinate.longitude]] < radius){
-//                [questionsToSend addObject:question];
-//            }
-//        }
-//    }
-    
-    NSString *api = [NSString stringWithFormat:@"api/questions?lat=%f&lng=%f&distance=%f", coordinate.latitude, coordinate.longitude, radius];
+    NSString *api = [NSString stringWithFormat:@"api/questions?lat=%f&lng=%f&distance=%d", coordinate.latitude, coordinate.longitude, radius];
     
     [self requestHTTPFromDefaultServerWithMethod:nil
                                              api:api

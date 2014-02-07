@@ -31,7 +31,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    [NSTimer scheduledTimerWithTimeInterval:45.0 target:self selector:@selector(fetchAndSetQuestionsAsynchronously:) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:45.0 target:self selector:@selector(fetchAndSetQuestionsAsynchronously) userInfo:nil repeats:YES];
 }
 
 #pragma mark - Setters & Getters
@@ -39,7 +39,7 @@
 - (NSArray *)questions {
     
     if( !_questions)
-        [self fetchAndSetQuestionsAsynchronously:nil];
+        [self fetchAndSetQuestionsAsynchronously];
     
     return _questions;
 }
@@ -79,16 +79,16 @@
 
 #pragma mark - Data Fetch
 
-- (void)fetchAndSetQuestionsAsynchronously:(NSTimer *)timer {
+- (void)fetchAndSetQuestionsAsynchronously {
     
     UIActivityIndicatorView *ai = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:ai];
     [ai startAnimating];
     
     [EtrafaSorHTTPRequestHandler questionsAroundCenterCoordinate:self.userProfile.coordinate
-                                                          withRadius:RADIUS
-                                                                user:self.userProfile
-                                                              sender:self];
+                                                      withRadius:RADIUS
+                                                            user:self.userProfile
+                                                          sender:self];
 }
 
 #pragma mark - Table view data source
@@ -127,12 +127,44 @@
 
 #pragma mark - EtrafaSorHTTPRequestHandlerDelegate Delegate
 
+- (Question *)parseQuestionData:(NSDictionary *)questionData {
+    
+    NSDictionary *userInfo = [questionData objectForKey:@"user"];
+    Profile *owner = [Profile profileWithUserId:[userInfo objectForKey:@"userId"]
+                                      userEmail:nil
+                                       userName:[userInfo objectForKey:@"userName"]
+                                       imageURL:[NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"]];
+    
+    Question *question = [Question questionWithTopic:[questionData objectForKey:@"title"]
+                                     questionMessage:[questionData objectForKey:@"text"]
+                                               owner:owner];
+    
+    return question;
+}
 - (void)connectionHasFinishedWithData:(NSDictionary *)data {
     
     if( data) {
         
-        //[self setQuestions:questions];
-        self.navigationItem.rightBarButtonItem = nil;
+        for(id key in data) {
+            
+            id value = [data objectForKey:key];
+            
+            NSString *keyAsString = (NSString *)key;
+            
+            if( [keyAsString isEqualToString:@"content"]) {
+                
+                if( [value isKindOfClass:[NSArray class]]) {
+                    NSMutableArray *questionsForTableView = [NSMutableArray array];
+                    NSArray *questions = value;
+                    
+                    for( NSDictionary *questionData in questions)
+                        [questionsForTableView addObject:[self parseQuestionData:questionData]];
+                    
+                    self.questions = [questionsForTableView copy];
+                    self.navigationItem.rightBarButtonItem = nil;
+                }
+            }
+        }
     }
 }
 #pragma mark - Segue
