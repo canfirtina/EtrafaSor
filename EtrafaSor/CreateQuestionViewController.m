@@ -52,7 +52,9 @@
     questionOwner.questions = [mutable copy];
                 
     //do it in another thread
-    [EtrafaSorHTTPRequestHandler postQuestion:question OfUser:questionOwner sender:self];
+    [EtrafaSorHTTPRequestHandler postQuestion:question
+                                         user:questionOwner
+                                       sender:self];
 }
 
 #pragma mark - Delegate

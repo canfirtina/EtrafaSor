@@ -81,21 +81,16 @@
     
     if( !data) NSLog(@"login not succeded");
     else {
-        
-        NSLog(@"%@", data);
-        
+
         NSString *userNameString;
         NSString *userIdString;
         NSString *sessionIdString;
         
         BOOL succeded = NO;
         
-        NSLog(@"Login");
         for(id key in data) {
             id value = [data objectForKey:key];
-            
-            NSLog(@"%@", value);
-            
+                        
             NSString *keyAsString = (NSString *)key;
             NSString *valueAsString = (NSString *)value;
             
@@ -108,7 +103,6 @@
                 userNameString = [NSString stringWithFormat:@"%@", userName];
                 userIdString = [NSString stringWithFormat:@"%@", userId];
                 sessionIdString = [NSString stringWithFormat:@"%@", sessionID];
-                
                 
             } else if( [keyAsString isEqualToString:KEY_RESULT]){
                 
@@ -128,7 +122,7 @@
                                                                                           forUserEMail:self.userEmailField.text
                                                                                               password:self.passwordField.text
                                                                                              sessionId:sessionIdString];
-        } else NSLog(@"not succeded");
+        } else NSLog(@"login not succeded");
         
         [self enableAllButtons:YES];
     }

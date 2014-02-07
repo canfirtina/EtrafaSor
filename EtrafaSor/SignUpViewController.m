@@ -84,7 +84,6 @@
     if( !data) NSLog(@"failed signup");
     else {
         
-        NSLog(@"Sign up");
         for(id key in data) {
             
             id value = [data objectForKey:key];
@@ -94,7 +93,8 @@
             
             if( [keyAsString isEqualToString:KEY_FOR_RESULT]){
                 
-                if( [[NSString stringWithFormat:@"%@", valueAsString] isEqualToString:RESULT_FOR_SUCCESS]) NSLog(@"sign up succeded");
+                if( [[NSString stringWithFormat:@"%@", valueAsString] isEqualToString:RESULT_FOR_SUCCESS])
+                    [self dismissViewControllerAnimated:YES completion:nil];
                 else NSLog(@"sign up not succeded");
             }
         }

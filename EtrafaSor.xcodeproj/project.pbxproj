@@ -92,6 +92,7 @@
 		9FB6C88718912AC100CD5427 /* JSQSystemSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB6C88618912AC100CD5427 /* JSQSystemSoundPlayer.m */; };
 		9FB6C88918912ADD00CD5427 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB6C88818912ADD00CD5427 /* AudioToolbox.framework */; };
 		9FB6C88B18912B0700CD5427 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB6C88A18912B0700CD5427 /* QuartzCore.framework */; };
+		9FC51E8918A56D1200F6F9B6 /* WaitScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FC51E8818A56D1200F6F9B6 /* WaitScreenViewController.m */; };
 		9FDD89A5188E818500DC7BB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A4188E818500DC7BB9 /* Foundation.framework */; };
 		9FDD89A7188E818500DC7BB9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A6188E818500DC7BB9 /* CoreGraphics.framework */; };
 		9FDD89A9188E818500DC7BB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FDD89A8188E818500DC7BB9 /* UIKit.framework */; };
@@ -248,6 +249,8 @@
 		9FB6C88618912AC100CD5427 /* JSQSystemSoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQSystemSoundPlayer.m; sourceTree = "<group>"; };
 		9FB6C88818912ADD00CD5427 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9FB6C88A18912B0700CD5427 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9FC51E8718A56D1200F6F9B6 /* WaitScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitScreenViewController.h; sourceTree = "<group>"; };
+		9FC51E8818A56D1200F6F9B6 /* WaitScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitScreenViewController.m; sourceTree = "<group>"; };
 		9FDD89A1188E818500DC7BB9 /* EtrafaSor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EtrafaSor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FDD89A4188E818500DC7BB9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9FDD89A6188E818500DC7BB9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -576,6 +579,8 @@
 				9FDD89B4188E818500DC7BB9 /* AppDelegate.m */,
 				9FDD89BC188E818500DC7BB9 /* LoginViewController.h */,
 				9FDD89BD188E818500DC7BB9 /* LoginViewController.m */,
+				9FC51E8718A56D1200F6F9B6 /* WaitScreenViewController.h */,
+				9FC51E8818A56D1200F6F9B6 /* WaitScreenViewController.m */,
 				9FE67C6918942114009E8B85 /* SignUpViewController.h */,
 				9FE67C6A18942114009E8B85 /* SignUpViewController.m */,
 				9FDD89DC188E919C00DC7BB9 /* MapViewController.h */,
@@ -816,6 +821,7 @@
 				9FB6C854189129F400CD5427 /* JSMessagesViewController.m in Sources */,
 				9F5908E81892A4F9000128A0 /* UIImageView+WebCache.m in Sources */,
 				9F5F87F21890437000428918 /* EtrafaSorHTTPRequestHandler.m in Sources */,
+				9FC51E8918A56D1200F6F9B6 /* WaitScreenViewController.m in Sources */,
 				9FB6C850189129F400CD5427 /* JSDismissiveTextView.m in Sources */,
 				9FB6C84E189129F400CD5427 /* JSBubbleMessageCell.m in Sources */,
 				9F5908E01892A4F9000128A0 /* SDWebImageDownloader.m in Sources */,

@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "MessageBoardViewController.h"
 
-@interface QuestionsTableViewController ()
+@interface QuestionsTableViewController () <EtrafaSorHTTPRequestHandlerDelegate>
 @property (nonatomic, readonly, copy) Profile *userProfile;
 @end
 
@@ -85,17 +85,10 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:ai];
     [ai startAnimating];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSArray *questions = [EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:self.userProfile.coordinate
-                                                                                    withRadius:RADIUS
-                                                                                        sender:nil];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self setQuestions:questions];
-            [ai stopAnimating];
-            self.navigationItem.rightBarButtonItem = nil;
-        });
-    });
+    [EtrafaSorHTTPRequestHandler questionsAroundCenterCoordinate:self.userProfile.coordinate
+                                                          withRadius:RADIUS
+                                                                user:self.userProfile
+                                                              sender:self];
 }
 
 #pragma mark - Table view data source
@@ -132,6 +125,16 @@
     [self performSegueWithIdentifier:@"MessageBoardModal" sender:[self.questions objectAtIndex:indexPath.row]];
 }
 
+#pragma mark - EtrafaSorHTTPRequestHandlerDelegate Delegate
+
+- (void)connectionHasFinishedWithData:(NSDictionary *)data {
+    
+    if( data) {
+        
+        //[self setQuestions:questions];
+        self.navigationItem.rightBarButtonItem = nil;
+    }
+}
 #pragma mark - Segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     

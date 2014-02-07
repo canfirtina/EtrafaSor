@@ -125,7 +125,8 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 }
 
 - (void)mapView:(MKMapView *)mapView
- annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+ annotationView:(MKAnnotationView *)view
+calloutAccessoryControlTapped:(UIControl *)control {
     
     if( [view.annotation isKindOfClass:[Profile class]]){
         
@@ -142,6 +143,8 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 - (void)connectionHasFinishedWithData:(NSDictionary *)data {
     
     NSLog(@"%@", data);
+    
+    //[self.mapView addAnnotations: for fetched questions from loadquestionsaround
 }
 
 #pragma mark - Gesture Recognizers
@@ -186,7 +189,9 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
 
 - (void)updateLocation {
     
-    [EtrafaSorHTTPRequestHandler updateUserCheckIn:self.userProfile inCoordinate:self.mapView.userLocation.coordinate sender:self];
+    [EtrafaSorHTTPRequestHandler updateUserLocationInCoordinate:self.mapView.userLocation.coordinate
+                                                           user:self.userProfile
+                                                         sender:self];
 }
 
 #pragma mark - MapView Controls
@@ -219,15 +224,17 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     
     [self.mapView removeAnnotations:[questionAnnotations copy]];
     
-    [self.mapView addAnnotations:[EtrafaSorHTTPRequestHandler fetchQuestionsAroundCenterCoordinate:coordinate
-                                                           withRadius:RADIUS
-                                                               sender:self]];
+    [EtrafaSorHTTPRequestHandler questionsAroundCenterCoordinate:coordinate
+                                                      withRadius:RADIUS
+                                                            user:self.userProfile
+                                                          sender:self];
 }
 
 - (void)loadPeopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate {
     
     [EtrafaSorHTTPRequestHandler peopleAroundCenterCoordinate:coordinate
                                                    withRadius:RADIUS
+                                                         user:self.userProfile
                                                        sender:self];
     
     self.peopleAroundLabel.text = [NSString stringWithFormat:@"%d people around you", 0];

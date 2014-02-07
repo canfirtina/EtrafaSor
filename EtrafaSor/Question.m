@@ -96,6 +96,7 @@
     
     [EtrafaSorHTTPRequestHandler postMessage:message
                                  forQuestion:self
+                                        user:user
                                       sender:self];
 }
 

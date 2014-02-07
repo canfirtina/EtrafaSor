@@ -14,17 +14,11 @@
 @interface EtrafaSorHTTPRequestHandler : NSObject
 
 //if you want to be notified about connection results, set sender
-+ (NSArray *)fetchQuestionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-                                       withRadius:(CGFloat)radius
-                                           sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (void)peopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-                               withRadius:(CGFloat)radius
-                                        sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
-
+//user information not needed
 + (void)loginWithUserEMail:(NSString *)userEMail
-                           andPassword:(NSString *)password
-                                sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
+               andPassword:(NSString *)password
+                    sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
 + (void)signUpUserProfile:(Profile *)profile
               andPassword:(NSString *)password
@@ -33,15 +27,27 @@
 + (void)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress
                                         sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-+ (void)updateUserCheckIn:(Profile *)profile
-             inCoordinate:(CLLocationCoordinate2D)coordinate
-                   sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
++ (void)questionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
+                             withRadius:(CGFloat)radius
+                                   user:(Profile *)user
+                                 sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
+
+//user information needed
++ (void)peopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
+                          withRadius:(CGFloat)radius
+                                user:(Profile *)user
+                              sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
+
++ (void)updateUserLocationInCoordinate:(CLLocationCoordinate2D)coordinate
+                                  user:(Profile *)user
+                                sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
 + (void)postQuestion:(Question *)question
-              OfUser:(Profile *)user
+                user:(Profile *)user
               sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
 + (void)postMessage:(Message *)message
         forQuestion:(Question *)question
+               user:(Profile *)user
              sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 @end
