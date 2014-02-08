@@ -103,6 +103,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     static NSString *CellIdentifier = @"Questions Around";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
@@ -125,7 +126,7 @@
     [self performSegueWithIdentifier:@"MessageBoardModal" sender:[self.questions objectAtIndex:indexPath.row]];
 }
 
-#pragma mark - EtrafaSorHTTPRequestHandlerDelegate Delegate
+#pragma mark - EtrafaSorHTTPRequestHandlerDelegate Delegate & Parse
 
 - (Question *)parseQuestionData:(NSDictionary *)questionData {
     
@@ -141,6 +142,7 @@
     
     return question;
 }
+
 - (void)connectionHasFinishedWithData:(NSDictionary *)data {
     
     if( data) {
@@ -154,6 +156,7 @@
             if( [keyAsString isEqualToString:@"content"]) {
                 
                 if( [value isKindOfClass:[NSArray class]]) {
+                    
                     NSMutableArray *questionsForTableView = [NSMutableArray array];
                     NSArray *questions = value;
                     
@@ -167,6 +170,7 @@
         }
     }
 }
+
 #pragma mark - Segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     

@@ -114,8 +114,8 @@
             
             Profile *profile = [Profile profileWithUserId:userIdString
                                                 userEmail:self.userEmailField.text
-                                                    userName:userNameString
-                                                    imageURL:[NSURL URLWithString:DEFAULT_IMAGE_URL]];
+                                                 userName:userNameString
+                                                 imageURL:[NSURL URLWithString:DEFAULT_IMAGE_URL]];
             
             [self.loginResponseDelegate loginSucceededWithUserProfile:profile
                                                          forUserEMail:self.userEmailField.text
