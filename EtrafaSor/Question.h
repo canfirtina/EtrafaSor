@@ -17,12 +17,17 @@
 
 @interface Question : NSObject <MKAnnotation>
 
+@property (strong, nonatomic) NSString *questionId;
 @property (strong, nonatomic) NSString *topic;
 @property (nonatomic, readonly, copy) Profile *owner;
 @property (strong, nonatomic, readonly) NSArray *messages; //array of messages
 @property (nonatomic) BOOL isSolved;
 
-+ (Question *)questionWithTopic:(NSString *)topic questionMessage:(NSString *)question owner:(Profile *)owner;
++ (Question *)questionWithTopic:(NSString *)topic
+                questionMessage:(NSString *)question
+                     questionId:(NSString *)questionId
+                     coordinate:(CLLocationCoordinate2D)coordinate
+                          owner:(Profile *)owner;
 
 - (void)postMessage:(NSString *)text forUser:(Profile *)user;
 

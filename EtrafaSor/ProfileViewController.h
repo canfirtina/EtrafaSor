@@ -10,4 +10,8 @@
 
 @interface ProfileViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet UIButton *questionsButton;
+@property (weak, nonatomic) IBOutlet UIButton *answersButton;
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @end

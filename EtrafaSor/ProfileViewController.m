@@ -7,32 +7,36 @@
 //
 
 #import "ProfileViewController.h"
+#import "UIImageView+WebCache.h"
+#import "AppDelegate.h"
+#import "Profile.h"
 
 @interface ProfileViewController ()
-
+@property (nonatomic, readonly, copy) Profile *userProfile;
 @end
 
 @implementation ProfileViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+@synthesize profileImageView = _profileImageView;
+@synthesize answersButton = _answersButton;
+@synthesize questionsButton = _questionsButton;
+@synthesize userProfile = _userProfile;
+
+- (void)viewDidLayoutSubviews {
+    
+    [super viewDidLayoutSubviews];
+    
+    [self.profileImageView setImageWithURL:self.userProfile.userImageURL placeholderImage:[UIImage imageNamed:@"defaultProfilePicture"]];
+    self.title = self.userProfile.userName;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
+- (Profile *)userProfile {
+    
+    return [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)logoutPressed:(UIButton *)sender {
+    
+    [(AppDelegate *)[[UIApplication sharedApplication] delegate] logout];
 }
-
 @end

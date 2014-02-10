@@ -47,6 +47,18 @@
                                         sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
 }
 
++ (void)answersForQuestion:(Question *)question
+                      user:(Profile *)user
+                    sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
+    
+    NSString *api = [NSString stringWithFormat:@"api/questions/%@", question.questionId];
+    
+    [self requestHTTPFromDefaultServerWithMethod:nil
+                                             api:api
+                                        dataInfo:nil
+                                          userId:user.userId
+                                          sender:sender];
+}
 + (void)questionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
                              withRadius:(NSInteger)radius
                                    user:(Profile *)user
@@ -62,9 +74,18 @@
 }
 
 + (void)peopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-                          withRadius:(CGFloat)radius
+                          withRadius:(NSInteger)radius
                                 user:(Profile *)user
-                              sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {}
+                              sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
+    
+    NSString *api = [NSString stringWithFormat:@"api/users?lat=%f&lng=%f&distance=%d", coordinate.latitude, coordinate.longitude, radius];
+    
+    [self requestHTTPFromDefaultServerWithMethod:nil
+                                             api:api
+                                        dataInfo:nil
+                                          userId:user.userId
+                                          sender:sender];
+}
 
 + (void)updateUserLocationInCoordinate:(CLLocationCoordinate2D)coordinate
                                   user:(Profile *)user
@@ -95,7 +116,16 @@
 + (void)postMessage:(Message *)message
         forQuestion:(Question *)question
                user:(Profile *)user
-             sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {}
+             sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender {
+    
+    NSDictionary *newDatasetInfo = [NSDictionary dictionaryWithObjectsAndKeys:question.questionId, @"questionId", [NSNumber numberWithDouble:question.coordinate.latitude], @"lat",[NSNumber numberWithDouble:question.coordinate.longitude],@"lng",message.text,@"text", nil];
+        
+    [self requestHTTPFromDefaultServerWithMethod:@"POST"
+                                             api:@"api/questions/answer"
+                                        dataInfo:newDatasetInfo
+                                          userId:user.userId
+                                          sender:sender];
+}
 
 + (void)requestHTTPFromDefaultServerWithMethod:(NSString *)method
                                            api:(NSString *)api

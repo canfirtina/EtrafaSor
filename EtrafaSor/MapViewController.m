@@ -11,12 +11,14 @@
 #import "AppDelegate.h"
 #import "MessageBoardViewController.h"
 #import "UIImageView+WebCache.h"
+#import "CreateQuestionViewController.h"
 
 const float lonDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 = 0.0135 (111000 meters is distance between two longtitudes)
 const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 = 0.0135 (111000 meters is an approximate distance between two latitudes)
 
-@interface MapViewController () <EtrafaSorHTTPRequestHandlerDelegate>
+@interface MapViewController () <EtrafaSorHTTPRequestHandlerDelegate, CreateQuestionDelegate>
 @property (strong, nonatomic) NSTimer *questionLoadTimer;
+@property (nonatomic, readonly, copy) Profile *userProfile;
 @end
 
 @implementation MapViewController
@@ -33,6 +35,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
     [super viewDidLoad];
     
     self.mapView.delegate = self;
+    self.splitViewController.delegate = self;
     
     //Gesture Recognizer Creations
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self
@@ -140,11 +143,88 @@ calloutAccessoryControlTapped:(UIControl *)control {
 
 #pragma mark - EtrafaSorHTTPRequestManagerDelegate
 
+- (void)questionPostedSuccessfully{
+    
+    [self loadQuestionsAroundCenterCoordinate:self.userProfile.coordinate];
+}
+
+- (Question *)parseQuestionData:(NSDictionary *)questionData {
+        
+    NSDictionary *questionInfo = [questionData objectForKey:@"question"];
+    NSDictionary *userInfo = [questionInfo objectForKey:@"user"];
+    
+    Profile *owner = [Profile profileWithUserId:[userInfo objectForKey:@"userId"]
+                                      userEmail:nil
+                                       userName:[userInfo objectForKey:@"userName"]
+                                       imageURL:[NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"]];
+    
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([[questionInfo objectForKey:@"lat"] doubleValue], [[questionInfo objectForKey:@"lng"] doubleValue]);
+    
+    Question *question = [Question questionWithTopic:[questionData objectForKey:@"title"]
+                                     questionMessage:[questionInfo objectForKey:@"text"]
+                                          questionId:[questionData objectForKey:@"id"]
+                                          coordinate:coordinate
+                                               owner:owner];
+    
+    return question;
+}
+
 - (void)connectionHasFinishedWithData:(NSDictionary *)data {
     
-    NSLog(@"%@", data);
+    if( data) {
+        
+        for(id key in data) {
+            
+            id value = [data objectForKey:key];
+            
+            NSString *keyAsString = (NSString *)key;
+            
+            if( [keyAsString isEqualToString:@"content"]) {
+                
+                if( [value isKindOfClass:[NSArray class]] && [[value firstObject] objectForKey:@"question"]) {
+                    
+                    NSMutableArray *questionsForAnnotation = [NSMutableArray array];
+                    NSArray *questions = value;
+                    
+                    for( NSDictionary *questionData in questions)
+                        [questionsForAnnotation addObject:[self parseQuestionData:questionData]];
+                    
+                    [self.mapView addAnnotations:[questionsForAnnotation copy]];
+                } else if( [value isKindOfClass:[NSNumber class]]){
+                    
+                    self.peopleAroundLabel.text = [NSString stringWithFormat:@"%d people around you", (int)[value integerValue]];
+                }
+            }
+        }
+    }
+}
+
+#pragma mark - UISplitViewControllerDelegate
+
+#pragma mark - SplitViewController Delegate
+- (void)splitViewController:(UISplitViewController *)svc
+     willHideViewController:(UIViewController *)aViewController
+          withBarButtonItem:(UIBarButtonItem *)barButtonItem
+       forPopoverController:(UIPopoverController *)pc
+{
+    NSMutableArray *items = [self.navigationItem.leftBarButtonItems mutableCopy];
+    if( [items containsObject:barButtonItem])[items removeObject:barButtonItem];
+    barButtonItem.image = [UIImage imageNamed:@"detail"];
+    barButtonItem.style = UIBarButtonItemStylePlain;
     
-    //[self.mapView addAnnotations: for fetched questions from loadquestionsaround
+    if( !items) items = [NSMutableArray arrayWithObject:barButtonItem];
+    else [items insertObject:barButtonItem atIndex:0];
+    self.navigationItem.leftBarButtonItems = [items copy];
+    
+}
+
+- (void)splitViewController:(UISplitViewController *)svc
+     willShowViewController:(UIViewController *)aViewController
+  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    NSMutableArray *items = [self.navigationItem.leftBarButtonItems mutableCopy];
+    if( [items containsObject:barButtonItem])[items removeObject:barButtonItem];
+    self.navigationItem.leftBarButtonItems = [items copy];
 }
 
 #pragma mark - Gesture Recognizers
@@ -236,8 +316,6 @@ calloutAccessoryControlTapped:(UIControl *)control {
                                                    withRadius:RADIUS
                                                          user:self.userProfile
                                                        sender:self];
-    
-    self.peopleAroundLabel.text = [NSString stringWithFormat:@"%d people around you", 0];
 }
 
 #pragma mark - Segue
@@ -259,6 +337,17 @@ calloutAccessoryControlTapped:(UIControl *)control {
             mbvc = (MessageBoardViewController *)segue.destinationViewController;
         
         mbvc.question = question;
+    } else if( [segue.identifier isEqualToString:@"CreateQuestionModal"]) {
+        
+        CreateQuestionViewController *cqvc = nil;
+        
+        if( [segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController *nvc = (UINavigationController *)segue.destinationViewController;
+            cqvc = (CreateQuestionViewController *)nvc.topViewController;
+        } else if( [segue.destinationViewController isKindOfClass:[MessageBoardViewController class]])
+            cqvc = (CreateQuestionViewController *)segue.destinationViewController;
+        
+        cqvc.delegate = self;
     }
 }
 

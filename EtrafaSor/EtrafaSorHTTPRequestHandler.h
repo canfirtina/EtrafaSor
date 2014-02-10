@@ -27,14 +27,20 @@
 + (void)forgotPasswordRequestedForEMailAddress:(NSString *)eMailAddress
                                         sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
+
+//user information needed
+
 + (void)questionsAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
                              withRadius:(NSInteger)radius
                                    user:(Profile *)user
                                  sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 
-//user information needed
++ (void)answersForQuestion:(Question *)question
+                      user:(Profile *)user
+                    sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
+
 + (void)peopleAroundCenterCoordinate:(CLLocationCoordinate2D)coordinate
-                          withRadius:(CGFloat)radius
+                          withRadius:(NSInteger)radius
                                 user:(Profile *)user
                               sender:(id<EtrafaSorHTTPRequestHandlerDelegate>)sender;
 

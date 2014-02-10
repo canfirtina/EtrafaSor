@@ -8,9 +8,11 @@
 
 #import "Question.h"
 #import "EtrafaSorHTTPRequestHandler.h"
+#import "AppDelegate.h"
 
 @interface Question () <EtrafaSorHTTPRequestHandlerDelegate>
 @property (strong, nonatomic) NSMutableArray *questionContentObservers;
+@property (nonatomic, readonly, copy) Profile *userProfile;
 @end
 
 @implementation Question
@@ -23,6 +25,8 @@
 @synthesize isSolved = _isSolved;
 @synthesize owner = _owner;
 @synthesize questionContentObservers = _questionContentObservers;
+@synthesize questionId = _questionId;
+@synthesize userProfile = _userProfile;
 
 #pragma mark - Setters & Getters
 
@@ -58,9 +62,16 @@
     
     if( !_messages){
         _messages = [NSArray array];
+        
+        [EtrafaSorHTTPRequestHandler answersForQuestion:self user:self.userProfile sender:self];
     }
     
     return _messages;
+}
+
+- (Profile *)userProfile {
+    
+    return [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];;
 }
 
 - (Profile *)owner {
@@ -78,6 +89,23 @@
 }
 
 #pragma mark - Property Change
+
+- (void)addMessages:(NSArray *)messages {
+    
+    NSMutableArray *mutableCopy = [self.messages mutableCopy];
+    BOOL didChange = false;
+    
+    for( Message *message in messages)
+        if( ![self.messages containsObject:message]){
+            [mutableCopy addObject:message];
+            didChange = true;
+        }
+    
+    if( didChange) {
+        _messages = [mutableCopy copy];
+        [self notifyContentObservers];
+    }
+}
 
 - (void)addMessage:(Message *)message {
     
@@ -140,12 +168,17 @@
 
 #pragma mark - Allocations
 
-+ (Question *)questionWithTopic:(NSString *)topic questionMessage:(NSString *)question owner:(Profile *)owner {
++ (Question *)questionWithTopic:(NSString *)topic
+                questionMessage:(NSString *)question
+                     questionId:(NSString *)questionId
+                     coordinate:(CLLocationCoordinate2D)coordinate
+                          owner:(Profile *)owner {
     
     Question *newQuestion = [[Question alloc] init];
     newQuestion.topic = topic;
     [newQuestion addMessage:[Message messageWithText:question owner:owner inQuestion:newQuestion atDate:[NSDate date]]];
-    [newQuestion setCoordinate:owner.coordinate];
+    [newQuestion setCoordinate:coordinate];
+    newQuestion.questionId = questionId;
     newQuestion.isSolved = NO;
     
     return newQuestion;

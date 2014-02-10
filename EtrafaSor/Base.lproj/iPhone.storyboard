@@ -410,7 +410,7 @@
             </objects>
             <point key="canvasLocation" x="3043" y="-978"/>
         </scene>
-        <!--Profile View Controller - username-->
+        <!--Profile View Controller-->
         <scene sceneID="9YA-H2-mqF">
             <objects>
                 <viewController id="8up-uy-aX2" customClass="ProfileViewController" sceneMemberID="viewController">
@@ -451,6 +451,18 @@
                                     <segue destination="WEm-8e-dSF" kind="push" id="ymM-9T-B4M"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z58-Y3-NNg">
+                                <rect key="frame" x="20" y="305" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="MYi-g6-fBE"/>
+                                </constraints>
+                                <state key="normal" title="Logout"/>
+                                <connections>
+                                    <action selector="logoutPressed:" destination="8up-uy-aX2" eventType="touchUpInside" id="6Bc-k1-RU9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.32268914599999998" green="0.57725417180000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -458,14 +470,23 @@
                             <constraint firstItem="0Ui-od-DNr" firstAttribute="top" secondItem="nUb-jl-cMd" secondAttribute="bottom" constant="30" id="8dY-Ag-knc"/>
                             <constraint firstItem="7gk-Je-gwK" firstAttribute="centerX" secondItem="0Ui-od-DNr" secondAttribute="centerX" id="8uK-d0-cZf"/>
                             <constraint firstItem="7gk-Je-gwK" firstAttribute="leading" secondItem="jtb-Qe-ufP" secondAttribute="leading" constant="20" symbolic="YES" id="9jv-1W-heM"/>
+                            <constraint firstItem="Z58-Y3-NNg" firstAttribute="top" secondItem="hDN-W2-q3g" secondAttribute="bottom" constant="8" id="FQe-yM-rHN"/>
                             <constraint firstItem="7gk-Je-gwK" firstAttribute="top" secondItem="0Ui-od-DNr" secondAttribute="bottom" constant="35" id="KA0-uC-N0n"/>
                             <constraint firstItem="hDN-W2-q3g" firstAttribute="top" secondItem="7gk-Je-gwK" secondAttribute="bottom" constant="8" symbolic="YES" id="RPL-vP-Sxu"/>
                             <constraint firstAttribute="trailing" secondItem="7gk-Je-gwK" secondAttribute="trailing" constant="20" symbolic="YES" id="WZ1-ed-0Hg"/>
+                            <constraint firstItem="Z58-Y3-NNg" firstAttribute="leading" secondItem="hDN-W2-q3g" secondAttribute="leading" id="kEl-Ov-QWd"/>
                             <constraint firstItem="7gk-Je-gwK" firstAttribute="trailing" secondItem="hDN-W2-q3g" secondAttribute="trailing" id="mC7-9d-iiG"/>
                             <constraint firstItem="7gk-Je-gwK" firstAttribute="leading" secondItem="hDN-W2-q3g" secondAttribute="leading" id="pRH-gT-2qy"/>
+                            <constraint firstItem="Z58-Y3-NNg" firstAttribute="trailing" secondItem="hDN-W2-q3g" secondAttribute="trailing" id="tP8-a8-MxL"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="username" id="7bc-Zu-QoR"/>
+                    <navigationItem key="navigationItem" id="7bc-Zu-QoR"/>
+                    <connections>
+                        <outlet property="answersButton" destination="hDN-W2-q3g" id="6NE-6S-Y2g"/>
+                        <outlet property="logoutButton" destination="Z58-Y3-NNg" id="Bpl-Ga-ghQ"/>
+                        <outlet property="profileImageView" destination="0Ui-od-DNr" id="U49-jx-bPa"/>
+                        <outlet property="questionsButton" destination="7gk-Je-gwK" id="qIw-Md-8Gd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LVN-4o-LPh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -599,13 +620,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="IYr-Qi-hRj">
-                                <rect key="frame" x="142" y="265" width="37" height="37"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="IYr-Qi-hRj">
+                                <rect key="frame" x="142" y="221" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.32268914599999998" green="0.57725417180000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IYr-Qi-hRj" firstAttribute="centerX" secondItem="W9P-tA-iaT" secondAttribute="centerX" id="Uvi-Ss-GrZ"/>
+                            <constraint firstItem="IYr-Qi-hRj" firstAttribute="top" secondItem="96o-uM-SVz" secondAttribute="bottom" constant="201" id="vUl-1o-uhE"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z3f-1K-W97" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -712,6 +737,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="rAm-5l-pTT"/>
+        <segue reference="nfx-TT-qa8"/>
     </inferredMetricsTieBreakers>
 </document>

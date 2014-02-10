@@ -136,4 +136,18 @@
     return [[NSUserDefaults standardUserDefaults] valueForKey:SESSION_ID_KEY];
 }
 
+- (void)logout {
+    
+    [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:USEREMAIL_KEY];
+    [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:SESSION_ID_KEY];
+    [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PASSWORD_KEY];
+    
+    UIStoryboard* storyboard = self.window.rootViewController.storyboard;
+    self.rootViewController = self.window.rootViewController;
+    
+    LoginViewController *loginScreenViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginScreen"];
+    loginScreenViewController.loginResponseDelegate = self;
+    self.window.rootViewController = loginScreenViewController;
+}
+
 @end

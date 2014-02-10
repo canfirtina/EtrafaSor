@@ -15,12 +15,11 @@
 
 #define RADIUS 375
 
-@interface MapViewController : UIViewController <MKMapViewDelegate, ProfileCoordinateObserver>
+@interface MapViewController : UIViewController <MKMapViewDelegate, ProfileCoordinateObserver, UISplitViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *peopleAroundLabel;
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;
-@property (nonatomic, readonly, copy) Profile *userProfile;
 
 
 - (IBAction)dismissByCancelToMapViewController:(UIStoryboardSegue *)segue;

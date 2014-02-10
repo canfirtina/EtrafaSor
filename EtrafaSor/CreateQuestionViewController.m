@@ -46,7 +46,13 @@
 - (IBAction)sendMessagePressed:(UIBarButtonItem *)sender {
     
     Profile *questionOwner = [(AppDelegate *)[[UIApplication sharedApplication] delegate] profile];
-    Question *question = [Question questionWithTopic:self.questionTopicField.text questionMessage:self.questionDetailed.text owner:questionOwner];
+    
+    Question *question = [Question questionWithTopic:self.questionTopicField.text
+                                     questionMessage:self.questionDetailed.text
+                                          questionId:nil
+                                          coordinate:questionOwner.coordinate
+                                               owner:questionOwner];
+    
     NSMutableArray *mutable = [questionOwner.questions mutableCopy];
     [mutable addObject:question];
     questionOwner.questions = [mutable copy];
@@ -109,7 +115,9 @@
             NSLog(@"value: %@", valueAsString);
         }
         
-        //[self dismissViewControllerAnimated:YES completion:nil]; //if everything is ok then dismiss
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self.delegate questionPostedSuccessfully];
+        }];
     }
 }
 

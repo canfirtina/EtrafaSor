@@ -19,4 +19,6 @@
                          forUserEMail:(NSString *)userEMail
                              password:(NSString *)password
                             sessionId:(NSString *)sessionId;
+
+- (void)logout;
 @end

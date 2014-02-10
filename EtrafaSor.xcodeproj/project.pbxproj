@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F319EBF18A7BD0B00BB27E7 /* detail.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F319EBD18A7BD0B00BB27E7 /* detail.png */; };
+		9F319EC018A7BD0B00BB27E7 /* detail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F319EBE18A7BD0B00BB27E7 /* detail@2x.png */; };
 		9F5908DB1892A4F9000128A0 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5908BF1892A4F9000128A0 /* MKAnnotationView+WebCache.m */; };
 		9F5908DC1892A4F9000128A0 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5908C11892A4F9000128A0 /* NSData+ImageContentType.m */; };
 		9F5908DD1892A4F9000128A0 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5908C31892A4F9000128A0 /* SDImageCache.m */; };
@@ -125,6 +127,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9F319EBD18A7BD0B00BB27E7 /* detail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detail.png; sourceTree = "<group>"; };
+		9F319EBE18A7BD0B00BB27E7 /* detail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail@2x.png"; sourceTree = "<group>"; };
 		9F5908BE1892A4F9000128A0 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		9F5908BF1892A4F9000128A0 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		9F5908C01892A4F9000128A0 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -620,6 +624,8 @@
 				9FDD89AD188E818500DC7BB9 /* InfoPlist.strings */,
 				9FDD89B0188E818500DC7BB9 /* main.m */,
 				9FDD89B2188E818500DC7BB9 /* EtrafaSor-Prefix.pch */,
+				9F319EBD18A7BD0B00BB27E7 /* detail.png */,
+				9F319EBE18A7BD0B00BB27E7 /* detail@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -733,6 +739,7 @@
 				9FB6C871189129F400CD5427 /* bubble-tailless.png in Resources */,
 				9FB6C85C189129F400CD5427 /* bubble-classic-gray@2x.png in Resources */,
 				9FB6C878189129F400CD5427 /* input-field-cover@2x.png in Resources */,
+				9F319EBF18A7BD0B00BB27E7 /* detail.png in Resources */,
 				9FB6C87D189129F400CD5427 /* button-photo.png in Resources */,
 				9FB6C86E189129F400CD5427 /* bubble-stroked-tailless@2x.png in Resources */,
 				9F7CEAEE189AD12700B2C81F /* defaultProfilePicture.png in Resources */,
@@ -757,6 +764,7 @@
 				9FB6C873189129F400CD5427 /* bubble.png in Resources */,
 				9FB6C860189129F400CD5427 /* bubble-classic-selected@2x.png in Resources */,
 				9FB6C85B189129F400CD5427 /* bubble-classic-gray.png in Resources */,
+				9F319EC018A7BD0B00BB27E7 /* detail@2x.png in Resources */,
 				9FB6C85E189129F400CD5427 /* bubble-classic-green@2x.png in Resources */,
 				9FB6C875189129F400CD5427 /* input-bar-background.png in Resources */,
 				9FB6C87A189129F400CD5427 /* send-button-pressed@2x.png in Resources */,

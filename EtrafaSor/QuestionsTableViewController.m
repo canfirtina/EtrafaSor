@@ -130,14 +130,20 @@
 
 - (Question *)parseQuestionData:(NSDictionary *)questionData {
     
-    NSDictionary *userInfo = [questionData objectForKey:@"user"];
+    NSDictionary *questionInfo = [questionData objectForKey:@"question"];
+    NSDictionary *userInfo = [questionInfo objectForKey:@"user"];
+    
     Profile *owner = [Profile profileWithUserId:[userInfo objectForKey:@"userId"]
                                       userEmail:nil
                                        userName:[userInfo objectForKey:@"userName"]
                                        imageURL:[NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"]];
     
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([[questionInfo objectForKey:@"lat"] doubleValue], [[questionInfo objectForKey:@"lng"] doubleValue]);
+    
     Question *question = [Question questionWithTopic:[questionData objectForKey:@"title"]
-                                     questionMessage:[questionData objectForKey:@"text"]
+                                     questionMessage:[questionInfo objectForKey:@"text"]
+                                          questionId:[questionData objectForKey:@"id"]
+                                          coordinate:coordinate
                                                owner:owner];
     
     return question;
@@ -155,7 +161,7 @@
             
             if( [keyAsString isEqualToString:@"content"]) {
                 
-                if( [value isKindOfClass:[NSArray class]]) {
+                if( [value isKindOfClass:[NSArray class]] && [[value firstObject] objectForKey:@"question"]) {
                     
                     NSMutableArray *questionsForTableView = [NSMutableArray array];
                     NSArray *questions = value;
