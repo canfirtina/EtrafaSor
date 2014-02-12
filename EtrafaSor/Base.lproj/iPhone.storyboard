@@ -572,7 +572,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="t4b-F2-Aod">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="LZe-hc-LsZ" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="EtrafaSorApp" automaticallyAdjustsScrollViewInsets="NO" id="LZe-hc-LsZ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="Oe8-d0-yFl">

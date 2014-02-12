@@ -32,7 +32,6 @@
 #define RESULT_FOR_INVALID_CREDENTIALS @"4"
 
 @interface AppDelegate () <EtrafaSorHTTPRequestHandlerDelegate, LoginResultResponser>
-@property (nonatomic, strong) UIViewController *rootViewController;
 @end
 
 @implementation AppDelegate
@@ -42,7 +41,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     UIStoryboard* storyboard = self.window.rootViewController.storyboard;
-    self.rootViewController = self.window.rootViewController;
     
     if( ![[NSUserDefaults standardUserDefaults] valueForKey:USEREMAIL_KEY]){
         
@@ -73,7 +71,10 @@
     [[NSUserDefaults standardUserDefaults] setValue:password forKey:PASSWORD_KEY];
     
     _profile = userProfile;
-    self.window.rootViewController = self.rootViewController;
+    
+    UIStoryboard* storyboard = self.window.rootViewController.storyboard;
+    
+    self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"EtrafaSorApp"];
 }
 
 - (void)connectionHasFinishedWithData:(NSDictionary *)data {
@@ -143,7 +144,6 @@
     [[NSUserDefaults standardUserDefaults] setValue:NULL forKey:PASSWORD_KEY];
     
     UIStoryboard* storyboard = self.window.rootViewController.storyboard;
-    self.rootViewController = self.window.rootViewController;
     
     LoginViewController *loginScreenViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginScreen"];
     loginScreenViewController.loginResponseDelegate = self;

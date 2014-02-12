@@ -27,7 +27,8 @@
     [super viewDidLayoutSubviews];
     
     [self.profileImageView setImageWithURL:self.userProfile.userImageURL placeholderImage:[UIImage imageNamed:@"defaultProfilePicture"]];
-    self.title = self.userProfile.userName;
+    
+    self.navigationItem.title = self.userProfile.userName;
 }
 
 - (Profile *)userProfile {
