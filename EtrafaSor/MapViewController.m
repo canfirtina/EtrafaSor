@@ -102,7 +102,7 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
         
     } else if( [annotation isKindOfClass:[Question class]]){
         
-        Question *question = (Question *)annotation;
+        //Question *question = (Question *)annotation;
         pinAnnotationView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:@"Question Annotation"];
         
         if( !pinAnnotationView){
@@ -113,10 +113,10 @@ const float letDegree = 0.0135; //denominator = 750m, 2*750 = 1500, 1500/111000 
             pinAnnotationView.animatesDrop = YES;
             pinAnnotationView.canShowCallout = YES;
             
-            UIImageView *imageView = [[UIImageView alloc] init];
-            [imageView setImageWithURL:question.owner.userImageURL placeholderImage:[UIImage imageNamed:@"defaultProfilePicture"]];
-            imageView.frame = CGRectMake(0,0,32,32);
-            pinAnnotationView.leftCalloutAccessoryView = imageView;
+//            UIImageView *imageView = [[UIImageView alloc] init];
+//            [imageView setImageWithURL:question.owner.userImageURL placeholderImage:[UIImage imageNamed:@"defaultProfilePicture"]];
+//            imageView.frame = CGRectMake(0,0,32,32);
+//            pinAnnotationView.leftCalloutAccessoryView = imageView;
             
             pinAnnotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         }

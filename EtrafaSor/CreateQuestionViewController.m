@@ -52,10 +52,6 @@
                                           questionId:nil
                                           coordinate:questionOwner.coordinate
                                                owner:questionOwner];
-    
-    NSMutableArray *mutable = [questionOwner.questions mutableCopy];
-    [mutable addObject:question];
-    questionOwner.questions = [mutable copy];
                 
     //do it in another thread
     [EtrafaSorHTTPRequestHandler postQuestion:question

@@ -19,6 +19,7 @@
 
 @property (strong, nonatomic) NSString *questionId;
 @property (strong, nonatomic) NSString *topic;
+@property (strong, nonatomic) NSString *text;
 @property (nonatomic, readonly, copy) Profile *owner;
 @property (strong, nonatomic, readonly) NSArray *messages; //array of messages
 @property (nonatomic) BOOL isSolved;

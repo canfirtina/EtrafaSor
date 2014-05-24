@@ -27,6 +27,7 @@
 @synthesize questionContentObservers = _questionContentObservers;
 @synthesize questionId = _questionId;
 @synthesize userProfile = _userProfile;
+@synthesize text = _text;
 
 #pragma mark - Setters & Getters
 
@@ -48,14 +49,12 @@
 
 - (NSString *)subtitle {
     
-    NSString *firstMessage = ((Message *)[self.messages firstObject]).text;
-    
-    if( firstMessage.length > 25){
+    if( self.topic.length > 20){
         
-        return [NSString stringWithFormat:@"%@...", [firstMessage substringToIndex:22]];
+        return [NSString stringWithFormat:@"%@...", [self.text substringToIndex:17]];
     }
     
-    return firstMessage;
+    return self.text;
 }
 
 - (NSArray *)messages {
@@ -90,6 +89,7 @@
 
 #pragma mark - Property Change
 
+//use to reset messages
 - (void)addMessages:(NSArray *)messages {
     
     NSMutableArray *mutableCopy = [self.messages mutableCopy];
@@ -148,21 +148,51 @@
 
 #pragma mark - Delegations
 
+- (Message *)parseAnswer:(NSDictionary *)answerData {
+    
+    NSDictionary *userInfo = [answerData objectForKey:@"user"];
+    
+    Profile *owner = [Profile profileWithUserId:[userInfo objectForKey:@"userId"]
+                                      userEmail:nil userName:[userInfo objectForKey:@"userName"]
+                                       imageURL:[NSURL URLWithString:@"http://canfirtina.com/projectTrials/profile.jpg"]];
+    
+    
+    NSNumber *time = [answerData objectForKey:@"time"];
+    NSTimeInterval timed = [time doubleValue] / 1000.0;
+    
+    Message *message = [Message messageWithText:[answerData objectForKey:@"text"]
+                              owner:owner
+                         inQuestion:self
+                             atDate:[NSDate dateWithTimeIntervalSince1970:timed]];
+    message.isSent = YES;
+    
+    return message;
+}
 - (void)connectionHasFinishedWithData:(NSDictionary *)data {
     
-    if( !data) NSLog(@"something wrong with questiin");
+    if( !data) NSLog(@"something wrong with question");
     else {
         
-        NSLog(@"Question");
         for(id key in data) {
             id value = [data objectForKey:key];
             
-            NSString *keyAsString = (NSString *)key;
-            NSString *valueAsString = (NSString *)value;
-            
-            NSLog(@"key: %@", keyAsString);
-            NSLog(@"value: %@", valueAsString);
+            if( [value isKindOfClass:[NSDictionary class]] && [value objectForKey:@"answers"]){
+                
+                NSMutableArray *messages = [NSMutableArray array];
+                [messages addObject:[self parseAnswer:[value objectForKey:@"question"]]]; //it is the question of the user who created the question
+                
+                if( [[value objectForKey:@"answers"] firstObject]) {
+                    
+                    NSArray *answers = [value objectForKey:@"answers"];
+                    
+                    for( NSDictionary *answerData in answers)
+                        [messages addObject:[self parseAnswer:answerData]];
+                }
+                
+                [self addMessages:[messages copy]];
+            }
         }
+        
     }
 }
 
@@ -176,7 +206,7 @@
     
     Question *newQuestion = [[Question alloc] init];
     newQuestion.topic = topic;
-    [newQuestion addMessage:[Message messageWithText:question owner:owner inQuestion:newQuestion atDate:[NSDate date]]];
+    newQuestion.text = question;
     [newQuestion setCoordinate:coordinate];
     newQuestion.questionId = questionId;
     newQuestion.isSolved = NO;
